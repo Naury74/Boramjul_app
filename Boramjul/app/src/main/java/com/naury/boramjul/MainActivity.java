@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 import com.yalantis.phoenix.PullToRefreshView;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
@@ -45,6 +46,22 @@ public class MainActivity extends AppCompatActivity {
 
     ScrollView mScrollView;
     PullToRefreshView mPullToRefreshView;
+
+    //////////////////////////////// 주간 도서용
+    String week_address;
+    String week_title;
+    String week_author;
+    String week_cover;
+    String week_sub_title;
+
+    ArrayList<String> title_list;
+    ArrayList<String> sub_title_list;
+    ArrayList<String> author_list;
+    ArrayList<String> coverUrl;
+
+    ImageView week_book_cover;
+    TextView week_book_sub_title;
+    TextView week_book_title;
 
     //////////////////////////////// 베스트셀러용
     String bs_thumbnail;
@@ -70,11 +87,12 @@ public class MainActivity extends AppCompatActivity {
     int currentPage = 0;
     Timer timer;
     final long DELAY_MS = 500;
-    final long PERIOD_MS = 3000;
+    final long PERIOD_MS = 4000;
 
     TextView count_view;
     TextView reco_title;
     TextView reco_author;
+    ImageView reco_book_cover;
 
     //////////////////////////////// 신간 도서용
     String nw_thumbnail;
@@ -112,6 +130,11 @@ public class MainActivity extends AppCompatActivity {
         count_view = (TextView)findViewById(R.id.count_view);
         reco_title = (TextView)findViewById(R.id.reco_title);
         reco_author = (TextView)findViewById(R.id.reco_author);
+        reco_book_cover = (ImageView)findViewById(R.id.reco_book_cover);
+
+        week_book_cover = (ImageView)findViewById(R.id.week_book_cover);;
+        week_book_sub_title  = (TextView)findViewById(R.id.week_book_sub_title);;
+        week_book_title  = (TextView)findViewById(R.id.week_book_title);;
 
         mScrollView = findViewById(R.id.scrollView);
 
@@ -139,6 +162,9 @@ public class MainActivity extends AppCompatActivity {
         new_adapter = new BookListImageAdapter(MainActivity.this,R.layout.book_list_item);
         new_listView.setAdapter(new_adapter);
 
+        Week_Book_JsoupAsyncTask week_book_jsoupAsyncTask = new Week_Book_JsoupAsyncTask();
+        week_book_jsoupAsyncTask.execute();
+
         Recommended_JsoupAsyncTask recommended_jsoupAsyncTask = new Recommended_JsoupAsyncTask();
         recommended_jsoupAsyncTask.execute();
 
@@ -156,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
                         mPullToRefreshView.setRefreshing(false);
                         timer.cancel();
+                        Week_Book_JsoupAsyncTask week_book_jsoupAsyncTask = new Week_Book_JsoupAsyncTask();
+                        week_book_jsoupAsyncTask.execute();
+
                         Recommended_JsoupAsyncTask recommended_jsoupAsyncTask = new Recommended_JsoupAsyncTask();
                         recommended_jsoupAsyncTask.execute();
 
@@ -168,6 +197,70 @@ public class MainActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
+
+    }
+
+    private class Week_Book_JsoupAsyncTask extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            title_list = new ArrayList<String>();
+            sub_title_list = new ArrayList<String>();
+            author_list = new ArrayList<String>();
+
+            coverUrl = new ArrayList<>();
+
+            Document doc = null;
+            try {
+                doc = Jsoup.connect("http://www.kyobobook.co.kr/killingpart/mainCategory.laf?orderClick=c0z").get();
+
+                Elements title_contents = doc.select(".title a strong");
+                Elements author_contents = doc.select(".author");
+                Elements sub_title_contents = doc.select(".card_news tbody tr td p");
+                Elements ImageGroupList_cover = doc.select(".cover a");
+
+                for (Element element : ImageGroupList_cover){
+                    week_cover = element.select("img").attr("src");
+                    if(!week_cover.equals("")){
+                        Log.d("TAG","\n주간 이미지 커버 주소: "+week_cover+"\n\n");
+                        coverUrl.add(week_cover);
+                    }
+                }
+
+                for(int i = 0; i < 10; i++){
+                    week_title = title_contents.get(i).text();
+                    week_author = author_contents.get(i).text();
+                    week_sub_title = sub_title_contents.get(i*2).text();
+
+                    Log.d("TAG","\n주간순번 : "+i);
+                    Log.d("TAG","\n주간제목 : "+week_title);
+                    Log.d("TAG","\n주간저자 : "+week_author);
+                    Log.d("TAG","\n주간 서브 텍스트 : "+week_sub_title);
+
+                    title_list.add(week_title);
+                    sub_title_list.add(week_sub_title);
+                    author_list.add(week_author);
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+
+        }
 
     }
 
@@ -240,6 +333,17 @@ public class MainActivity extends AppCompatActivity {
             count_view.setText(1+" / "+pagerAdapter.getCount());
             reco_title.setText(rc_list.get(0).getTitle());
             reco_author.setText(rc_list.get(0).getAuthor());
+            Picasso.get()
+                    .load(rc_list.get(0).getBook_cover())
+                    .error(R.color.light_gray)
+                    .into(reco_book_cover);
+
+            Picasso.get()
+                    .load(coverUrl.get(0))
+                    .error(R.color.light_gray)
+                    .into(week_book_cover);
+            week_book_sub_title.setText(sub_title_list.get(0));
+            week_book_title.setText(title_list.get(0));
 
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -252,6 +356,17 @@ public class MainActivity extends AppCompatActivity {
                     count_view.setText((position+1)+" / "+pagerAdapter.getCount());
                     reco_title.setText(rc_list.get(position).getTitle());
                     reco_author.setText(rc_list.get(position).getAuthor());
+                    Picasso.get()
+                            .load(rc_list.get(position).getBook_cover())
+                            .error(R.color.light_gray)
+                            .into(reco_book_cover);
+
+                    Picasso.get()
+                            .load(coverUrl.get(position))
+                            .error(R.color.light_gray)
+                            .into(week_book_cover);
+                    week_book_sub_title.setText(sub_title_list.get(position));
+                    week_book_title.setText(title_list.get(position));
                 }
 
                 @Override
@@ -472,6 +587,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick_search_map(View v){//홈탭버튼
         Intent intent = new Intent(MainActivity.this, SearchOnMapActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
+    public void onClick_total_bs(View v){//베스트셀러 모두보기
+        Intent intent = new Intent(MainActivity.this, BestBookTotalViewActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }

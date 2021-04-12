@@ -7,6 +7,22 @@
     android:background="#ffffff"
     tools:context=".SplashActivity">
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/logo"
+        android:layout_gravity="center"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.07"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.5">
+    </ImageView>
+
     <TextView
         android:id="@+id/logo_text"
         android:layout_width="0dp"
@@ -20,12 +36,12 @@
         app:autoSizeMinTextSize="0.1sp"
         app:autoSizeStepGranularity="0.1sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHeight_percent="0.08"
+        app:layout_constraintHeight_percent="0.05"
         app:layout_constraintWidth_percent="0.85"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0"
         app:layout_constraintHorizontal_bias="0.5"></TextView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

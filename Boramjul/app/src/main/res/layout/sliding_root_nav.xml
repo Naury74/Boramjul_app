@@ -27,7 +27,7 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:text="Menu"
-            android:fontFamily="@font/parisienne_regular"
+            android:fontFamily="@font/gilroy_light"
             android:gravity="center|left"
             android:textColor="@color/boram_purple"
             app:autoSizeTextType="uniform"
