@@ -12,12 +12,21 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/back_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:clickable="true"
+        android:background="@drawable/ic_left_arrow">
+    </TextView>
+
+    <TextView
         android:id="@+id/title"
+        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="center"
         android:text="Login"
-        android:fontFamily="@font/parisienne_regular"
+        android:fontFamily="@font/gilroy_light"
         android:textStyle="bold"
         android:gravity="center|left"
         android:textColor="#000000"
@@ -118,26 +127,24 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/login_btn"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="110dp"
-        android:background="@drawable/ripple_black_btn"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/ripple_purple_btn"
         android:clickable="true"
         android:elevation="3dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="20dp"
             android:layout_gravity="center"
-            android:fontFamily="@font/gilroy_light"
+            android:fontFamily="@font/gmarketsansmedium"
             android:gravity="center"
             android:text="로그인"
             android:textColor="#ffffff"
-            android:textStyle="bold"
             app:autoSizeMinTextSize="0.1sp"
             app:autoSizeStepGranularity="0.1sp"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.35"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

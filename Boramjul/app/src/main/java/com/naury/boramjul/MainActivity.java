@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setTitle("");
+        toolbar.setBackgroundColor(getColor(R.color.transparent));
         setSupportActionBar(toolbar);
 
         new SlidingRootNavBuilder(this)

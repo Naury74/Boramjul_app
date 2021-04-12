@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.AnyRes;
@@ -45,6 +46,9 @@ public class BookListImageAdapter extends RecyclerView.Adapter<BookListImageAdap
                 .load(item.getThumbnail())
                 .error(R.color.light_gray)
                 .into(holder.image);
+
+        holder.title.setText(item.getTitle());
+        holder.author.setText(item.getAuthor());
     }
 
     @Override
@@ -85,12 +89,16 @@ public class BookListImageAdapter extends RecyclerView.Adapter<BookListImageAdap
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView image;
         public final CardView card_view;
+        public final TextView title;
+        public final TextView author;
 
         public ViewHolder(View parent) {
             super(parent);
 
             image= (ImageView) parent.findViewById(R.id.image);
             card_view= (CardView) parent.findViewById(R.id.card_view);
+            title = (TextView) parent.findViewById(R.id.title);
+            author = (TextView) parent.findViewById(R.id.author);
 
             card_view.setOnClickListener(new View.OnClickListener() {
                 @Override

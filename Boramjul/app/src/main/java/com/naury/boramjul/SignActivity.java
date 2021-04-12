@@ -125,7 +125,7 @@ public class SignActivity extends AppCompatActivity {
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(SignActivity.this,R.style.BottomSheetDialogTheme);
         final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.login_bottomsheet_layout,(LinearLayout)findViewById(R.id.container_bottom_sheet));
-        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
 
         final EditText id_input, pw_input;
         id_input = bottomSheetView.findViewById(R.id.id_input);
@@ -138,6 +138,14 @@ public class SignActivity extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                 finish();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        bottomSheetView.findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
                 bottomSheetDialog.dismiss();
             }
         });
