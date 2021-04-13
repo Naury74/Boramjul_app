@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="bottom"
-            android:background="#5052A2">
+            android:background="@color/boram_purple">
 
             <TextView
                 android:id="@+id/title"
