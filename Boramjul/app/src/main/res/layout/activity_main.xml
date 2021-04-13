@@ -6,7 +6,7 @@
     android:id="@+id/main_background_Layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@drawable/round_white_backgorund"
     tools:context=".MainActivity">
 
     <com.yalantis.phoenix.PullToRefreshView
@@ -26,7 +26,7 @@
             android:layout_height="0dp"
             android:fillViewport="true"
             android:orientation="vertical"
-            android:background="#ffffff"
+            android:background="@drawable/round_white_backgorund"
             android:scrollbars="none">
 
             <LinearLayout
@@ -34,16 +34,16 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <androidx.cardview.widget.CardView
+                <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="430dp"
-                    app:cardCornerRadius="20dp"
-                    app:cardElevation="5dp">
+                    android:background="@drawable/round_white_backgorund"
+                    android:elevation="10dp">
 
                     <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="430dp"
-                        android:background="@drawable/gradient_purple_bg">
+                        android:background="@drawable/bottom_round_purple_gradient_bg">
 
 
                         <androidx.appcompat.widget.Toolbar
@@ -231,7 +231,7 @@
 
                     </FrameLayout>
 
-                </androidx.cardview.widget.CardView>
+                </FrameLayout>
 
                 <FrameLayout
                     android:layout_width="match_parent"
