@@ -87,19 +87,29 @@
                             android:textColor="@color/boram_purple"
                             android:fontFamily="@font/gmarketsansmedium" />
 
-                        <SearchView
+                        <AutoCompleteTextView
+                            android:id="@+id/search_bar"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:layout_marginTop="110dp"
                             android:layout_marginHorizontal="30dp"
-                            android:layout_gravity="center_horizontal"
+                            android:paddingHorizontal="30dp"
+                            android:layout_gravity="left"
+                            android:hint="도서 검색"
                             android:background="@drawable/round_white_backgorund"
-                            android:queryBackground="@null"
-                            android:queryHint="검색"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:iconifiedByDefault="false">
-                        </SearchView>
+                            android:completionThreshold="1">
+                        </AutoCompleteTextView>
+
+                        <ImageView
+                            android:id="@+id/search_btn"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:clickable="true"
+                            android:background="@drawable/ic_search"
+                            android:layout_marginTop="120dp"
+                            android:layout_marginHorizontal="50dp"
+                            android:paddingHorizontal="30dp"
+                            android:layout_gravity="right" />
 
                     </FrameLayout>
 
@@ -239,7 +249,7 @@
                     android:clickable="true"
                     android:onClick="onClick_total_bs"
                     android:paddingHorizontal="15dp"
-                    android:layout_marginTop="15dp">
+                    android:layout_marginTop="30dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -273,7 +283,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:paddingHorizontal="15dp"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="30dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -306,11 +316,11 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="80dp"
                     android:layout_marginHorizontal="15dp"
                     app:cardCornerRadius="10dp"
-                    app:cardElevation="5dp">
+                    app:cardElevation="0dp">
 
                     <FrameLayout
                         android:id="@+id/top_banner_layout"

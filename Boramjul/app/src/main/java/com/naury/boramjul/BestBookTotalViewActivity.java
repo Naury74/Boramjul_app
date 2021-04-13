@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -26,7 +27,7 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
     String bs_price;
     String bs_score_review;
 
-    BookListImageAdapter adapter;
+    BookListTotalAdapter adapter;
     ArrayList<BookListItem> bs_list;
 
     @Override
@@ -34,19 +35,22 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_best_book_total_view);
 
-        adapter = new BookListImageAdapter(BestBookTotalViewActivity.this,R.layout.book_list_item);
+        adapter = new BookListTotalAdapter(BestBookTotalViewActivity.this,R.layout.listview_book_list_item);
 
         RecyclerView listView = (RecyclerView) findViewById(R.id.Best_list_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(BestBookTotalViewActivity.this);
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         listView.setHasFixedSize(true);
         listView.setLayoutManager(layoutManager);
 
-        adapter = new BookListImageAdapter(BestBookTotalViewActivity.this,R.layout.book_list_item);
         listView.setAdapter(adapter);
 
         Best_JsoupAsyncTask jsoupAsyncTask = new Best_JsoupAsyncTask();
         jsoupAsyncTask.execute();
+    }
+
+    public void onClick_back(View v){
+        finish();
     }
 
     private class Best_JsoupAsyncTask extends AsyncTask<Void,Void,Void> {

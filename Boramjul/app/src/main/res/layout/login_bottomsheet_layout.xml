@@ -29,7 +29,7 @@
         android:fontFamily="@font/gilroy_light"
         android:textStyle="bold"
         android:gravity="center|left"
-        android:textColor="#000000"
+        android:textColor="@color/boram_purple"
         android:textSize="35dp"></TextView>
 
     <TextView
@@ -39,9 +39,10 @@
         android:layout_height="20dp"
         android:layout_gravity="center"
         android:text="ID"
+        android:textStyle="bold"
         android:fontFamily="@font/gilroy_light"
         android:gravity="center|left"
-        android:textColor="#939393"
+        android:textColor="@color/boram_purple"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="0.1sp"
         app:autoSizeStepGranularity="0.1sp"></TextView>
@@ -83,10 +84,11 @@
         android:layout_height="20dp"
         android:layout_gravity="center"
         android:text="Password"
+        android:textStyle="bold"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/gilroy_light"
         android:gravity="center|left"
-        android:textColor="#939393"
+        android:textColor="@color/boram_purple"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="0.1sp"
         app:autoSizeStepGranularity="0.1sp"></TextView>

@@ -16,6 +16,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -108,6 +110,9 @@ public class MainActivity extends AppCompatActivity {
     ///////////////////////////// Firebase 인증용
     private FirebaseAuth mAuth ;
 
+    //////////////////////////// Search 관련 변수
+    ArrayList<String> search_item = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,6 +147,11 @@ public class MainActivity extends AppCompatActivity {
         mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
 
         backPressCloseHendler = new BackPressCloseHendler(this);//뒤로가기버튼 동작 제어 핸들러 생성
+
+        AutoCompleteTextView edit = (AutoCompleteTextView) findViewById(R.id.search_bar);
+
+        edit.setAdapter(new ArrayAdapter<String>(this,
+                android.R.layout.simple_list_item_1, search_item));
 
         MenuClick();
 
@@ -249,6 +259,8 @@ public class MainActivity extends AppCompatActivity {
                     sub_title_list.add(week_sub_title);
                     author_list.add(week_author);
 
+                    search_item.add(week_title);
+
                 }
 
             } catch (IOException e) {
@@ -315,6 +327,7 @@ public class MainActivity extends AppCompatActivity {
                     DayBookItem item = new DayBookItem(imgUrl.get(i),coverUrl.get(i), rc_title, rc_author);
 
                     rc_list.add(item);
+                    search_item.add(rc_title);
                 }
 
             } catch (IOException e) {
@@ -448,6 +461,7 @@ public class MainActivity extends AppCompatActivity {
                     BookListItem item = new BookListItem(imgUrl.get(i), bs_category, bs_title, bs_author, bs_price, bs_score_review);
 
                     bs_list.add(item);
+                    search_item.add(bs_title);
                 }
 
             } catch (IOException e) {
@@ -511,6 +525,7 @@ public class MainActivity extends AppCompatActivity {
                     BookListItem item = new BookListItem(imgUrl.get(i), nw_category, nw_title, nw_author, nw_price, nw_score_review);
 
                     nw_list.add(item);
+                    search_item.add(nw_title);
                 }
 
             } catch (IOException e) {
