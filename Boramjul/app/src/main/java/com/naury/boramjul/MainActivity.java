@@ -3,6 +3,7 @@ package com.naury.boramjul;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -15,14 +16,22 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.squareup.picasso.Picasso;
 import com.yalantis.phoenix.PullToRefreshView;
@@ -48,6 +57,20 @@ public class MainActivity extends AppCompatActivity {
 
     ScrollView mScrollView;
     PullToRefreshView mPullToRefreshView;
+
+    //////////////////////////////// 검색 출력용
+    String search_thumbnail;
+    String search_category;
+    String search_title;
+    String search_author;
+    String search_price;
+    String search_score_review;
+
+    BookListImageAdapter search_adapter;
+    ArrayList<BookListItem> search_list;
+
+    TextView content_string;
+    TextView title;
 
     //////////////////////////////// 주간 도서용
     String week_address;
@@ -112,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     //////////////////////////// Search 관련 변수
     ArrayList<String> search_item = new ArrayList<String>();
+    AutoCompleteTextView edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,12 +172,37 @@ public class MainActivity extends AppCompatActivity {
 
         backPressCloseHendler = new BackPressCloseHendler(this);//뒤로가기버튼 동작 제어 핸들러 생성
 
-        AutoCompleteTextView edit = (AutoCompleteTextView) findViewById(R.id.search_bar);
+        edit = (AutoCompleteTextView) findViewById(R.id.search_bar);
 
         edit.setAdapter(new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, search_item));
 
+        edit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                switch (i) {
+                    case EditorInfo.IME_ACTION_SEARCH:
+                        // 검색 동작
+                        InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                        manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+                        if(edit.getText().toString().equals("")){
+                            Toast.makeText(MainActivity.this, "검색어를 입력하세요.", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Search();
+                        }
+                        break;
+                    default:
+                        // 기본 엔터키 동작
+                        return false;
+                }
+                return true;
+            }
+        });
+
         MenuClick();
+
+        search_adapter  = new BookListImageAdapter(MainActivity.this,R.layout.search_book_list_item);
 
         RecyclerView listView = (RecyclerView) findViewById(R.id.Best_list_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(MainActivity.this);
@@ -209,6 +258,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void Search(){
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this,R.style.BottomSheetDialogTheme);
+        final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.search_result_bottomsheet_layout,(LinearLayout)findViewById(R.id.container_bottom_sheet));
+        bottomSheetDialog.setCanceledOnTouchOutside(false);
+
+        content_string = bottomSheetView.findViewById(R.id.content_string);
+        title = bottomSheetView.findViewById(R.id.title);
+
+        RecyclerView listView = (RecyclerView) bottomSheetView.findViewById(R.id.search_list_view);
+        GridLayoutManager layoutManager = new GridLayoutManager(MainActivity.this,2);
+        listView.setLayoutManager(layoutManager);
+
+        listView.setAdapter(search_adapter);
+
+        bottomSheetView.findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        Search_JsoupAsyncTask search_jsoupAsyncTask = new Search_JsoupAsyncTask();
+        search_jsoupAsyncTask.execute();
+
+        bottomSheetDialog.setContentView(bottomSheetView);
+        bottomSheetDialog.show();
     }
 
     private class Week_Book_JsoupAsyncTask extends AsyncTask<Void,Void,Void> {
@@ -542,6 +620,74 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private class Search_JsoupAsyncTask extends AsyncTask<Void,Void,Void> {
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            search_list = new ArrayList<BookListItem>();
+            ArrayList<String> imgUrl = new ArrayList<>();
+
+            Document doc = null;
+            try {
+                doc = Jsoup.connect("https://search.kyobobook.co.kr/web/search?vPstrKeyWord="+edit.getText().toString()).get();
+
+                Elements title_contents = doc.select(".title a strong");
+                Elements author_contents = doc.select(".author a");
+                Elements price_contents = doc.select(".sell_price strong");
+                Elements score_review_contents = doc.select(".rating");
+                Elements ImageGroupList = doc.select(".cover a");
+
+                for (Element element : ImageGroupList){
+                    search_thumbnail = element.select("img").attr("src");
+                    if(!search_thumbnail.equals("")){
+                        Log.d("TAG","\n검색 이미지 주소: "+search_thumbnail+"\n\n");
+                        imgUrl.add(search_thumbnail);
+                    }
+                }
+
+
+
+                for(int i = 0; i < score_review_contents.size(); i++){
+                    search_score_review = score_review_contents.get(i).select("img").attr("alt");
+                    search_category = "";
+                    search_title = title_contents.get(i).text();
+                    search_author = author_contents.get(i).text();
+                    search_price = price_contents.get(i).text();
+
+                    Log.d("TAG","\n검색 순번 : "+i);
+                    Log.d("TAG","\n검색 제목 : "+search_title);
+                    Log.d("TAG","\n검색 저자 : "+search_author);
+                    Log.d("TAG","\n검색 가격 : "+search_price);
+                    Log.d("TAG","\n검색 평점 : "+search_score_review);
+
+                    BookListItem item = new BookListItem(imgUrl.get(i), search_category, search_title, search_author, search_price, search_score_review);
+
+                    search_list.add(item);
+                    search_item.add(search_title);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result){
+            search_adapter.addAll(search_list);
+            content_string.setText("\'"+edit.getText().toString()+"\'");
+            title.setText("검색결과 "+search_adapter.getItemCount()+"개");
+        }
+
+    }
+
     public void MenuClick(){
         ((ConstraintLayout) findViewById(R.id.profile_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -601,6 +747,18 @@ public class MainActivity extends AppCompatActivity {
         mScrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 
+    public void onClick_search(View v){//검색
+
+        InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
+        if(edit.getText().toString().equals("")){
+            Toast.makeText(MainActivity.this, "검색어를 입력하세요.", Toast.LENGTH_SHORT).show();
+        }else {
+            Search();
+        }
+    }
+
     public void onClick_search_map(View v){//홈탭버튼
         Intent intent = new Intent(MainActivity.this, SearchOnMapActivity.class);
         startActivity(intent);
@@ -609,6 +767,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick_total_bs(View v){//베스트셀러 모두보기
         Intent intent = new Intent(MainActivity.this, BestBookTotalViewActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
+    public void onClick_total_nw(View v){//뉴셀러 모두보기
+        Intent intent = new Intent(MainActivity.this, NewBookTotalViewActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }

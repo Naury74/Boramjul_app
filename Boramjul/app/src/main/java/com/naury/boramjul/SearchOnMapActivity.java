@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -19,8 +23,10 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -31,13 +37,27 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.PhotoMetadata;
+import com.google.android.libraries.places.api.net.FetchPhotoRequest;
+import com.google.android.libraries.places.api.net.FetchPhotoResponse;
+import com.google.android.libraries.places.api.net.FetchPlaceRequest;
+import com.google.android.libraries.places.api.net.FetchPlaceResponse;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsRequest;
+import com.google.android.libraries.places.api.net.FindAutocompletePredictionsResponse;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest;
+import com.google.android.libraries.places.api.net.FindCurrentPlaceResponse;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -65,7 +85,6 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
     LatLng currentPosition;
     int state_check = 0;
 
-
     // onRequestPermissionsResult에서 수신된 결과에서 ActivityCompat.requestPermissions를 사용한 퍼미션 요청을 구별하기 위해 사용됩니다.
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     boolean needRequest = false;
@@ -76,6 +95,13 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
 
     ///////////////////////뷰
     ConstraintLayout main_background_Layout;
+    TextView place_text;
+
+    ////////////////////////리스트 관련
+    PlaceInfoAdapter place_adapter;
+    ArrayList<PlaceListItem> place_list;
+    RecyclerView new_listView;
+    Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +109,7 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_search_on_map);
 
         main_background_Layout = (ConstraintLayout)findViewById(R.id.main_background_Layout);
+        place_text = (TextView)findViewById(R.id.place_text);
 
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -94,6 +121,17 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
         mapFragment.getMapAsync(this);
 
         previous_marker = new ArrayList<Marker>();
+
+        new_listView = (RecyclerView) findViewById(R.id.place_list_view);
+        LinearLayoutManager new_layoutManager = new LinearLayoutManager(SearchOnMapActivity.this);
+        new_layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        new_listView.setHasFixedSize(true);
+        new_listView.setLayoutManager(new_layoutManager);
+
+        place_list = new ArrayList<PlaceListItem>();
+
+        place_adapter = new PlaceInfoAdapter(SearchOnMapActivity.this,R.layout.location_info_item);
+        new_listView.setAdapter(place_adapter);
     }
 
     @Override
@@ -164,6 +202,22 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
                 LatLng centerLatLng = map.getProjection().getVisibleRegion().latLngBounds.getCenter();
                 String center_position = getCurrentAddress(centerLatLng);
                 center_position = center_position.substring(5);
+
+            }
+        });
+
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+
+                marker.showInfoWindow();
+                int result_pos = place_adapter.getSearchPosition(marker.getTitle().toString());
+
+                if(result_pos!=100){
+                    new_listView.scrollToPosition(result_pos);
+                }
+
+                return true;
             }
         });
     }
@@ -174,6 +228,12 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
 
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(currentLatLng,15);
         map.moveCamera(cameraUpdate);
+
+        LatLng centerLatLng = map.getProjection().getVisibleRegion().latLngBounds.getCenter();
+        String center_position = getCurrentAddress(centerLatLng);
+        center_position = center_position.substring(5);
+
+        place_text.setText(center_position);
 
         showPlaceInformation(currentLatLng);
 
@@ -227,11 +287,11 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
             //네트워크 문제
             Toast.makeText(this, "지오코더 서비스 사용불가", Toast.LENGTH_LONG).show();
             state_check = 0;
-            return "     지오코더 서비스 사용불가. 네트워크를 확인해주세요.";
+            return "지오코더 서비스 사용불가. 네트워크를 확인해주세요.";
         } catch (IllegalArgumentException illegalArgumentException) {
             Toast.makeText(this, "잘못된 GPS 좌표", Toast.LENGTH_LONG).show();
             state_check = 0;
-            return "     잘못된 GPS 좌표입니다.";
+            return "잘못된 GPS 좌표입니다.";
 
         }
 
@@ -239,7 +299,7 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
         if (addresses == null || addresses.size() == 0) {
             //Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
             state_check = 0;
-            return "     해당위치의 주소정보가 없어요";
+            return "해당위치의 주소정보가 없어요";
 
         } else {
             Address address = addresses.get(0);
@@ -417,7 +477,13 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onPlacesFailure(PlacesException e) {
         Log.d(TAG,"검색 결과 없음");
-        //Toast.makeText(SearchOnMapActivity.this, "주변 검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new_listView.setVisibility(View.GONE);
+                Toast.makeText(SearchOnMapActivity.this, "주변 검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -430,6 +496,8 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                place_adapter.clear();
                 for (noman.googleplaces.Place place : places) {
 
                     LatLng latLng
@@ -442,8 +510,19 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
                     markerOptions.position(latLng);
                     markerOptions.title(place.getName());
                     markerOptions.snippet(markerSnippet);
+                    BitmapDrawable bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.marker_purple);
+                    Bitmap b=bitmapdraw.getBitmap();
+                    Bitmap smallMarker = Bitmap.createScaledBitmap(b, 75, 100, false);
+                    markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
                     Marker item = map.addMarker(markerOptions);
                     previous_marker.add(item);
+
+                    Log.d("Place", "place info: "+place.toString());
+                    //String photo_address = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='여기에 포토 레퍼런스값 입력'&key=AIzaSyDQPnXLcFUTdtjQ0KKFtjFDp3demom9cCA";
+
+                    PlaceListItem place_item = new PlaceListItem(place.getPlaceId(),place.getName(),markerSnippet,place.getVicinity());
+
+                    place_list.add(place_item);
 
                 }
 
@@ -453,6 +532,10 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
                 previous_marker.clear();
                 previous_marker.addAll(hashSet);
 
+                place_adapter.addAll(place_list);
+                place_adapter.notifyDataSetChanged();
+
+                new_listView.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -460,6 +543,55 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
     @Override
     public void onPlacesFinished() {
 
+    }
+
+    public Bitmap getPlaceImg(String id) {//해당 위치의 이미지를 받아옴
+
+        Places.initialize(SearchOnMapActivity.this,"AIzaSyDQPnXLcFUTdtjQ0KKFtjFDp3demom9cCA");
+
+        PlacesClient placesClient  = Places.createClient(SearchOnMapActivity.this);
+
+        final String placeId = id;
+
+        final List<com.google.android.libraries.places.api.model.Place.Field> fields = Collections.singletonList(com.google.android.libraries.places.api.model.Place.Field.PHOTO_METADATAS);
+
+        final FetchPlaceRequest placeRequest = FetchPlaceRequest.newInstance(placeId, fields);
+
+        placesClient.fetchPlace(placeRequest).addOnSuccessListener((response) -> {
+            final com.google.android.libraries.places.api.model.Place place = response.getPlace();
+
+            // Get the photo metadata.
+            final List<PhotoMetadata> metadata = place.getPhotoMetadatas();
+            if (metadata == null || metadata.isEmpty()) {
+                Log.w(TAG, "No photo metadata.");
+                return;
+            }
+            final PhotoMetadata photoMetadata = metadata.get(0);
+
+            // Get the attribution text.
+            final String attributions = photoMetadata.getAttributions();
+
+            // Create a FetchPhotoRequest.
+            final FetchPhotoRequest photoRequest = FetchPhotoRequest.builder(photoMetadata)
+                    .setMaxWidth(500) // Optional.
+                    .setMaxHeight(300) // Optional.
+                    .build();
+            placesClient.fetchPhoto(photoRequest).addOnSuccessListener((fetchPhotoResponse) -> {
+                bitmap = fetchPhotoResponse.getBitmap();
+                Log.d(TAG, "Place Bitmap found");
+                //imageView.setImageBitmap(bitmap);
+            }).addOnFailureListener((exception) -> {
+                bitmap = null;
+                if (exception instanceof ApiException) {
+                    final ApiException apiException = (ApiException) exception;
+                    Log.e(TAG, "Place not found: " + exception.getMessage());
+                    final int statusCode = apiException.getStatusCode();
+                    // TODO: Handle error with given status code.
+                }
+            });
+        });
+
+        return bitmap;
     }
 
     public void showPlaceInformation(LatLng location)
@@ -473,10 +605,14 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
                 .listener(SearchOnMapActivity.this)
                 .key("AIzaSyDQPnXLcFUTdtjQ0KKFtjFDp3demom9cCA")
                 .latlng(location.latitude, location.longitude)//현재 위치
-                .radius(500) //500 미터 내에서 검색
+                .radius(800) //1000 미터 내에서 검색
                 .type(PlaceType.BOOK_STORE) //음식점
                 .build()
                 .execute();
+    }
+
+    public void onClick_back(View v){
+        finish();
     }
 
     public void onClick_search_map(View v){

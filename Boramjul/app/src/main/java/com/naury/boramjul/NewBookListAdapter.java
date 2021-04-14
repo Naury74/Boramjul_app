@@ -19,13 +19,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class BookListTotalAdapter extends RecyclerView.Adapter<BookListTotalAdapter.ViewHolder>{
+public class NewBookListAdapter extends RecyclerView.Adapter<NewBookListAdapter.ViewHolder>{
 
     private final int resource;
     private Context context;
     private ArrayList<BookListItem> list;
 
-    public BookListTotalAdapter(Context context, @AnyRes int resource) {
+    public NewBookListAdapter(Context context, @AnyRes int resource) {
         this.resource = resource;
         this.context = context;
         list = new ArrayList<BookListItem>();
@@ -49,9 +49,9 @@ public class BookListTotalAdapter extends RecyclerView.Adapter<BookListTotalAdap
 
         holder.title.setText(item.getTitle());
         holder.author.setText(item.getAuthor());
-        holder.score.setText("★ "+item.getScore_review().substring(7,8)+" /5점");
+        holder.score.setText("★ "+item.getScore_review());
         holder.price.setText(item.getPrice());
-        holder.number_text.setText(Integer.toString(position+1));
+        holder.number_text.setText("New");
     }
 
     @Override
@@ -74,6 +74,11 @@ public class BookListTotalAdapter extends RecyclerView.Adapter<BookListTotalAdap
         notifyDataSetChanged();
     }
 
+    public void delete_Item(int position) {
+        list.remove(position);
+        notifyDataSetChanged();
+    }
+
     public int getSearchPosition(String s) {
 
         int num = 100;
@@ -85,11 +90,6 @@ public class BookListTotalAdapter extends RecyclerView.Adapter<BookListTotalAdap
             }
         }
         return num;
-    }
-
-    public void delete_Item(int position) {
-        list.remove(position);
-        notifyDataSetChanged();
     }
 
     public void addAll(ArrayList<BookListItem> list) {

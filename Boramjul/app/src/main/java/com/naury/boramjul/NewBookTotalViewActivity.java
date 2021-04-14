@@ -24,39 +24,37 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BestBookTotalViewActivity extends AppCompatActivity {
+public class NewBookTotalViewActivity extends AppCompatActivity {
 
     //////////////////////////////// 베스트셀러용
-    String bs_thumbnail;
-    String bs_category;
-    String bs_title;
-    String bs_author;
-    String bs_price;
-    String bs_score_review;
+    String nw_thumbnail;
+    String nw_category;
+    String nw_title;
+    String nw_author;
+    String nw_price;
+    String nw_score_review;
 
     AutoCompleteTextView edit;
 
-    BookListTotalAdapter adapter;
-    ArrayList<BookListItem> bs_list;
-
-    RecyclerView listView;
+    NewBookListAdapter new_adapter;
+    ArrayList<BookListItem> nw_list;
+    RecyclerView new_listView;
 
     ArrayList<String> search_item = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_best_book_total_view);
+        setContentView(R.layout.activity_new_book_total_view);
 
-        adapter = new BookListTotalAdapter(BestBookTotalViewActivity.this,R.layout.listview_book_list_item);
+        new_listView = (RecyclerView) findViewById(R.id.New_list_view);
+        LinearLayoutManager new_layoutManager = new LinearLayoutManager(NewBookTotalViewActivity.this);
+        new_layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        new_listView.setHasFixedSize(true);
+        new_listView.setLayoutManager(new_layoutManager);
 
-        listView = (RecyclerView) findViewById(R.id.Best_list_view);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(BestBookTotalViewActivity.this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        listView.setHasFixedSize(true);
-        listView.setLayoutManager(layoutManager);
-
-        listView.setAdapter(adapter);
+        new_adapter = new NewBookListAdapter(NewBookTotalViewActivity.this,R.layout.listview_book_list_item);
+        new_listView.setAdapter(new_adapter);
 
         edit = (AutoCompleteTextView) findViewById(R.id.search_bar);
 
@@ -72,12 +70,12 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
                         InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
                         manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-                        int result_pos = adapter.getSearchPosition(edit.getText().toString());
+                        int result_pos = new_adapter.getSearchPosition(edit.getText().toString());
 
                         if(result_pos!=100){
-                            listView.scrollToPosition(result_pos);
+                            new_listView.scrollToPosition(result_pos);
                         }else{
-                            Toast.makeText(BestBookTotalViewActivity.this, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(NewBookTotalViewActivity.this, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     default:
@@ -88,8 +86,9 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
             }
         });
 
-        Best_JsoupAsyncTask jsoupAsyncTask = new Best_JsoupAsyncTask();
-        jsoupAsyncTask.execute();
+        New_JsoupAsyncTask new_jsoupAsyncTask = new New_JsoupAsyncTask();
+        new_jsoupAsyncTask.execute();
+
     }
 
     public void onClick_back(View v){
@@ -100,16 +99,16 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
         InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
         manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-        int result_pos = adapter.getSearchPosition(edit.getText().toString());
+        int result_pos = new_adapter.getSearchPosition(edit.getText().toString());
 
         if(result_pos!=100){
-            listView.scrollToPosition(result_pos);
+            new_listView.scrollToPosition(result_pos);
         }else{
-            Toast.makeText(BestBookTotalViewActivity.this, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NewBookTotalViewActivity.this, "검색 결과가 없습니다.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private class Best_JsoupAsyncTask extends AsyncTask<Void,Void,Void> {
+    private class New_JsoupAsyncTask extends AsyncTask<Void,Void,Void> {
 
         @Override
         protected void onPreExecute(){
@@ -119,45 +118,44 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
 
-            bs_list = new ArrayList<BookListItem>();
+            nw_list = new ArrayList<BookListItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
 
             Document doc = null;
             try {
-                doc = Jsoup.connect("http://www.kyobobook.co.kr/bestSellerNew/bestseller.laf?mallGb=KOR&linkClass=A&range=1&kind=0&orderClick=DAa").get();
+                doc = Jsoup.connect("http://www.kyobobook.co.kr/newproduct/newProductList.laf?orderClick=Ca1").get();
 
                 Elements title_contents = doc.select(".title a strong");
-                Elements category_contents = doc.select(".author");
                 Elements author_contents = doc.select(".author");
-                Elements price_contents = doc.select(".book_price");
-                Elements score_review_contents = doc.select(".review");
+                Elements price_contents = doc.select(".sell_price");
+                Elements score_review_contents = doc.select(".score strong");
                 Elements ImageGroupList = doc.select(".cover a");
 
                 for (Element element : ImageGroupList){
-                    bs_thumbnail = element.select("img").attr("src");
-                    if(!bs_thumbnail.equals("")){
-                        Log.d("TAG","\n베스트 이미지 주소: "+bs_thumbnail+"\n\n");
-                        imgUrl.add(bs_thumbnail);
+                    nw_thumbnail = element.select("img").attr("src");
+                    if(!nw_thumbnail.equals("")){
+                        Log.d("TAG","\n뉴 이미지 주소: "+nw_thumbnail+"\n\n");
+                        imgUrl.add(nw_thumbnail);
                     }
                 }
 
                 for(int i = 0; i < title_contents.size(); i++){
-                    bs_score_review = score_review_contents.get(i).select("img").attr("alt");
-                    bs_category = "";
-                    bs_title = title_contents.get(i).text();
-                    bs_author = author_contents.get(i).text();
-                    bs_price = price_contents.get(i).text();
+                    nw_score_review = score_review_contents.get(i).text();
+                    nw_category = "";
+                    nw_title = title_contents.get(i).text();
+                    nw_author = author_contents.get(i).text();
+                    nw_price = price_contents.get(i).text();
 
-                    Log.d("TAG","\n베스트 순번 : "+i);
-                    Log.d("TAG","\n베스트 제목 : "+bs_title);
-                    Log.d("TAG","\n베스트 저자 : "+bs_author);
-                    Log.d("TAG","\n베스트 가격 : "+bs_price);
-                    Log.d("TAG","\n베스트 평점 : "+bs_score_review);
+                    Log.d("TAG","\n뉴 순번 : "+i);
+                    Log.d("TAG","\n뉴 제목 : "+nw_title);
+                    Log.d("TAG","\n뉴 저자 : "+nw_author);
+                    Log.d("TAG","\n뉴 가격 : "+nw_price);
+                    Log.d("TAG","\n뉴 평점 : "+nw_score_review);
 
-                    BookListItem item = new BookListItem(imgUrl.get(i), bs_category, bs_title, bs_author, bs_price, bs_score_review);
+                    BookListItem item = new BookListItem(imgUrl.get(i), nw_category, nw_title, nw_author, nw_price, nw_score_review);
 
-                    bs_list.add(item);
-                    search_item.add(bs_title);
+                    nw_list.add(item);
+                    search_item.add(nw_title);
                 }
 
             } catch (IOException e) {
@@ -169,7 +167,7 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result){
-            adapter.addAll(bs_list);
+            new_adapter.addAll(nw_list);
         }
 
     }

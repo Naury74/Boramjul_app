@@ -90,12 +90,15 @@
                         <AutoCompleteTextView
                             android:id="@+id/search_bar"
                             android:layout_width="match_parent"
-                            android:layout_height="40dp"
+                            android:layout_height="45dp"
                             android:layout_marginTop="110dp"
                             android:layout_marginHorizontal="30dp"
-                            android:paddingHorizontal="30dp"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="55dp"
                             android:layout_gravity="left"
                             android:hint="도서 검색"
+                            android:singleLine="true"
+                            android:imeOptions="actionSearch"
                             android:background="@drawable/round_white_backgorund"
                             android:completionThreshold="1">
                         </AutoCompleteTextView>
@@ -105,8 +108,9 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:clickable="true"
+                            android:onClick="onClick_search"
                             android:background="@drawable/ic_search"
-                            android:layout_marginTop="120dp"
+                            android:layout_marginTop="122.5dp"
                             android:layout_marginHorizontal="50dp"
                             android:paddingHorizontal="30dp"
                             android:layout_gravity="right" />
@@ -282,6 +286,8 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:clickable="true"
+                    android:onClick="onClick_total_nw"
                     android:paddingHorizontal="15dp"
                     android:layout_marginTop="30dp">
 

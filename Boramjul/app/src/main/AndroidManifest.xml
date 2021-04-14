@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".BestBookTotalViewActivity"></activity>
+        <activity android:name=".NewBookTotalViewActivity"
+            android:theme="@style/ImageBgTheme"></activity>
+        <activity android:name=".BestBookTotalViewActivity"
+            android:theme="@style/ImageBgTheme"/>
         <activity android:name=".DetailBookActivity" />
         <activity
             android:name=".SearchOnMapActivity"
@@ -38,8 +41,9 @@
         <activity
             android:name=".SignActivity"
             android:theme="@style/ImageBgTheme" />
-        <activity android:name=".MainActivity"
-            android:theme="@style/ImageBgTheme"/>
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/ImageBgTheme" />
     </application>
 
 </manifest>
