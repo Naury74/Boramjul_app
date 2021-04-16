@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -119,6 +120,11 @@ public class SignActivity extends AppCompatActivity {
         }
     }
 
+    public void onClick_SignUp(View v) {
+        Intent intent = new Intent(SignActivity.this, TOS_Activity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
 
     public void onClick_login(View v){
         final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -134,11 +140,15 @@ public class SignActivity extends AppCompatActivity {
         bottomSheetView.findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SignActivity.this, MainActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                finish();
-                bottomSheetDialog.dismiss();
+                if(!id_input.getText().toString().equals("")&&!pw_input.getText().toString().equals("")){
+                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    finish();
+                    bottomSheetDialog.dismiss();
+                }else {
+                    Toast.makeText(SignActivity.this, "아이디 또는 비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

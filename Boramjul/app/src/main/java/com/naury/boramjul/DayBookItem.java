@@ -6,12 +6,32 @@ public class DayBookItem {
     private String book_cover;
     private String title;
     private String author;
+    private String price;
+    private String score;
 
-    public DayBookItem(String thumbnail, String book_cover, String title, String author) {
+    public DayBookItem(String thumbnail, String book_cover, String title, String author, String price, String score) {
         this.thumbnail = thumbnail;
         this.book_cover = book_cover;
         this.title = title;
         this.author = author;
+        this.price = price;
+        this.score = score;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 
     public String getThumbnail() {

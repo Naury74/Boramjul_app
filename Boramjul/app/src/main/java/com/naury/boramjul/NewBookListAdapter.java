@@ -1,12 +1,14 @@
 package com.naury.boramjul;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -109,6 +111,7 @@ public class NewBookListAdapter extends RecyclerView.Adapter<NewBookListAdapter.
         public final TextView score;
         public final TextView price;
         public final TextView number_text;
+        public final FrameLayout main_layout;
 
         public ViewHolder(View parent) {
             super(parent);
@@ -119,18 +122,23 @@ public class NewBookListAdapter extends RecyclerView.Adapter<NewBookListAdapter.
             score = (TextView) parent.findViewById(R.id.score);
             price = (TextView) parent.findViewById(R.id.price);
             number_text = (TextView) parent.findViewById(R.id.position_num);
+            main_layout = (FrameLayout) parent.findViewById(R.id.main_layout);
 
-//            card_view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    int pos = getAdapterPosition();
-//                    if (pos != RecyclerView.NO_POSITION) {
-//                        // 데이터 리스트로부터 아이템 데이터 참조.
-//                        //delete_Item(pos);
-//                        Toast.makeText(context, getItem(pos).getTitle(), Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
+            main_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    if (pos != RecyclerView.NO_POSITION) {
+                        // 데이터 리스트로부터 아이템 데이터 참조.
+                        //delete_Item(pos);
+                        BookListItem item = getItem(pos);
+                        Intent intent = new Intent(context, DetailBookActivity.class);
+                        intent.putExtra("OBJECT",item);
+                        context.startActivity(intent);
+                        //Toast.makeText(context, getItem(pos).getTitle(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
     }
 }

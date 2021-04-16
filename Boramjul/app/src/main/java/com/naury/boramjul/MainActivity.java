@@ -104,10 +104,14 @@ public class MainActivity extends AppCompatActivity {
     String rc_book_cover;
     String rc_title;
     String rc_author;
+    String rc_price;
+    String rc_score;
 
     AutoScrollAdapter pagerAdapter;
     ViewPager viewPager;
     ArrayList<DayBookItem> rc_list;
+
+    int rc_position = 0;
 
     int currentPage = 0;
     Timer timer;
@@ -375,6 +379,8 @@ public class MainActivity extends AppCompatActivity {
 
                 Elements title_contents = doc.select(".title a strong");
                 Elements author_contents = doc.select(".author");
+                Elements price_contents = doc.select(".sell_price");
+                Elements score_contents = doc.select(".score strong");
                 Elements ImageGroupList = doc.select(".card_news tbody tr");
                 Elements ImageGroupList_cover = doc.select(".cover a");
 
@@ -397,12 +403,16 @@ public class MainActivity extends AppCompatActivity {
                 for(int i = 0; i < 10; i++){
                     rc_title = title_contents.get(i).text();
                     rc_author = author_contents.get(i).text();
+                    rc_price = price_contents.get(i).text();
+                    rc_score = score_contents.get(i).text();
 
                     Log.d("TAG","\n추천순번 : "+i);
                     Log.d("TAG","\n추천제목 : "+rc_title);
                     Log.d("TAG","\n추천저자 : "+rc_author);
+                    Log.d("TAG","\n추천가격 : "+rc_price);
+                    Log.d("TAG","\n추천평점 : "+rc_score);
 
-                    DayBookItem item = new DayBookItem(imgUrl.get(i),coverUrl.get(i), rc_title, rc_author);
+                    DayBookItem item = new DayBookItem(imgUrl.get(i),coverUrl.get(i), rc_title, rc_author, rc_price, rc_score);
 
                     rc_list.add(item);
                     search_item.add(rc_title);
@@ -459,6 +469,7 @@ public class MainActivity extends AppCompatActivity {
                             .into(week_book_cover);
                     week_book_sub_title.setText(sub_title_list.get(position));
                     week_book_title.setText(title_list.get(position));
+                    rc_position = position;
                 }
 
                 @Override
@@ -475,7 +486,6 @@ public class MainActivity extends AppCompatActivity {
                     if(currentPage == image_num) {
                         currentPage = 0;
                     }
-                    int position = currentPage;
                     viewPager.setCurrentItem(currentPage++, true);
                 }
             };
@@ -684,6 +694,7 @@ public class MainActivity extends AppCompatActivity {
             search_adapter.addAll(search_list);
             content_string.setText("\'"+edit.getText().toString()+"\'");
             title.setText("검색결과 "+search_adapter.getItemCount()+"개");
+            edit.setText("");
         }
 
     }
@@ -745,6 +756,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick_home(View v){//홈탭버튼
         mScrollView.fullScroll(ScrollView.FOCUS_UP);
+    }
+
+    public void onClick_Show_RecommendBook_Detail(View v){
+        pagerAdapter.ViewDetail(rc_position);
     }
 
     public void onClick_search(View v){//검색

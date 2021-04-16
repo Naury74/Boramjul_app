@@ -1,6 +1,7 @@
 package com.naury.boramjul;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -107,7 +108,11 @@ public class BookListImageAdapter extends RecyclerView.Adapter<BookListImageAdap
                     if (pos != RecyclerView.NO_POSITION) {
                         // 데이터 리스트로부터 아이템 데이터 참조.
                         //delete_Item(pos);
-                        Toast.makeText(context, getItem(pos).getTitle(), Toast.LENGTH_SHORT).show();
+                        BookListItem item = getItem(pos);
+                        Intent intent = new Intent(context, DetailBookActivity.class);
+                        intent.putExtra("OBJECT",item);
+                        context.startActivity(intent);
+                        //Toast.makeText(context, getItem(pos).getTitle(), Toast.LENGTH_SHORT).show();
                     }
                 }
             });

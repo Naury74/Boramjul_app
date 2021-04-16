@@ -1,6 +1,7 @@
 package com.naury.boramjul;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,6 +48,19 @@ public class AutoScrollAdapter extends PagerAdapter {
                     .error(R.color.light_gray)
                     .into(poster_img);
 
+            poster_img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    DayBookItem pos_item = images.get(position);
+
+                    BookListItem item = new BookListItem(pos_item.getBook_cover(), "", pos_item.getTitle(), pos_item.getAuthor(), pos_item.getPrice(), pos_item.getScore());
+                    Intent intent = new Intent(context, DetailBookActivity.class);
+                    intent.putExtra("OBJECT",item);
+                    context.startActivity(intent);
+                }
+            });
+
         }
 
         // 뷰페이저에 추가
@@ -70,5 +84,14 @@ public class AutoScrollAdapter extends PagerAdapter {
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
         return view == object;
+    }
+
+    public void ViewDetail(int index){
+        DayBookItem pos_item = images.get(index);
+
+        BookListItem item = new BookListItem(pos_item.getBook_cover(), "", pos_item.getTitle(), pos_item.getAuthor(), pos_item.getPrice(), pos_item.getScore());
+        Intent intent = new Intent(context, DetailBookActivity.class);
+        intent.putExtra("OBJECT",item);
+        context.startActivity(intent);
     }
 }

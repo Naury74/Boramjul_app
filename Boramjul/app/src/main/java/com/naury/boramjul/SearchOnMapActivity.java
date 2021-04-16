@@ -318,6 +318,8 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
 
     private void startLocationUpdates() {
 
+        map.setMyLocationEnabled(true);
+
         if (!checkLocationServicesStatus()) {
 
             Log.d(TAG, "startLocationUpdates : call showDialogForLocationServiceSetting");
@@ -481,7 +483,7 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void run() {
                 new_listView.setVisibility(View.GONE);
-                Toast.makeText(SearchOnMapActivity.this, "주변 검색 결과가 없습니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchOnMapActivity.this, "주변에 북스토어가 없어요...\n지도를 움직여 다른 위치를 검색해 보세요!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -520,7 +522,7 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
                     Log.d("Place", "place info: "+place.toString());
                     //String photo_address = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='여기에 포토 레퍼런스값 입력'&key=AIzaSyDQPnXLcFUTdtjQ0KKFtjFDp3demom9cCA";
 
-                    PlaceListItem place_item = new PlaceListItem(place.getPlaceId(),place.getName(),markerSnippet,place.getVicinity());
+                    PlaceListItem place_item = new PlaceListItem(place.getPlaceId(),place.getName(),markerSnippet,place.getVicinity(),Double.toString(place.getLatitude()), Double.toString(place.getLongitude()));
 
                     place_list.add(place_item);
 

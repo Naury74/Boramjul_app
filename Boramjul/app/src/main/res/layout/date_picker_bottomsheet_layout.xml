@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/up_round_white_bg"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="35dp"
+    android:paddingVertical="20dp"
+    android:layout_height="300dp"
+    android:orientation="vertical">
+
+    <DatePicker
+        android:id="@+id/dataPicker"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="5dp"
+        android:datePickerMode="spinner"
+        android:calendarViewShown="false"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="25dp">
+
+        <TextView
+            android:id="@+id/set_date_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/ripple_purple_btn"
+            android:text="설정"
+            android:fontFamily="@font/gmarketsanslight"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="22dp"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.65"
+            app:layout_constraintHeight_percent="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

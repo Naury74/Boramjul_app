@@ -2,7 +2,9 @@ package com.naury.boramjul;
 
 import android.graphics.Bitmap;
 
-public class BookListItem {
+import java.io.Serializable;
+
+public class BookListItem implements Serializable {
     private String thumbnail;
     private String category;
     private String title;

@@ -1,7 +1,9 @@
 package com.naury.boramjul;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -117,8 +119,10 @@ public class PlaceInfoAdapter extends RecyclerView.Adapter<PlaceInfoAdapter.View
                     int pos = getAdapterPosition();
                     if (pos != RecyclerView.NO_POSITION) {
                         // 데이터 리스트로부터 아이템 데이터 참조.
-                        //delete_Item(pos);
-                        //Toast.makeText(context, getItem(pos).getTitle(), Toast.LENGTH_SHORT).show();
+                        Uri gmmIntentUri = Uri.parse("google.streetview:cbll="+getItem(pos).getLatitude()+","+getItem(pos).getLongitude());
+                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                        mapIntent.setPackage("com.google.android.apps.maps");
+                        context.startActivity(mapIntent);
                     }
                 }
             });

@@ -16,10 +16,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".NewBookTotalViewActivity"
+        <activity android:name=".CompleteSignUpActivity"
             android:theme="@style/ImageBgTheme"></activity>
-        <activity android:name=".BestBookTotalViewActivity"
-            android:theme="@style/ImageBgTheme"/>
+        <activity android:name=".PersonVerifyActivity" />
+        <activity android:name=".TOS_Activity" />
+        <activity android:name=".RecommendTotalViewActivity" />
+        <activity
+            android:name=".NewBookTotalViewActivity"
+            android:theme="@style/ImageBgTheme" />
+        <activity
+            android:name=".BestBookTotalViewActivity"
+            android:theme="@style/ImageBgTheme" />
         <activity android:name=".DetailBookActivity" />
         <activity
             android:name=".SearchOnMapActivity"

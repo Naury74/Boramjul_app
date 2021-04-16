@@ -88,6 +88,7 @@
         android:layout_height="50dp"
         android:elevation="3dp"
         android:clickable="true"
+        android:onClick="onClick_SignUp"
         android:background="@drawable/ripple_white_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintWidth_percent="0.8"

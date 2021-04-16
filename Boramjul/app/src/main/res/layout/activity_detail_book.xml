@@ -1,9 +1,390 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffffff"
     tools:context=".DetailBookActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:background="@drawable/round_white_backgorund"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="150dp"
+                android:layout_height="210dp"
+                android:layout_marginTop="110dp"
+                android:layout_gravity="center"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
+
+                <ImageView
+                    android:id="@+id/week_book_cover"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center|right"
+                    android:scaleType="fitXY" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textColor="@color/boram_purple"
+                android:textSize="20dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:text="책 제목"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_marginTop="40dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_gravity="center"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textColor="@color/boram_purple"
+                android:textSize="14dp"
+                android:fontFamily="@font/gmarketsanslight"
+                android:textStyle="bold"
+                android:text="저자정보"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="40dp"
+                android:layout_gravity="center"
+                android:gravity="center|top"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="15dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/top_banner_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="30dp"
+                    android:background="@color/boram_purple">
+
+                    <LinearLayout
+                        android:id="@+id/rating_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintHeight_percent="0.7"
+                        app:layout_constraintWidth_percent="0.25"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:layout_constraintHorizontal_bias="0">
+
+                        <TextView
+                            android:id="@+id/rating_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="-"
+                            android:textSize="14dp"
+                            android:gravity="center|bottom"
+                            android:layout_gravity="top"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:textColor="#ffffff"
+                            android:fontFamily="@font/gmarketsansmedium" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="Rating"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:layout_gravity="bottom"
+                            android:ellipsize="end"
+                            android:textColor="#ffffff"
+                            android:fontFamily="@font/gmarketsanslight" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        android:background="#A1A1A1"
+                        app:layout_constraintHeight_percent="0.55"
+                        app:layout_constraintWidth_percent="0.005"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/rating_layout"
+                        app:layout_constraintRight_toLeftOf="@+id/price_layout"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:layout_constraintHorizontal_bias="0.5">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/price_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintHeight_percent="0.7"
+                        app:layout_constraintWidth_percent="0.25"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:layout_constraintHorizontal_bias="0.5">
+
+                        <TextView
+                            android:id="@+id/price_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="-"
+                            android:textSize="14dp"
+                            android:gravity="center|bottom"
+                            android:layout_gravity="top"
+                            android:singleLine="true"
+                            android:ellipsize="marquee"
+                            android:marqueeRepeatLimit="marquee_forever"
+                            android:textColor="#ffffff"
+                            android:fontFamily="@font/gmarketsansmedium" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="Price"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:layout_gravity="bottom"
+                            android:ellipsize="end"
+                            android:textColor="#ffffff"
+                            android:fontFamily="@font/gmarketsanslight" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        android:background="#A1A1A1"
+                        app:layout_constraintHeight_percent="0.55"
+                        app:layout_constraintWidth_percent="0.005"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toRightOf="@+id/price_layout"
+                        app:layout_constraintRight_toLeftOf="@+id/language_layout"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:layout_constraintHorizontal_bias="0.5">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/language_layout"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:orientation="vertical"
+                        app:layout_constraintHeight_percent="0.7"
+                        app:layout_constraintWidth_percent="0.25"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.5"
+                        app:layout_constraintHorizontal_bias="1">
+
+                        <TextView
+                            android:id="@+id/language_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="Korean"
+                            android:textSize="14dp"
+                            android:gravity="center|bottom"
+                            android:layout_gravity="top"
+                            android:ellipsize="end"
+                            android:textColor="#ffffff"
+                            android:fontFamily="@font/gmarketsansmedium" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:text="Language"
+                            android:textSize="12dp"
+                            android:gravity="center"
+                            android:layout_gravity="bottom"
+                            android:ellipsize="end"
+                            android:textColor="#ffffff"
+                            android:fontFamily="@font/gmarketsanslight" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:paddingHorizontal="15dp"
+                android:layout_marginTop="30dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="관련 도서"
+                    android:textSize="20dp"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:fontFamily="@font/gmarketsansmedium" />
+
+            </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_view"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            </LinearLayout>
+
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bookmark_btn"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="15dp"
+        android:elevation="10dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_white_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98"
+        app:layout_constraintHorizontal_bias="0">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_bookmark_lightgray"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5">
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cart_btn"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_marginHorizontal="15dp"
+        android:elevation="10dp"
+        android:clickable="true"
+        android:background="@drawable/ripple_white_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98"
+        app:layout_constraintHorizontal_bias="1">
+
+        <ImageView
+            android:id="@+id/cart_img"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_shopping_cart_purple"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.15">
+        </ImageView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:text="목록 추가"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:textColor="@color/boram_purple"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="2sp"
+            app:autoSizeStepGranularity="1sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.35"
+            app:layout_constraintWidth_percent="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.7"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="15dp"
+            android:clickable="true"
+            android:onClick="onClick_back"
+            android:src="@drawable/ic_left_arrow"
+            android:background="@drawable/ripple_white_btn">
+        </ImageView>
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

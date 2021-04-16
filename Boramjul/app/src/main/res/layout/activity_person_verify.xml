@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#ffffff"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:id="@+id/main_background_Layout"
+    tools:context=".PersonVerifyActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.045"
+        app:layout_constraintWidth_percent="0.85"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_left_arrow"
+            android:layout_gravity="center"
+            android:clickable="true"
+            android:onClick="onClick_back"
+            android:background="@drawable/ripple_white_btn"
+            app:layout_constraintDimensionRatio="w,1:1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0">
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:text="가입정보 입력"
+        android:fontFamily="@font/gmarketsanslight"
+        android:gravity="center|left"
+        android:textColor="@color/boram_purple"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="2sp"
+        app:autoSizeStepGranularity="1sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHeight_percent="0.035"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.18"
+        app:layout_constraintHorizontal_bias="0.5"></TextView>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/btn_confirm"
+        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.6"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/name_input"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:hint="이름 입력"
+                android:background="@null"
+                android:fontFamily="@font/gmarketsanslight"
+                android:textSize="16dp"
+                android:paddingHorizontal="20dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="30dp">
+            </EditText>
+
+            <TextView
+                android:id="@+id/birthday_input"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:hint="생년월일 입력"
+                android:background="@null"
+                android:fontFamily="@font/gmarketsanslight"
+                android:textSize="16dp"
+                android:paddingHorizontal="20dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:clickable="true"
+                android:onClick="onClick_calendar"
+                android:layout_marginTop="10dp">
+            </TextView>
+
+            <RadioGroup
+                android:id="@+id/gender_input"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rd_gender_f"
+                    android:checked="true"
+                    android:textColor="#5F5F5F"
+                    android:fontFamily="@font/gmarketsanslight"
+                    android:text="여성"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/rd_gender_m"
+                    android:textColor="#5F5F5F"
+                    android:fontFamily="@font/gmarketsanslight"
+                    android:text="남성"/>
+            </RadioGroup>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/email_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/email_input"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:hint="이메일 입력"
+                    android:background="@null"
+                    android:fontFamily="@font/gmarketsanslight"
+                    android:textSize="16dp"
+                    android:paddingHorizontal="20dp"
+                    android:textColorHint="#5F5F5F"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:inputType="textEmailAddress"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    app:layout_constraintWidth_percent="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/email_check"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:gravity="center"
+                    android:textColor="@color/boram_purple"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:paddingRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="1"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/phone_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/phone_input"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:hint="전화번호 입력"
+                    android:background="@null"
+                    android:fontFamily="@font/gmarketsanslight"
+                    android:textSize="16dp"
+                    android:paddingHorizontal="20dp"
+                    android:textColorHint="#5F5F5F"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:inputType="phone"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:maxLength="11"
+                    app:layout_constraintWidth_percent="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/phone_check"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:clickable="true"
+                    android:onClick="onClick_RequestCode"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:gravity="center"
+                    android:textColor="@color/boram_purple"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:paddingRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="1"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/code_input_layout"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="60dp">
+
+                <EditText
+                    android:id="@+id/code_input"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:hint="인증코드 입력"
+                    android:background="@null"
+                    android:fontFamily="@font/gmarketsanslight"
+                    android:textSize="16dp"
+                    android:paddingHorizontal="20dp"
+                    android:textColorHint="#5F5F5F"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:inputType="phone"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:maxLines="11"
+                    app:layout_constraintWidth_percent="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/code_check"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:clickable="true"
+                    android:onClick="onClick_VerifyCode"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:gravity="center"
+                    android:textColor="@color/boram_purple"
+                    android:textStyle="bold"
+                    android:textSize="15dp"
+                    android:paddingRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="1"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/verify_result_layout"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="60dp">
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:text="인증 완료"
+                    android:background="@null"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:textSize="16dp"
+                    android:paddingHorizontal="5dp"
+                    android:textColorHint="#5F5F5F"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:inputType="phone"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:maxLines="11"
+                    app:layout_constraintWidth_percent="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="1">
+                </EditText>
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:padding="20dp"
+                    android:src="@drawable/ic_tick_purple"
+                    app:layout_constraintDimensionRatio="w,1:1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0"></ImageView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/id_input"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:hint="아이디 입력"
+                android:background="@null"
+                android:fontFamily="@font/gmarketsanslight"
+                android:textSize="16dp"
+                android:paddingHorizontal="20dp"
+                android:textColorHint="#5F5F5F"
+                android:maxLength="10"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="30dp">
+            </EditText>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/pw_layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:id="@+id/pw_input"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:hint="비밀번호 입력"
+                    android:background="@null"
+                    android:fontFamily="@font/gmarketsanslight"
+                    android:textSize="16dp"
+                    android:paddingHorizontal="20dp"
+                    android:textColorHint="#5F5F5F"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:inputType="textPassword"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:maxLength="20"
+                    app:layout_constraintWidth_percent="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/pw_check"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:gravity="center"
+                    android:textColor="@color/boram_purple"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:paddingRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="1"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/pw_notice_text"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:text="* 영문 대, 소문자, 숫자, 기호를 포함하여 8~20자리"
+                android:background="@null"
+                android:fontFamily="@font/gmarketsanslight"
+                android:textSize="12dp"
+                android:paddingHorizontal="20dp"
+                android:gravity="top|left"
+                android:textColor="@color/boram_purple"
+                android:layout_marginTop="0dp">
+            </TextView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/re_pw_layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp">
+
+                <EditText
+                    android:id="@+id/re_pw_input"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:hint="비밀번호 확인"
+                    android:background="@null"
+                    android:fontFamily="@font/gmarketsanslight"
+                    android:textSize="16dp"
+                    android:paddingHorizontal="20dp"
+                    android:textColorHint="#5F5F5F"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:inputType="textPassword"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:maxLength="20"
+                    app:layout_constraintWidth_percent="0.8"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/re_pw_check"
+                    android:layout_width="0dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:gravity="center"
+                    android:textColor="@color/boram_purple"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:paddingRight="20dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintWidth_percent="0.2"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="1"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/btn_confirm"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ripple_purple_btn"
+        android:text="가입하기"
+        android:textStyle="bold"
+        android:fontFamily="@font/gmarketsanslight"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        app:autoSizeTextType="uniform"
+        app:autoSizeMinTextSize="1sp"
+        app:autoSizeMaxTextSize="25sp"
+        app:autoSizeStepGranularity="1sp"
+        android:clickable="true"
+        android:onClick="onClick_Complete"
+        android:padding="12dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.625"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.068"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

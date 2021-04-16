@@ -4,10 +4,12 @@
     <corners
         android:bottomLeftRadius="20dp"
         android:bottomRightRadius="20dp" />
-    <gradient
-        android:angle="270"
-        android:type="linear"
-        android:startColor="@color/boram_purple"
-        android:centerColor="#6062C1"
-        android:endColor="#999BF6"/>
+    <solid
+        android:color="@color/boram_purple"/>
+<!--    <gradient-->
+<!--        android:angle="270"-->
+<!--        android:type="linear"-->
+<!--        android:startColor="@color/boram_purple"-->
+<!--        android:centerColor="#6062C1"-->
+<!--        android:endColor="#999BF6"/>-->
 </shape>
