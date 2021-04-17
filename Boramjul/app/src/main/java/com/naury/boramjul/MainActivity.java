@@ -758,6 +758,12 @@ public class MainActivity extends AppCompatActivity {
         mScrollView.fullScroll(ScrollView.FOCUS_UP);
     }
 
+    public void onClick_category(View v){//홈탭버튼
+        Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
     public void onClick_Show_RecommendBook_Detail(View v){
         pagerAdapter.ViewDetail(rc_position);
     }
