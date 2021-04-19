@@ -20,172 +20,152 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="1">
 
-        <ScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            android:orientation="vertical"
-            android:background="@drawable/round_white_backgorund"
-            android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="#ffffff">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_height="50dp"
+                    android:background="@null"
+                    app:layout_constraintHeight_percent="0.08"
+                    app:layout_constraintWidth_percent="1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0"
+                    app:layout_constraintHorizontal_bias="0.5">
+
+                </androidx.appcompat.widget.Toolbar>
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Boramjul"
+                    android:layout_marginTop="40dp"
+                    android:textColor="@color/boram_purple"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/parisienne_regular"
+                    android:gravity="center"
+                    android:layout_gravity="center|top"
+                    android:id="@+id/toolbar_title"
+                    android:textSize="24dp"
+                    />
+
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_shopping_cart_purple"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:textColor="@color/boram_purple"
+                    android:fontFamily="@font/gmarketsansmedium" />
+
+            </FrameLayout>
+
+            <ScrollView
+                android:id="@+id/scrollView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:fillViewport="true"
+                android:orientation="vertical"
+                android:background="@drawable/round_white_backgorund"
+                android:scrollbars="none">
 
-                <FrameLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="430dp"
-                    android:background="@drawable/round_white_backgorund">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="430dp"
-                        android:background="#ffffff">
+                        android:layout_height="480dp"
+                        android:background="@drawable/round_white_backgorund">
 
-
-                        <androidx.appcompat.widget.Toolbar
-                            android:id="@+id/toolbar"
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_marginTop="40dp"
-                            android:layout_height="50dp"
-                            android:background="@null"
-                            app:layout_constraintHeight_percent="0.08"
-                            app:layout_constraintWidth_percent="1"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0"
-                            app:layout_constraintHorizontal_bias="0.5">
-
-                        </androidx.appcompat.widget.Toolbar>
-
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="50dp"
-                            android:text="Boramjul"
-                            android:layout_marginTop="40dp"
-                            android:textColor="@color/boram_purple"
-                            android:textStyle="bold"
-                            android:fontFamily="@font/parisienne_regular"
-                            android:gravity="center"
-                            android:layout_gravity="center|top"
-                            android:id="@+id/toolbar_title"
-                            android:textSize="24dp"
-                            />
-
-                        <TextView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:background="@drawable/ic_shopping_cart_purple"
-                            android:layout_gravity="right"
-                            android:layout_marginTop="55dp"
-                            android:layout_marginHorizontal="15dp"
-                            android:textColor="@color/boram_purple"
-                            android:fontFamily="@font/gmarketsansmedium" />
-
-                        <AutoCompleteTextView
-                            android:id="@+id/search_bar"
-                            android:layout_width="match_parent"
-                            android:layout_height="45dp"
-                            android:layout_marginTop="110dp"
-                            android:layout_marginHorizontal="30dp"
-                            android:elevation="8dp"
-                            android:paddingLeft="30dp"
-                            android:paddingRight="55dp"
-                            android:layout_gravity="left"
-                            android:hint="도서 검색"
-                            android:singleLine="true"
-                            android:imeOptions="actionSearch"
-                            android:background="@drawable/round_white_backgorund"
-                            android:completionThreshold="1">
-                        </AutoCompleteTextView>
-
-                        <ImageView
-                            android:id="@+id/search_btn"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:clickable="true"
-                            android:elevation="10dp"
-                            android:onClick="onClick_search"
-                            android:background="@drawable/ic_search_purple"
-                            android:layout_marginTop="122.5dp"
-                            android:layout_marginHorizontal="50dp"
-                            android:paddingHorizontal="30dp"
-                            android:layout_gravity="right" />
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="260dp"
-                        android:layout_gravity="bottom|left"
-                        android:layout_marginHorizontal="15dp"
-                        android:layout_marginBottom="0dp">
-
-                        <TextView
-                            android:layout_width="100dp"
-                            android:layout_height="match_parent"
-                            android:text="오늘의 \n추천 도서"
-                            android:textSize="20dp"
-                            android:clickable="true"
-                            android:onClick="onClick_Show_RecommendBook_Detail"
-                            android:layout_marginTop="20dp"
-                            android:gravity="left"
-                            android:textColor="@color/boram_purple"
-                            android:fontFamily="@font/gmarketsansmedium" />
-
-                        <TextView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:background="@drawable/ic_right_arrow_purple"
-                            android:gravity="left"
-                            android:layout_marginTop="80dp"
-                            android:textColor="@color/boram_purple"
-                            android:fontFamily="@font/gmarketsansmedium" />
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="85dp"
-                            android:layout_height="120dp"
-                            android:layout_gravity="bottom"
-                            android:layout_marginBottom="20dp"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="5dp">
-
-                            <ImageView
-                                android:id="@+id/reco_book_cover"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:scaleType="fitXY"
-                                android:elevation="5dp"/>
-
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/card_view"
-                            android:layout_width="240dp"
-                            android:layout_height="220dp"
-                            android:layout_gravity="center|right"
-                            app:cardCornerRadius="10dp"
-                            app:cardElevation="5dp"
-                            >
+                            android:layout_height="480dp"
+                            android:background="#ffffff">
 
                             <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/viewPager"
                                 android:background="@color/light_gray"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="350dp"
+                                android:layout_gravity="bottom">
 
                             </androidx.viewpager.widget.ViewPager>
 
                             <LinearLayout
+                                android:background="@drawable/gradient_reverse_semi_white"
+                                android:layout_width="match_parent"
+                                android:layout_height="350dp"
+                                android:layout_gravity="bottom">
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="450dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginBottom="0dp">
+
+                            <TextView
+                                android:layout_width="200dp"
+                                android:layout_height="match_parent"
+                                android:text="오늘의 \n추천 도서"
+                                android:textSize="25dp"
+                                android:clickable="true"
+                                android:onClick="onClick_Show_RecommendBook_Detail"
+                                android:gravity="left"
+                                android:textColor="#000000"
+                                android:fontFamily="@font/gmarketsansbold" />
+
+                            <TextView
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:background="@drawable/ic_right_arrow"
+                                android:gravity="left"
+                                android:layout_marginTop="100dp"
+                                android:textColor="@color/boram_purple"
+                                android:fontFamily="@font/gmarketsansmedium"
+                                android:layout_gravity="top"/>
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="70dp"
+                                android:layout_height="100dp"
+                                android:layout_gravity="top|right"
+                                android:layout_marginBottom="20dp"
+                                app:cardCornerRadius="5dp"
+                                app:cardElevation="5dp">
+
+                                <ImageView
+                                    android:id="@+id/reco_book_cover"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:scaleType="fitXY"
+                                    android:elevation="5dp"/>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
                                 android:layout_width="45dp"
                                 android:layout_height="20dp"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginHorizontal="10dp"
-                                android:layout_gravity="right"
+                                android:layout_marginBottom="20dp"
+                                android:layout_gravity="bottom|left"
                                 android:background="@drawable/round_70black_background">
 
                                 <TextView
@@ -202,203 +182,230 @@
 
                             </LinearLayout>
 
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center|bottom"
-                                android:background="#4C2080">
+                            <TextView
+                                android:id="@+id/reco_title"
+                                android:layout_width="200dp"
+                                android:layout_height="40dp"
+                                android:textColor="#000000"
+                                android:layout_marginTop="60dp"
+                                android:textStyle="bold"
+                                android:textSize="12dp"
+                                android:fontFamily="@font/gmarketsanslight"
+                                android:text=""
+                                android:ellipsize="end"
+                                android:layout_gravity="top|left"
+                                android:gravity="center|left">
 
-                                <TextView
-                                    android:id="@+id/reco_title"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:textColor="#ffffff"
-                                    android:textStyle="bold"
-                                    android:textSize="10dp"
-                                    android:layout_marginHorizontal="10dp"
-                                    android:fontFamily="@font/gmarketsansmedium"
-                                    android:text=""
-                                    android:singleLine="true"
-                                    android:ellipsize="end"
-                                    android:layout_gravity="center|right"
-                                    android:gravity="center|right">
+                            </TextView>
 
-                                </TextView>
+                            <TextView
+                                android:id="@+id/reco_author"
+                                android:layout_width="90dp"
+                                android:layout_height="match_parent"
+                                android:textColor="#ffffff"
+                                android:visibility="gone"
+                                android:textSize="10dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:fontFamily="@font/gmarketsansmedium"
+                                android:text=""
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                android:layout_gravity="center|right"
+                                android:gravity="center|right">
 
-                                <TextView
-                                    android:id="@+id/reco_author"
-                                    android:layout_width="90dp"
-                                    android:layout_height="match_parent"
-                                    android:textColor="#ffffff"
-                                    android:visibility="gone"
-                                    android:textSize="10dp"
-                                    android:layout_marginHorizontal="5dp"
-                                    android:fontFamily="@font/gmarketsansmedium"
-                                    android:text=""
-                                    android:singleLine="true"
-                                    android:ellipsize="end"
-                                    android:layout_gravity="center|right"
-                                    android:gravity="center|right">
+                            </TextView>
 
-                                </TextView>
-
-                            </FrameLayout>
-
-                        </androidx.cardview.widget.CardView>
+                        </FrameLayout>
 
                     </FrameLayout>
 
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:clickable="true"
-                    android:onClick="onClick_total_bs"
-                    android:paddingHorizontal="15dp"
-                    android:layout_marginTop="20dp">
-
-                    <TextView
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="베스트셀러"
-                        android:textSize="20dp"
-                        android:gravity="center|left"
-                        android:textColor="@color/boram_purple"
-                        android:fontFamily="@font/gmarketsansmedium" />
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp">
 
-                    <TextView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:background="@drawable/ic_add"
-                        android:gravity="center"
-                        android:layout_gravity="center|right"
-                        android:textColor="@color/boram_purple"
-                        android:fontFamily="@font/gmarketsansmedium" />
+                        <AutoCompleteTextView
+                            android:id="@+id/search_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:layout_marginHorizontal="15dp"
+                            android:elevation="1dp"
+                            android:paddingLeft="30dp"
+                            android:paddingRight="55dp"
+                            android:layout_gravity="center"
+                            android:hint="도서 검색"
+                            android:singleLine="true"
+                            android:imeOptions="actionSearch"
+                            android:background="@drawable/round_white_backgorund"
+                            android:completionThreshold="1">
+                        </AutoCompleteTextView>
 
-                </FrameLayout>
+                        <ImageView
+                            android:id="@+id/search_btn"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:clickable="true"
+                            android:elevation="2dp"
+                            android:onClick="onClick_search"
+                            android:background="@drawable/ic_search_purple"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginHorizontal="30dp"
+                            android:paddingHorizontal="30dp"
+                            android:layout_gravity="right" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/Best_list_view"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:clickable="true"
-                    android:onClick="onClick_total_nw"
-                    android:paddingHorizontal="15dp"
-                    android:layout_marginTop="30dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="화제의 신간"
-                        android:textSize="20dp"
-                        android:gravity="center|left"
-                        android:textColor="@color/boram_purple"
-                        android:fontFamily="@font/gmarketsansmedium" />
-
-                    <TextView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:background="@drawable/ic_add"
-                        android:gravity="center"
-                        android:layout_gravity="center|right"
-                        android:textColor="@color/boram_purple"
-                        android:fontFamily="@font/gmarketsansmedium" />
-
-                </FrameLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/New_list_view"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="230dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="80dp"
-                    app:cardCornerRadius="10dp"
-                    app:cardElevation="0dp">
+                    </FrameLayout>
 
                     <FrameLayout
-                        android:id="@+id/top_banner_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingHorizontal="20dp"
-                        android:background="#ffffff">
-
-                        <androidx.cardview.widget.CardView
-                            android:layout_width="130dp"
-                            android:layout_height="180dp"
-                            android:layout_gravity="center|right"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="5dp">
-
-                            <ImageView
-                                android:id="@+id/week_book_cover"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center|right"
-                                android:scaleType="fitXY" />
-
-                        </androidx.cardview.widget.CardView>
+                        android:layout_height="40dp"
+                        android:clickable="true"
+                        android:onClick="onClick_total_bs"
+                        android:paddingHorizontal="15dp"
+                        android:layout_marginTop="20dp">
 
                         <TextView
-                            android:layout_width="180dp"
-                            android:layout_height="30dp"
-                            android:text="책 속의 말"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="베스트셀러"
                             android:textSize="20dp"
-                            android:layout_marginTop="30dp"
-                            android:gravity="left"
-                            android:ellipsize="end"
-                            android:textColor="@color/boram_purple"
+                            android:gravity="center|left"
+                            android:textColor="#000000"
                             android:fontFamily="@font/gmarketsansmedium" />
 
                         <TextView
-                            android:id="@+id/week_book_sub_title"
-                            android:layout_width="180dp"
-                            android:layout_height="100dp"
-                            android:text=""
-                            android:textSize="13dp"
-                            android:layout_gravity="center|left"
-                            android:gravity="left"
-                            android:maxLines="5"
-                            android:ellipsize="end"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:background="@drawable/ic_add"
+                            android:gravity="center"
+                            android:layout_gravity="center|right"
                             android:textColor="@color/boram_purple"
-                            android:fontFamily="@font/gilroy_light" />
-
-                        <TextView
-                            android:id="@+id/week_book_title"
-                            android:layout_width="180dp"
-                            android:layout_height="20dp"
-                            android:textColor="@color/boram_purple"
-                            android:textStyle="bold"
-                            android:textSize="12dp"
-                            android:layout_marginBottom="30dp"
-                            android:fontFamily="@font/gmarketsansmedium"
-                            android:text=""
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            android:layout_gravity="bottom|left"
-                            android:gravity="bottom|left"/>
+                            android:fontFamily="@font/gmarketsansmedium" />
 
                     </FrameLayout>
 
-                </androidx.cardview.widget.CardView>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/Best_list_view"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
 
-            </LinearLayout>
+                    </androidx.recyclerview.widget.RecyclerView>
 
-        </ScrollView>
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:clickable="true"
+                        android:onClick="onClick_total_nw"
+                        android:paddingHorizontal="15dp"
+                        android:layout_marginTop="30dp">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="화제의 신간"
+                            android:textSize="20dp"
+                            android:gravity="center|left"
+                            android:textColor="#000000"
+                            android:fontFamily="@font/gmarketsansmedium" />
+
+                        <TextView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:background="@drawable/ic_add"
+                            android:gravity="center"
+                            android:layout_gravity="center|right"
+                            android:textColor="@color/boram_purple"
+                            android:fontFamily="@font/gmarketsansmedium" />
+
+                    </FrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/New_list_view"
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="230dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="80dp"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="0dp">
+
+                        <FrameLayout
+                            android:id="@+id/top_banner_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:paddingHorizontal="20dp"
+                            android:background="#ffffff">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="130dp"
+                                android:layout_height="180dp"
+                                android:layout_gravity="center|right"
+                                app:cardCornerRadius="5dp"
+                                app:cardElevation="5dp">
+
+                                <ImageView
+                                    android:id="@+id/week_book_cover"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center|right"
+                                    android:scaleType="fitXY" />
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:layout_width="180dp"
+                                android:layout_height="30dp"
+                                android:text="책 속의 말"
+                                android:textSize="20dp"
+                                android:layout_marginTop="30dp"
+                                android:gravity="left"
+                                android:ellipsize="end"
+                                android:textColor="#000000"
+                                android:fontFamily="@font/gmarketsansmedium" />
+
+                            <TextView
+                                android:id="@+id/week_book_sub_title"
+                                android:layout_width="180dp"
+                                android:layout_height="100dp"
+                                android:text=""
+                                android:textSize="13dp"
+                                android:layout_gravity="center|left"
+                                android:gravity="left"
+                                android:maxLines="5"
+                                android:ellipsize="end"
+                                android:textColor="#90000000"
+                                android:fontFamily="@font/gilroy_light" />
+
+                            <TextView
+                                android:id="@+id/week_book_title"
+                                android:layout_width="180dp"
+                                android:layout_height="20dp"
+                                android:textColor="@color/boram_purple"
+                                android:textStyle="bold"
+                                android:textSize="12dp"
+                                android:layout_marginBottom="30dp"
+                                android:fontFamily="@font/gmarketsansmedium"
+                                android:text=""
+                                android:singleLine="true"
+                                android:ellipsize="end"
+                                android:layout_gravity="bottom|left"
+                                android:gravity="bottom|left"/>
+
+                        </FrameLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </LinearLayout>
 
     </com.yalantis.phoenix.PullToRefreshView>
 
