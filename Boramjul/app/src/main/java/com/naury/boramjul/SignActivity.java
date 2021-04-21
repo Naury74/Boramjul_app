@@ -39,6 +39,8 @@ public class SignActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     private SignInButton signInButton;
 
+    CustomAnimationLoadingDialog customAnimationLoadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class SignActivity extends AppCompatActivity {
 
         signInButton = findViewById(R.id.signInButton);
         mAuth = FirebaseAuth.getInstance();
+        customAnimationLoadingDialog = new CustomAnimationLoadingDialog(SignActivity.this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("557406782955-u5q6t763nvueu24sqpnmjqs9h52j4ug0.apps.googleusercontent.com")
@@ -54,6 +57,7 @@ public class SignActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         if (mAuth.getCurrentUser() != null) {
+            Log.d("TAG","로그인 유저: "+mAuth.getCurrentUser().getDisplayName());//get+원하는 정보로 유저 정보 받을 수 있음
             Intent intent = new Intent(getApplication(), MainActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -69,6 +73,7 @@ public class SignActivity extends AppCompatActivity {
     }
 
     private void signIn() {
+        customAnimationLoadingDialog.show();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -90,7 +95,7 @@ public class SignActivity extends AppCompatActivity {
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-
+        customAnimationLoadingDialog.dismiss();
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -114,6 +119,7 @@ public class SignActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
+            Log.d("TAG","로그인 유저: "+user.getDisplayName());
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

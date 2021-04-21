@@ -6,13 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
@@ -21,6 +25,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class DetailBookActivity extends AppCompatActivity {
@@ -29,6 +34,7 @@ public class DetailBookActivity extends AppCompatActivity {
     TextView title, author, rating_text, price_text;
 
     BookListItem item;
+    ArrayList<BookListItem> cart_list;
 
     //////////////////////////////// 검색 출력용
     String search_thumbnail;
@@ -54,6 +60,9 @@ public class DetailBookActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         item = (BookListItem)intent.getSerializableExtra("OBJECT");
+
+        cart_list = new ArrayList<BookListItem>();
+        cart_list = ReadData();
 
         title.setText(item.getTitle());
         author.setText(item.getAuthor());
@@ -85,6 +94,39 @@ public class DetailBookActivity extends AppCompatActivity {
 
     public void onClick_back(View v){
         finish();
+    }
+
+    public void onClick_AddCart(View v){
+        cart_list.add(item);
+        SaveData(cart_list);
+        Intent intent = new Intent(DetailBookActivity.this, CartActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        finish();
+    }
+
+    private void SaveData(ArrayList<BookListItem> friends) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = preferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(friends);
+        editor.putString("MyCart", json);
+        editor.commit();
+    }
+
+    private ArrayList<BookListItem> ReadData() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("MyCart", "EMPTY");
+        ArrayList<BookListItem> arrayList;
+        if(json.equals("EMPTY")){
+            arrayList = new ArrayList<BookListItem>();
+        }else{
+            Type type = new TypeToken<ArrayList<BookListItem>>() {
+            }.getType();
+            arrayList = gson.fromJson(json, type);
+        }
+        return arrayList;
     }
 
     private class Search_JsoupAsyncTask extends AsyncTask<Void,Void,Void> {

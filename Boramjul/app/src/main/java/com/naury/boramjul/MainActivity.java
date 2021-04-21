@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 import com.yalantis.phoenix.PullToRefreshView;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -699,6 +702,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void SaveData(ArrayList<BookListItem> friends) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = preferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(friends);
+        editor.putString("MyCart", json);
+        editor.commit();
+    }
+
     public void MenuClick(){
         ((ConstraintLayout) findViewById(R.id.profile_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -709,7 +721,9 @@ public class MainActivity extends AppCompatActivity {
         ((ConstraintLayout) findViewById(R.id.order_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "주문목록 버튼", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, CartActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             }
         });
         ((ConstraintLayout) findViewById(R.id.Promo_btn)).setOnClickListener(new View.OnClickListener() {
@@ -734,6 +748,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Google_signOut();
+                SaveData(new ArrayList<BookListItem>());
                 Intent intent = new Intent(MainActivity.this, SignActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -771,11 +786,11 @@ public class MainActivity extends AppCompatActivity {
     public void onClick_search(View v){//검색
 
         InputMethodManager manager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
         if(edit.getText().toString().equals("")){
             Toast.makeText(MainActivity.this, "검색어를 입력하세요.", Toast.LENGTH_SHORT).show();
         }else {
+            manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             Search();
         }
     }

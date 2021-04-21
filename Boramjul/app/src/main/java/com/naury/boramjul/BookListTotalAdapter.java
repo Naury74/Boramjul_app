@@ -51,7 +51,11 @@ public class BookListTotalAdapter extends RecyclerView.Adapter<BookListTotalAdap
 
         holder.title.setText(item.getTitle());
         holder.author.setText(item.getAuthor());
-        holder.score.setText("★ "+item.getScore_review().substring(7,8)+" /5점");
+        if(item.getScore_review().length()>3){
+            holder.score.setText("★ "+item.getScore_review().substring(7,8)+" /5점");
+        }else{
+            holder.score.setText("★ "+item.getScore_review());
+        }
         holder.price.setText(item.getPrice());
         holder.number_text.setText(Integer.toString(position+1));
     }

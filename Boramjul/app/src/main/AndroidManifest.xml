@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.naury.boramjul"
     xmlns:tools="http://schemas.android.com/tools"
+    package="com.naury.boramjul"
     tools:ignore="LockedOrientationActivity">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,29 +18,38 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CategoryActivity"
-            android:theme="@style/ChipTheme"
+        <activity android:name=".CartActivity"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name=".CategoryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ChipTheme" />
+        <activity
             android:name=".CompleteSignUpActivity"
-            android:theme="@style/ImageBgTheme"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PersonVerifyActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".TOS_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".RecommendTotalViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".NewBookTotalViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".BestBookTotalViewActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".DetailBookActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageBgTheme" />
+        <activity
+            android:name=".PersonVerifyActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TOS_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".RecommendTotalViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".NewBookTotalViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BestBookTotalViewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DetailBookActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SearchOnMapActivity"
-            android:theme="@style/MapTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/MapTheme" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -48,8 +57,8 @@
 
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,10 +67,11 @@
         </activity>
         <activity
             android:name=".SignActivity"
-            android:theme="@style/ImageBgTheme"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/ImageBgTheme" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ public class BookListItem implements Serializable {
     private String author;
     private String price;
     private String score_review;
+    private int count;
 
     public BookListItem(String thumbnail, String category, String title, String author, String price, String score_review) {
         this.thumbnail = thumbnail;
@@ -19,6 +20,25 @@ public class BookListItem implements Serializable {
         this.author = author;
         this.price = price;
         this.score_review = score_review;
+        this.count = 1;
+    }
+
+    public BookListItem(String thumbnail, String category, String title, String author, String price, String score_review, int count) {
+        this.thumbnail = thumbnail;
+        this.category = category;
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        this.score_review = score_review;
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public String getThumbnail() {

@@ -75,6 +75,8 @@ public class PersonVerifyActivity extends AppCompatActivity {
 
     String code_number = "";
 
+    CustomAnimationLoadingDialog customAnimationLoadingDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        customAnimationLoadingDialog = new CustomAnimationLoadingDialog(PersonVerifyActivity.this);
 
         gender_input = (RadioGroup)findViewById(R.id.gender_input);
         birthday_input = (TextView)findViewById(R.id.birthday_input);
@@ -339,7 +342,21 @@ public class PersonVerifyActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(phone_input.getWindowToken(), 0);
         if(check_phone == 1){
             if(check_phone == 1&&check_email==1&&check_name==1&&check_birth==1){
-                showNoti();
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run(){
+                        try
+                        {
+                            Thread.sleep(2000);
+                        }
+                        catch (Exception e)
+                        {
+
+                        }
+                        showNoti();
+                    }
+                });
+                thread.start();
                 code_input_layout.setVisibility(View.VISIBLE);
                 phone_input.setClickable(false);
                 phone_input.setFocusable(false);
@@ -354,6 +371,22 @@ public class PersonVerifyActivity extends AppCompatActivity {
 
     public void onClick_VerifyCode(View v){
         imm.hideSoftInputFromWindow(code_input.getWindowToken(), 0);
+        customAnimationLoadingDialog.show();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try
+                {
+                    Thread.sleep(1000);
+                }
+                catch (Exception e)
+                {
+
+                }
+                customAnimationLoadingDialog.dismiss();
+            }
+        });
+        thread.start();
         if(code_input.getText().toString().equals(code_number)){
             check_code = 1;
             name_input.setVisibility(View.GONE);
@@ -369,18 +402,34 @@ public class PersonVerifyActivity extends AppCompatActivity {
             verify_result_layout.setVisibility(View.VISIBLE);
         }else {
             check_code = 0;
-            Toast.makeText(this, "인증번호가 틀립니다. 다시 확인해 주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(PersonVerifyActivity.this, "인증번호가 틀립니다. 다시 확인해 주세요.", Toast.LENGTH_SHORT).show();
         }
     }
 
     public void onClick_Complete(View v){
 
-        Intent intent = new Intent(this, CompleteSignUpActivity.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        finish();
+        customAnimationLoadingDialog.show();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run(){
+                try
+                {
+                    Thread.sleep(1000);
+                }
+                catch (Exception e)
+                {
 
-        Toast.makeText(this, "가입 완료", Toast.LENGTH_SHORT).show();
+                }
+                customAnimationLoadingDialog.dismiss();
+                Intent intent = new Intent(PersonVerifyActivity.this, CompleteSignUpActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                finish();
+            }
+        });
+        thread.start();
+
+        //Toast.makeText(this, "가입 완료", Toast.LENGTH_SHORT).show();
     }
 
     public void onClick_back(View v){
