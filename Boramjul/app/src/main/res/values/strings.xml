@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">보람줄</string>
+
+    <string name="naver_client_id">lAozlqOF2T5hQ9UsSqJw</string>
+    <string name="naver_client_secret">G5Mi5M8Mhr</string>
+    <string name="naver_client_name">보람줄</string>
+
+    <string name="kakao_app_key">4273d3e69e3893dd1fe7bc981e5b304c</string>
 </resources>

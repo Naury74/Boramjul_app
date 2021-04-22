@@ -36,6 +36,9 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.callback.LogoutResponseCallback;
+import com.nhn.android.naverlogin.OAuthLogin;
 import com.squareup.picasso.Picasso;
 import com.yalantis.phoenix.PullToRefreshView;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
@@ -144,6 +147,9 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> search_item = new ArrayList<String>();
     AutoCompleteTextView edit;
 
+    /////////////////////////////네이버 로그아웃용
+    OAuthLogin oAuthLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -206,6 +212,17 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        ////////////////////////////////////////////네이버 키 인증
+        oAuthLogin = OAuthLogin.getInstance();
+        oAuthLogin.init(
+                this
+                ,getString(R.string.naver_client_id)
+                ,getString(R.string.naver_client_secret)
+                ,getString(R.string.naver_client_name)
+                //,OAUTH_CALLBACK_INTENT
+                // SDK 4.1.4 버전부터는 OAUTH_CALLBACK_INTENT변수를 사용하지 않습니다.
+        );
 
         MenuClick();
 
@@ -748,6 +765,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Google_signOut();
+                oAuthLogin.logout(MainActivity.this);
+                UserManagement.getInstance()
+                        .requestLogout(new LogoutResponseCallback() {
+                            @Override
+                            public void onCompleteLogout() {
+                                Toast.makeText(MainActivity.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 SaveData(new ArrayList<BookListItem>());
                 Intent intent = new Intent(MainActivity.this, SignActivity.class);
                 startActivity(intent);
