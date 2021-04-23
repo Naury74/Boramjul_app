@@ -43,7 +43,7 @@
             android:layout_height="50dp"
             android:text="Boramjul"
             android:layout_marginTop="40dp"
-            android:textColor="@color/boram_purple"
+            android:textColor="#000000"
             android:textStyle="bold"
             android:fontFamily="@font/parisienne_regular"
             android:gravity="center"
@@ -107,9 +107,18 @@
                         </androidx.viewpager.widget.ViewPager>
 
                         <LinearLayout
+                            android:background="@drawable/gradient_semi_white"
+                            android:layout_width="match_parent"
+                            android:layout_height="30dp"
+                            android:layout_marginTop="125dp"
+                            android:layout_gravity="top">
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:background="@drawable/gradient_reverse_semi_white"
                             android:layout_width="match_parent"
-                            android:layout_height="350dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="bottom">
 
                         </LinearLayout>
@@ -297,7 +306,7 @@
                     android:id="@+id/Best_list_view"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="250dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -333,7 +342,7 @@
                     android:id="@+id/New_list_view"
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp">
+                    android:layout_height="250dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
 
@@ -530,6 +539,44 @@
                 app:layout_constraintVertical_bias="0.5"
                 app:layout_constraintHorizontal_bias="0.5">
             </ImageView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cart_count_circle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_gravity="center"
+                android:background="@drawable/round_red_background"
+                android:visibility="gone"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent="0.3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.2"
+                app:layout_constraintHorizontal_bias="0.8">
+
+                <TextView
+                    android:id="@+id/cart_count_textView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:text="0"
+                    android:textColor="#ffffff"
+                    app:autoSizeTextType="uniform"
+                    app:autoSizeMinTextSize="2sp"
+                    app:autoSizeStepGranularity="1sp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHeight_percent="0.7"
+                    app:layout_constraintWidth_percent="0.7"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5"
+                    app:layout_constraintHorizontal_bias="0.5"></TextView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

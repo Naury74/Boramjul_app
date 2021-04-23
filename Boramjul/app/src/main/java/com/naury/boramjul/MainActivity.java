@@ -29,6 +29,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ import android.widget.Toast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.kakao.usermgmt.UserManagement;
 import com.kakao.usermgmt.callback.LogoutResponseCallback;
 import com.nhn.android.naverlogin.OAuthLogin;
@@ -51,6 +53,7 @@ import org.jsoup.select.Elements;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -65,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
     PullToRefreshView mPullToRefreshView;
 
     ImageView home_btn_icon;
+    ConstraintLayout cart_count_circle;
+    TextView cart_count_textView;
+
+    ArrayList<BookListItem> cart_arrayList;
 
     //////////////////////////////// 검색 출력용
     String search_thumbnail;
@@ -185,6 +192,9 @@ public class MainActivity extends AppCompatActivity {
 
         home_btn_icon = (ImageView)findViewById(R.id.home_btn_icon);
 
+        cart_count_circle = (ConstraintLayout)findViewById(R.id.cart_count_circle);
+        cart_count_textView = (TextView)findViewById(R.id.cart_count_textView);
+
         mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
@@ -298,6 +308,17 @@ public class MainActivity extends AppCompatActivity {
                 }, 2000);
             }
         });
+
+        cart_arrayList = new ArrayList<BookListItem>();
+        cart_arrayList = ReadData();
+
+        if(cart_arrayList.size()==0){
+            cart_count_circle.setVisibility(View.GONE);
+            cart_count_textView.setText("0");
+        }else {
+            cart_count_circle.setVisibility(View.VISIBLE);
+            cart_count_textView.setText(""+cart_arrayList.size());
+        }
 
     }
 
@@ -745,6 +766,21 @@ public class MainActivity extends AppCompatActivity {
         editor.commit();
     }
 
+    private ArrayList<BookListItem> ReadData() {
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        String json = sharedPrefs.getString("MyCart", "EMPTY");
+        ArrayList<BookListItem> arrayList;
+        if(json.equals("EMPTY")){
+            arrayList = new ArrayList<BookListItem>();
+        }else{
+            Type type = new TypeToken<ArrayList<BookListItem>>() {
+            }.getType();
+            arrayList = gson.fromJson(json, type);
+        }
+        return arrayList;
+    }
+
     public void MenuClick(){
         ((ConstraintLayout) findViewById(R.id.profile_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -857,5 +893,21 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, NewBookTotalViewActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        cart_arrayList = ReadData();
+
+        if(cart_arrayList.size()==0){
+            cart_count_circle.setVisibility(View.GONE);
+            cart_count_textView.setText("0");
+        }else {
+            cart_count_circle.setVisibility(View.VISIBLE);
+            cart_count_textView.setText(""+cart_arrayList.size());
+        }
+
     }
 }
