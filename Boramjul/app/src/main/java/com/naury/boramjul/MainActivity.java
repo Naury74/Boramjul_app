@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     ScrollView mScrollView;
     PullToRefreshView mPullToRefreshView;
 
+    ImageView home_btn_icon;
+
     //////////////////////////////// 검색 출력용
     String search_thumbnail;
     String search_category;
@@ -180,6 +182,21 @@ public class MainActivity extends AppCompatActivity {
         week_book_title  = (TextView)findViewById(R.id.week_book_title);;
 
         mScrollView = findViewById(R.id.scrollView);
+
+        home_btn_icon = (ImageView)findViewById(R.id.home_btn_icon);
+
+        mScrollView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View view, int i, int i1, int i2, int i3) {
+                int scrollY = i1;
+                Log.d("스크롤", "스크롤값: "+scrollY);
+                if(scrollY==0){
+                    home_btn_icon.setImageResource(R.drawable.ic_home);
+                }else{
+                    home_btn_icon.setImageResource(R.drawable.ic_up_arrow_purple);
+                }
+            }
+        });
 
         mPullToRefreshView = (PullToRefreshView) findViewById(R.id.pull_to_refresh);
 
@@ -738,9 +755,7 @@ public class MainActivity extends AppCompatActivity {
         ((ConstraintLayout) findViewById(R.id.order_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, CartActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                Toast.makeText(getApplicationContext(), "주문내역 버튼", Toast.LENGTH_LONG).show();
             }
         });
         ((ConstraintLayout) findViewById(R.id.Promo_btn)).setOnClickListener(new View.OnClickListener() {
@@ -800,6 +815,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick_category(View v){//홈탭버튼
         Intent intent = new Intent(MainActivity.this, CategoryActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+    }
+
+    public void onClick_Cart(View v){//장바구니 버튼
+        Intent intent = new Intent(MainActivity.this, CartActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
