@@ -19,8 +19,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CartActivity"
-            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MyInfoActivity"></activity>
+        <activity
+            android:name=".CartActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CategoryActivity"
             android:screenOrientation="portrait"
@@ -55,7 +57,6 @@
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="@string/kakao_app_key" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCgwfZbU3ymNGLMnoEjE2UzZvqIq_EYAGA" />

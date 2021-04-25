@@ -785,7 +785,10 @@ public class MainActivity extends AppCompatActivity {
         ((ConstraintLayout) findViewById(R.id.profile_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "프로필 버튼", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, MyInfoActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                //Toast.makeText(getApplicationContext(), "프로필 버튼", Toast.LENGTH_LONG).show();
             }
         });
         ((ConstraintLayout) findViewById(R.id.order_btn)).setOnClickListener(new View.OnClickListener() {

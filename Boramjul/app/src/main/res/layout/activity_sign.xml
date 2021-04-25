@@ -34,8 +34,8 @@
             app:autoSizeMinTextSize="0.1sp"
             app:autoSizeStepGranularity="0.1sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.08"
-            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintWidth_percent="0.4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -47,17 +47,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Login_btn"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:elevation="3dp"
         android:clickable="true"
         android:onClick="onClick_login"
         android:background="@drawable/ripple_purple_btn"
-        app:layout_constraintBottom_toTopOf="@+id/Create_account_btn"
-        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.97"
+        app:layout_constraintVertical_bias="0.7"
         app:layout_constraintHorizontal_bias="0.5">
 
         <TextView
@@ -72,7 +72,7 @@
             app:autoSizeMinTextSize="0.1sp"
             app:autoSizeStepGranularity="0.1sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.3"
+            app:layout_constraintHeight_percent="0.35"
             app:layout_constraintWidth_percent="0.8"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -85,68 +85,149 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Create_account_btn"
         android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:elevation="3dp"
-        android:clickable="true"
-        android:onClick="onClick_SignUp"
-        android:background="@drawable/ripple_white_btn"
+        android:layout_height="35dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75"
+        app:layout_constraintVertical_bias="0.95"
         app:layout_constraintHorizontal_bias="0.5">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:text="보람줄 회원가입"
+            android:text="회원 가입하기"
+            android:clickable="true"
+            android:onClick="onClick_SignUp"
             android:fontFamily="@font/gmarketsansmedium"
             android:gravity="center"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="0.1sp"
             app:autoSizeStepGranularity="0.1sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.3"
-            app:layout_constraintWidth_percent="0.8"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0"></TextView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:text="|"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="0.1sp"
+            app:autoSizeStepGranularity="0.1sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintWidth_percent="0.1"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5"
             app:layout_constraintHorizontal_bias="0.5"></TextView>
 
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:text="비밀번호 찾기"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="0.1sp"
+            app:autoSizeStepGranularity="0.1sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintWidth_percent="0.45"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="1"></TextView>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_gravity="center"
-        android:text="또는"
-        android:textStyle="bold"
-        android:fontFamily="@font/gilroy_extrabold"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        app:autoSizeTextType="uniform"
-        app:autoSizeMinTextSize="0.1sp"
-        app:autoSizeStepGranularity="0.1sp"
         app:layout_constraintBottom_toTopOf="@+id/signInButton"
-        app:layout_constraintHeight_percent="0.02"
-        app:layout_constraintWidth_percent="0.8"
+        app:layout_constraintHeight_percent="0.015"
+        app:layout_constraintWidth_percent="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Create_account_btn"
+        app:layout_constraintTop_toBottomOf="@+id/Login_btn"
         app:layout_constraintVertical_bias="0.5"
-        app:layout_constraintHorizontal_bias="0.5"></TextView>
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:text="또는"
+            android:textStyle="bold"
+            android:fontFamily="@font/gilroy_extrabold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            app:autoSizeTextType="uniform"
+            app:autoSizeMinTextSize="0.1sp"
+            app:autoSizeStepGranularity="0.1sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="1"
+            app:layout_constraintWidth_percent="0.2"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.5"></TextView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="0"></TextView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:background="#ffffff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent="0.08"
+            app:layout_constraintWidth_percent="0.4"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintHorizontal_bias="1"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/signInButton"
         android:layout_marginTop="0dp"
         android:layout_width="0dp"
-        android:layout_height="30dp"
+        android:layout_height="20dp"
         android:layout_centerHorizontal="true"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -154,14 +235,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.89"
-        app:layout_constraintHorizontal_bias="0.2"/>
+        app:layout_constraintVertical_bias="0.82"
+        app:layout_constraintHorizontal_bias="0.3"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/Google_Login_btn"
         android:layout_marginTop="0dp"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:background="@drawable/ripple_white_btn"
         app:layout_constraintDimensionRatio="w,1:1"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -169,8 +250,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintHorizontal_bias="0.2">
+        app:layout_constraintVertical_bias="0.83"
+        app:layout_constraintHorizontal_bias="0.3">
 
         <TextView
             android:layout_width="0dp"
@@ -193,7 +274,7 @@
         android:id="@+id/ll_naver_login"
         android:layout_marginTop="0dp"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:clickable="true"
         android:onClick="onClick_NaverLogin"
         android:background="@drawable/ripple_naver_btn"
@@ -203,7 +284,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
+        app:layout_constraintVertical_bias="0.83"
         app:layout_constraintHorizontal_bias="0.5"
         app:cardCornerRadius="100dp"
         app:cardElevation="0dp">
@@ -222,7 +303,7 @@
         android:id="@+id/kakao_login"
         android:layout_marginTop="0dp"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:clickable="true"
         android:onClick="onClick_kakaoLogin"
         android:background="@drawable/ripple_naver_btn"
@@ -232,8 +313,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
-        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintVertical_bias="0.83"
+        app:layout_constraintHorizontal_bias="0.7"
         app:cardCornerRadius="100dp"
         app:cardElevation="0dp">
 

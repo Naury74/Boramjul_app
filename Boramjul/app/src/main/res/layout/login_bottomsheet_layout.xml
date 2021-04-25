@@ -13,8 +13,8 @@
 
     <TextView
         android:id="@+id/back_btn"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:clickable="true"
         android:background="@drawable/ic_left_arrow">
     </TextView>
@@ -29,7 +29,7 @@
         android:fontFamily="@font/gilroy_light"
         android:textStyle="bold"
         android:gravity="center|left"
-        android:textColor="@color/boram_purple"
+        android:textColor="#000000"
         android:textSize="35dp"></TextView>
 
     <TextView
@@ -42,7 +42,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/gilroy_light"
         android:gravity="center|left"
-        android:textColor="@color/boram_purple"
+        android:textColor="#000000"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="0.1sp"
         app:autoSizeStepGranularity="0.1sp"></TextView>
@@ -88,7 +88,7 @@
         android:layout_marginTop="30dp"
         android:fontFamily="@font/gilroy_light"
         android:gravity="center|left"
-        android:textColor="@color/boram_purple"
+        android:textColor="#000000"
         app:autoSizeTextType="uniform"
         app:autoSizeMinTextSize="0.1sp"
         app:autoSizeStepGranularity="0.1sp"></TextView>

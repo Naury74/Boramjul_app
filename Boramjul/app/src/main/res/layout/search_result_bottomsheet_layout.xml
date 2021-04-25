@@ -28,7 +28,7 @@
         android:layout_marginTop="5dp"
         android:text=""
         android:gravity="center"
-        android:textColor="@color/boram_purple"
+        android:textColor="#000000"
         android:textSize="20dp"></TextView>
 
     <TextView
@@ -41,8 +41,8 @@
         android:fontFamily="@font/gmarketsansmedium"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@color/boram_purple"
-        android:textSize="25dp"></TextView>
+        android:textColor="#000000"
+        android:textSize="20dp"></TextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_list_view"

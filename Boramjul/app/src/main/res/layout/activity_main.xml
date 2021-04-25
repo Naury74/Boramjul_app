@@ -109,8 +109,8 @@
                         <LinearLayout
                             android:background="@drawable/gradient_semi_white"
                             android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            android:layout_marginTop="125dp"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="128dp"
                             android:layout_gravity="top">
 
                         </LinearLayout>
@@ -166,6 +166,8 @@
                                 android:id="@+id/reco_book_cover"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:clickable="true"
+                                android:onClick="onClick_Show_RecommendBook_Detail"
                                 android:scaleType="fitXY"
                                 android:elevation="5dp"/>
 
@@ -258,7 +260,7 @@
                         android:clickable="true"
                         android:elevation="2dp"
                         android:onClick="onClick_search"
-                        android:background="@drawable/ic_search_purple"
+                        android:background="@drawable/ic_search"
                         android:layout_marginTop="15dp"
                         android:layout_marginHorizontal="32dp"
                         android:paddingHorizontal="30dp"
@@ -269,7 +271,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_marginHorizontal="30dp"
-                        android:background="@color/boram_purple"
+                        android:background="#000000"
                         android:layout_gravity="center|bottom" />
 
                 </FrameLayout>
@@ -289,7 +291,7 @@
                         android:textSize="20dp"
                         android:gravity="center|left"
                         android:textColor="#000000"
-                        android:fontFamily="@font/gmarketsansmedium" />
+                        android:fontFamily="@font/gmarketsansbold" />
 
                     <TextView
                         android:layout_width="18dp"
@@ -310,13 +312,52 @@
 
                 </androidx.recyclerview.widget.RecyclerView>
 
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginHorizontal="15dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="3dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/girl_2771936_1920"
+                        android:scaleType="centerCrop">
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="보람줄 맴버십을 아시나요?\n내가 찾던 도서"
+                        android:textSize="15dp"
+                        android:gravity="center|left"
+                        android:textStyle="bold"
+                        android:layout_marginHorizontal="15dp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="최대15%\n할인!!"
+                        android:textSize="20dp"
+                        android:gravity="center|right"
+                        android:textStyle="bold"
+                        android:layout_marginHorizontal="15dp"
+                        android:textColor="#ffffff"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                </androidx.cardview.widget.CardView>
+
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:clickable="true"
                     android:onClick="onClick_total_nw"
                     android:paddingHorizontal="15dp"
-                    android:layout_marginTop="30dp">
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -325,7 +366,7 @@
                         android:textSize="20dp"
                         android:gravity="center|left"
                         android:textColor="#000000"
-                        android:fontFamily="@font/gmarketsansmedium" />
+                        android:fontFamily="@font/gmarketsansbold" />
 
                     <TextView
                         android:layout_width="18dp"
@@ -349,7 +390,6 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="230dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="80dp"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="0dp">
@@ -386,7 +426,7 @@
                             android:gravity="left"
                             android:ellipsize="end"
                             android:textColor="#000000"
-                            android:fontFamily="@font/gmarketsansmedium" />
+                            android:fontFamily="@font/gmarketsansbold" />
 
                         <TextView
                             android:id="@+id/week_book_sub_title"
@@ -405,7 +445,7 @@
                             android:id="@+id/week_book_title"
                             android:layout_width="180dp"
                             android:layout_height="20dp"
-                            android:textColor="@color/boram_purple"
+                            android:textColor="#000000"
                             android:textStyle="bold"
                             android:textSize="12dp"
                             android:layout_marginBottom="30dp"

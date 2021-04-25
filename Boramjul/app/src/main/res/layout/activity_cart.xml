@@ -39,7 +39,7 @@
             android:fontFamily="@font/gilroy_light"
             android:gravity="center|top"
             android:text="My Cart"
-            android:textColor="@color/boram_purple"
+            android:textColor="#000000"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -56,7 +56,7 @@
             android:textStyle="bold"
             android:gravity="bottom|center"
             android:text="내 주문 내역"
-            android:textColor="@color/boram_purple"
+            android:textColor="#000000"
             android:textSize="12dp" />
 
     </FrameLayout>
@@ -131,7 +131,7 @@
             android:layout_width="0dp"
             android:layout_height="15dp"
             android:layout_gravity="center"
-            android:text="주문 금액"
+            android:text="합계 금액"
             android:fontFamily="@font/gmarketsansmedium"
             android:textColor="#ffffff"
             app:autoSizeTextType="uniform"
@@ -143,14 +143,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.25"
+            app:layout_constraintVertical_bias="0.3"
             app:layout_constraintHorizontal_bias="0"></TextView>
 
 
         <TextView
             android:id="@+id/total_price"
             android:layout_width="0dp"
-            android:layout_height="30dp"
+            android:layout_height="28dp"
             android:layout_gravity="center"
             android:text="0원"
             android:fontFamily="@font/gmarketsansmedium"
@@ -164,7 +164,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/total_price_title"
-            app:layout_constraintVertical_bias="0.3"
+            app:layout_constraintVertical_bias="0."
             app:layout_constraintHorizontal_bias="0"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -172,11 +172,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/order_btn"
         android:layout_width="125dp"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:layout_marginHorizontal="15dp"
         android:elevation="10dp"
         android:clickable="true"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/ripple_white_btn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -204,13 +204,14 @@
             android:layout_height="0dp"
             android:layout_gravity="center"
             android:text="주문 하기"
-            android:fontFamily="@font/gmarketsansmedium"
+            android:fontFamily="@font/gmarketsansbold"
             android:textColor="@color/boram_purple"
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="2sp"
             app:autoSizeStepGranularity="1sp"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent="0.35"
+            app:layout_constraintHeight_percent="0.45"
             app:layout_constraintWidth_percent="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
