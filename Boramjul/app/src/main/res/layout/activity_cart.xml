@@ -176,6 +176,7 @@
         android:layout_marginHorizontal="15dp"
         android:elevation="10dp"
         android:clickable="true"
+        android:onClick="onClick_Order"
         android:layout_marginBottom="20dp"
         android:background="@drawable/ripple_white_btn"
         app:layout_constraintBottom_toBottomOf="parent"

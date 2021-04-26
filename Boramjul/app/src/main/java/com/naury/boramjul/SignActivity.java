@@ -69,6 +69,8 @@ public class SignActivity extends AppCompatActivity {
     private ISessionCallback sessionCallback;
     Session session;
 
+    UserInfo userInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +79,8 @@ public class SignActivity extends AppCompatActivity {
         signInButton = findViewById(R.id.signInButton);
         mAuth = FirebaseAuth.getInstance();
         customAnimationLoadingDialog = new CustomAnimationLoadingDialog(SignActivity.this);
+
+        userInfo = new UserInfo();
 
         sessionCallback = new ISessionCallback() {
             @Override
@@ -99,6 +103,8 @@ public class SignActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() != null) {
             Log.d("TAG","로그인 유저: "+mAuth.getCurrentUser().getDisplayName());//get+원하는 정보로 유저 정보 받을 수 있음
             Intent intent = new Intent(getApplication(), MainActivity.class);
+            userInfo.setLogin_type(2);
+            userInfo.setName(mAuth.getCurrentUser().getEmail());
             startActivity(intent);
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             finish();
@@ -177,8 +183,12 @@ public class SignActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) { //update ui code here
         if (user != null) {
-            Log.d("TAG","로그인 유저: "+user.getDisplayName());
+            Log.d("TAG","구글 로그인 유저: "+user.getDisplayName());
+            Log.d("TAG","구글 로그인 유저: "+user.getPhoneNumber());
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("Login_Type",2);
+            userInfo.setLogin_type(2);
+            userInfo.setName(user.getEmail());
             startActivity(intent);
             overridePendingTransition(R.anim.fadein, R.anim.fadeout);
             finish();
@@ -221,7 +231,11 @@ public class SignActivity extends AppCompatActivity {
                     Log.i("LoginData","expiresAt : "+ expiresAt);
                     Log.i("LoginData","tokenType : "+ tokenType);
 
+
                     Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                    intent.putExtra("Login_Type",3);
+                    userInfo.setLogin_type(3);
+                    userInfo.setName(Long.toString(expiresAt));
                     startActivity(intent);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     finish();
@@ -255,6 +269,8 @@ public class SignActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(!id_input.getText().toString().equals("")&&!pw_input.getText().toString().equals("")){
                     Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                    intent.putExtra("Login_Type",1);
+                    userInfo.setLogin_type(1);
                     startActivity(intent);
                     overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                     finish();
@@ -327,9 +343,11 @@ public class SignActivity extends AppCompatActivity {
 
                             // 이메일
                             String email = kakaoAccount.getEmail();
+                            String ph_num = kakaoAccount.getPhoneNumber();
 
                             if (email != null) {
                                 Log.i("KAKAO_API", "email: " + email);
+                                Log.i("KAKAO_API", "phone: " + ph_num);
 
                             } else if (kakaoAccount.emailNeedsAgreement() == OptionalBoolean.TRUE) {
                                 // 동의 요청 후 이메일 획득 가능
@@ -348,6 +366,9 @@ public class SignActivity extends AppCompatActivity {
                                 Log.d("KAKAO_API", "thumbnail image: " + profile.getThumbnailImageUrl());
 
                                 Intent intent = new Intent(getApplication(), MainActivity.class);
+                                intent.putExtra("Login_Type",4);
+                                userInfo.setLogin_type(4);
+                                userInfo.setName(email);
                                 startActivity(intent);
                                 overridePendingTransition(R.anim.fadein, R.anim.fadeout);
                                 finish();

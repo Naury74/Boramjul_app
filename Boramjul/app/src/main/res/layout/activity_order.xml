@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".OrderActivity">
+
+    <FrameLayout
+        android:id="@+id/top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <TextView
+            android:id="@+id/back_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="60dp"
+            android:layout_marginLeft="15dp"
+            android:clickable="true"
+            android:onClick="onClick_back"
+            android:background="@drawable/ic_left_arrow">
+        </TextView>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center"
+            android:text="주문 정보 입력"
+            android:textColor="#000000"
+            android:textSize="23dp" />
+
+        <TextView
+            android:id="@+id/order_list_btn"
+            android:visibility="gone"
+            android:layout_width="70dp"
+            android:layout_height="20dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="65dp"
+            android:layout_marginRight="15dp"
+            android:clickable="true"
+            android:background="@drawable/ripple_purple_none_bg"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:textStyle="bold"
+            android:gravity="bottom|center"
+            android:text="수정하기"
+            android:textColor="#000000"
+            android:textSize="12dp" />
+
+    </FrameLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/top_layout"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="0.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="15dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="배송지 정보 입력"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="* 주문인"
+                android:textColor="#000000"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/order_name_input"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint=""
+                android:background="#F1F1F1"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:textSize="16dp"
+                android:layout_marginHorizontal="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="10dp">
+            </EditText>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="* 받으시는분"
+                android:textColor="#000000"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/name_input"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint=""
+                android:background="#F1F1F1"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:textSize="16dp"
+                android:layout_marginHorizontal="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="10dp">
+            </EditText>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="* 주소"
+                android:textColor="#000000"
+                android:textSize="14dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/address_num_input"
+                    android:layout_width="260dp"
+                    android:layout_height="match_parent"
+                    android:hint=""
+                    android:background="#F1F1F1"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:textSize="16dp"
+                    android:paddingHorizontal="15dp"
+                    android:textColorHint="#5F5F5F"
+                    android:gravity="center|left"
+                    android:textColor="@color/boram_purple"
+                    android:inputType="text"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true">
+                </EditText>
+
+                <TextView
+                    android:id="@+id/address_search_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/ripple_purple_btn"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:layout_marginLeft="20dp"
+                    android:clickable="true"
+                    android:textSize="11dp"
+                    android:text="주소 검색"
+                    android:gravity="center"
+                    android:textColor="#ffffff">
+                </TextView>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/address_input"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint=""
+                android:background="#F1F1F1"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:textSize="16dp"
+                android:layout_marginHorizontal="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="10dp">
+            </EditText>
+
+            <EditText
+                android:id="@+id/address_detail_input"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:hint=""
+                android:background="#F1F1F1"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:textSize="16dp"
+                android:layout_marginHorizontal="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="10dp">
+            </EditText>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="* 휴대전화 번호"
+                android:textColor="#000000"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/ph_num_input"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint=""
+                android:background="#F1F1F1"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:textSize="16dp"
+                android:layout_marginHorizontal="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="phone"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="10dp">
+            </EditText>
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="* 요청사항"
+                android:textColor="#000000"
+                android:textSize="14dp" />
+
+            <EditText
+                android:id="@+id/request_input"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint=""
+                android:background="#F1F1F1"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:textSize="16dp"
+                android:layout_marginHorizontal="20dp"
+                android:paddingHorizontal="15dp"
+                android:textColorHint="#5F5F5F"
+                android:gravity="center|left"
+                android:textColor="@color/boram_purple"
+                android:inputType="text"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="10dp">
+            </EditText>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="30dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@color/boram_purple"
+                android:gravity="left" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="상품정보"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/item_count"
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:fontFamily="@font/gmarketsanslight"
+                android:gravity="left"
+                android:text="총 0가지"
+                android:textColor="#000000"
+                android:textSize="13dp"
+                android:layout_marginTop="5dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/Best_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="30dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@color/boram_purple"
+                android:gravity="left" />
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_marginHorizontal="15dp"
+                android:fontFamily="@font/gmarketsansmedium"
+                android:gravity="left"
+                android:text="결제수단 선택"
+                android:textColor="#000000"
+                android:textSize="16dp" />
+
+            <RadioGroup
+                android:id="@+id/pay_input"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginTop="10dp">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/method_card"
+                    android:checked="true"
+                    android:textColor="#5F5F5F"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:text="신용카드"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/method_other"
+                    android:textColor="#5F5F5F"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:text="간편결제"/>
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/easy_pay_select"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:paddingHorizontal="50dp"
+                android:layout_marginTop="10dp">
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/kakao_pay"
+                    android:checked="true"
+                    android:textColor="#5F5F5F"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:text="카카오 Pay"/>
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/naver_pay"
+                    android:textColor="#5F5F5F"
+                    android:fontFamily="@font/gmarketsansmedium"
+                    android:text="네이버 Pay"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginVertical="30dp"
+                android:layout_marginHorizontal="30dp"
+                android:background="@color/boram_purple"
+                android:gravity="left" />
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/round_white_backgorund"
+                android:padding="15dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="22dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="200dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="상품금액"
+                            android:gravity="center|left"
+                            android:textColor="#000000">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/total_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="0원"
+                            android:gravity="center|right"
+                            android:textColor="#000000">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="22dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="200dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="배송비"
+                            android:gravity="center|left"
+                            android:textColor="#000000">
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="0원"
+                            android:gravity="center|right"
+                            android:textColor="#000000">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="22dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="200dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="맴버십 할인"
+                            android:gravity="center|left"
+                            android:textColor="#000000">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/discount_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="0원"
+                            android:gravity="center|right"
+                            android:textColor="#000000">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="200dp"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="최종 결제 금액"
+                            android:gravity="center|left"
+                            android:textColor="#000000">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/final_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="20dp"
+                            android:text="0원"
+                            android:gravity="center|right"
+                            android:textColor="#ff0000">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:id="@+id/confirm_check"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginHorizontal="18dp"
+                        android:fontFamily="@font/gmarketsansmedium"
+                        android:textSize="12dp"
+                        android:text="주문내역확인 동의(필수)"
+                        android:textColor="#000000"
+                        android:layout_marginTop="30dp">
+                    </CheckBox>
+
+                    <TextView
+                        android:id="@+id/pay_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ripple_purple_btn"
+                        android:fontFamily="@font/gmarketsansmedium"
+                        android:layout_marginHorizontal="20dp"
+                        android:clickable="true"
+                        android:onClick="onClick_next"
+                        android:textSize="16dp"
+                        android:text="결제 하기"
+                        android:gravity="center"
+                        android:layout_marginTop="30dp"
+                        android:textColor="#ffffff">
+                    </TextView>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

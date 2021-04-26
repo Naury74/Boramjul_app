@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.DataSetObserver;
 import android.os.Bundle;
@@ -81,6 +82,16 @@ public class CartActivity extends AppCompatActivity {
 
     public void onClick_back(View v){
         finish();
+    }
+
+    public void onClick_Order(View v){
+        if(cart_list.size()==0){
+
+        }else {
+            Intent intent = new Intent(CartActivity.this, OrderActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void SaveData(ArrayList<BookListItem> friends) {
