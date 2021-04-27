@@ -47,14 +47,19 @@ public class CompleteSignUpActivity extends AppCompatActivity {
     }
 
     public void onClick_login(View v){
+        MainActivity MA = (MainActivity)MainActivity._Main_Activity;
+        if(MA!=null){
+            MA.finish();
+        }
         Intent intent = new Intent(this, SignActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         finish();
     }
 
     public void onBackPressed() {
-        finish();
+        //finish();
     }
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -63,6 +64,8 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
 
     private BackPressCloseHendler backPressCloseHendler;//뒤로가기버튼 터치핸들러
+
+    public static Activity _Main_Activity;
 
     ScrollView mScrollView;
     PullToRefreshView mPullToRefreshView;
@@ -163,6 +166,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        _Main_Activity = MainActivity.this;
 
         mAuth = FirebaseAuth.getInstance();
 

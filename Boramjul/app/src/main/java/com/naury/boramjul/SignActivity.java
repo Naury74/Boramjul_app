@@ -101,13 +101,13 @@ public class SignActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         if (mAuth.getCurrentUser() != null) {
-            Log.d("TAG","로그인 유저: "+mAuth.getCurrentUser().getDisplayName());//get+원하는 정보로 유저 정보 받을 수 있음
-            Intent intent = new Intent(getApplication(), MainActivity.class);
-            userInfo.setLogin_type(2);
-            userInfo.setName(mAuth.getCurrentUser().getEmail());
-            startActivity(intent);
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            finish();
+//            Log.d("TAG","로그인 유저: "+mAuth.getCurrentUser().getDisplayName());//get+원하는 정보로 유저 정보 받을 수 있음
+//            Intent intent = new Intent(getApplication(), MainActivity.class);
+//            userInfo.setLogin_type(2);
+//            userInfo.setName(mAuth.getCurrentUser().getEmail());
+//            startActivity(intent);
+//            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//            finish();
         }
 
         session = Session.getCurrentSession();

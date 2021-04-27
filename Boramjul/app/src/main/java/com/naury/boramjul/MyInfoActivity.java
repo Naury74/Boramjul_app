@@ -55,5 +55,6 @@ public class MyInfoActivity extends AppCompatActivity {
         Intent intent = new Intent(MyInfoActivity.this, TOS_Activity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        finish();
     }
 }
