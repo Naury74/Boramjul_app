@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -52,6 +53,16 @@ import com.kakao.util.exception.KakaoException;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.OAuthLoginHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -70,6 +81,11 @@ public class SignActivity extends AppCompatActivity {
     Session session;
 
     UserInfo userInfo;
+
+    String get_id = "";
+    String get_pw = "";
+
+    boolean result_check = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,12 +284,18 @@ public class SignActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!id_input.getText().toString().equals("")&&!pw_input.getText().toString().equals("")){
-                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
-                    intent.putExtra("Login_Type",1);
-                    userInfo.setLogin_type(1);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                    finish();
+
+                    get_id = id_input.getText().toString();
+                    get_pw = pw_input.getText().toString();
+
+                    InsertData task = new InsertData();
+                    task.execute();
+//                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
+//                    intent.putExtra("Login_Type",1);
+//                    userInfo.setLogin_type(1);
+//                    startActivity(intent);
+//                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//                    finish();
                     bottomSheetDialog.dismiss();
                 }else {
                     Toast.makeText(SignActivity.this, "아이디 또는 비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show();
@@ -403,6 +425,146 @@ public class SignActivity extends AppCompatActivity {
             } catch (NoSuchAlgorithmException e) {
                 Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
             }
+        }
+    }
+
+    String result_check_json;
+    //로그인 시에 서버에 로그인 정보 넘겨주고 리턴값 받음
+    class InsertData extends AsyncTask<String, Void, String> {
+
+        CustomAnimationLoadingDialog customAnimationLoadingDialog = new CustomAnimationLoadingDialog(SignActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            customAnimationLoadingDialog.show();
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            customAnimationLoadingDialog.dismiss();
+            super.onPostExecute(result);
+            Log.d("Login_TAG", "Data Post - App : " + result);
+
+            if(result_check==true){
+                Log.d("Login_TAB","로그인 성공");
+
+                Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                finish();
+            }else{
+
+                Toast.makeText(SignActivity.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(LogIn_Activity.this, "입력하신 정보를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            Log.d("FCM Log", "전화번호: "+login_biz_num);
+//            Log.d("FCM Log", "비밀번호: "+password);
+//            String biz_num = (String)params[1];//사업자 번호
+//            String device_token = (String)params[2];//디바이스 토큰
+//            String password = (String)params[3];//비밀번호
+
+            String serverURL = "http://www.boramjul.kro.kr/member/memberinfojson.do";//서버주소 할당
+//            String postParameters = "ph_num=" + biz_num + "&device_token=" + device_token + "&password=" + password;//전송할 파라미터,값
+//            Log.d("Login_TAG","postParameters : "+postParameters);
+
+            try {
+
+                URL url = new URL(serverURL);//주소입력
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);//5초내 무 응답시 예외처리
+                httpURLConnection.setConnectTimeout(5000);//5초내 연결 불가시 예외처리
+                httpURLConnection.setRequestMethod("POST");//post방식 요청
+                httpURLConnection.connect();
+
+
+//                OutputStream outputStream = httpURLConnection.getOutputStream();
+//                outputStream.write(postParameters.getBytes("UTF-8"));//전송할 데이터 할당
+//                outputStream.flush();
+//                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();//응답
+                Log.d("Login_TAG", "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {//정상응답
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();//에러
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");//수신값 저장
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                System.out.println("json 리턴: " + sb.toString());
+                bufferedReader.close();
+
+                result_check_json = sb.toString();//수신된 데이터 스트링으로 변환
+                ReturnCheck();
+                return sb.toString();
+
+
+            } catch (Exception e) {
+
+                Log.d("Login_TAG", "InsertData: Error ", e);
+
+                return new String("Error: " + e.getMessage());
+            }
+
+        }
+    }
+
+    protected void ReturnCheck(){//리턴 데이터 확인
+        try{
+            JSONArray jsonArray = new JSONArray(result_check_json);
+
+            for (int i=0; i < jsonArray.length(); i++)
+            {
+                try {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    // Pulling items from the array
+                    String id = jsonObject.getString("id");
+                    String passwd = jsonObject.getString("passwd");
+                    if(id.equals(get_id)&&passwd.equals(get_pw)){
+                        userInfo.setLogin_type(jsonObject.getInt("sns"));
+                        userInfo.setName(jsonObject.getString("name"));
+                        userInfo.setBirthday(jsonObject.getString("birth"));
+                        userInfo.setSex(jsonObject.getString("gender"));
+                        userInfo.setEmail(jsonObject.getString("email"));
+                        userInfo.setPh_num(jsonObject.getString("phone"));
+                        userInfo.setAddress(jsonObject.getString("address"));
+                        userInfo.setRank(jsonObject.getString("rank"));
+                        userInfo.setJoindate(jsonObject.getString("joindate"));
+                        result_check = true;
+                        break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }catch (JSONException e){
+            e.printStackTrace();
         }
     }
 }

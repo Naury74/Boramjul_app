@@ -19,8 +19,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".OrderActivity"></activity>
-        <activity android:name=".MyInfoActivity" />
+        <activity android:name=".Address_Search_Activity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".OrderActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MyInfoActivity"
+            android:theme="@style/ImageBgTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".CartActivity"
             android:screenOrientation="portrait" />

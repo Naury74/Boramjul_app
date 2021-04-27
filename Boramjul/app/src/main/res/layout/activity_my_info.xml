@@ -4,14 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/boram_purple"
     tools:context=".MyInfoActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_reverse_semi_black">
+    </ImageView>
 
     <FrameLayout
         android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:background="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,23 +28,22 @@
             android:id="@+id/back_btn"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginTop="60dp"
+            android:layout_gravity="bottom"
             android:layout_marginLeft="15dp"
             android:clickable="true"
             android:onClick="onClick_back"
-            android:background="@drawable/ic_left_arrow">
+            android:background="@drawable/ic_left_arrow_white">
         </TextView>
 
         <TextView
             android:id="@+id/title"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp"
-            android:fontFamily="@font/gilroy_light"
-            android:gravity="center|top"
+            android:layout_gravity="center_horizontal|bottom"
+            android:fontFamily="@font/gilroy_extrabold"
+            android:gravity="center"
             android:text="My Page"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="25dp"
             android:textStyle="bold" />
 
@@ -47,17 +51,16 @@
             android:id="@+id/order_list_btn"
             android:visibility="gone"
             android:layout_width="70dp"
-            android:layout_height="20dp"
-            android:layout_gravity="right"
-            android:layout_marginTop="65dp"
+            android:layout_height="30dp"
+            android:layout_gravity="right|bottom"
             android:layout_marginRight="15dp"
             android:clickable="true"
             android:background="@drawable/ripple_purple_none_bg"
             android:fontFamily="@font/gmarketsansmedium"
             android:textStyle="bold"
-            android:gravity="bottom|center"
+            android:gravity="center"
             android:text="수정하기"
-            android:textColor="#000000"
+            android:textColor="#ffffff"
             android:textSize="12dp" />
 
     </FrameLayout>
@@ -95,7 +98,7 @@
                     android:id="@+id/top_banner_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
+                    android:padding="20dp"
                     android:background="#ffffff">
 
                     <TextView
@@ -128,7 +131,7 @@
 
                     <TextView
                         android:id="@+id/sns_info_textView2"
-                        android:layout_width="300dp"
+                        android:layout_width="280dp"
                         android:layout_height="20dp"
                         android:text=""
                         android:textSize="15dp"
@@ -146,7 +149,7 @@
                         android:clickable="true"
                         android:onClick="onClick_Join"
                         android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="130dp"
+                        android:layout_gravity="bottom"
                         android:background="@drawable/ripple_purple_btn">
 
                         <TextView
@@ -188,7 +191,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
+                    android:padding="20dp"
                     android:background="#ffffff">
 
                     <TextView
@@ -221,7 +224,7 @@
 
                     <TextView
                         android:id="@+id/sns_info_textView3"
-                        android:layout_width="300dp"
+                        android:layout_width="280dp"
                         android:layout_height="20dp"
                         android:text=""
                         android:textSize="15dp"
@@ -239,7 +242,7 @@
                         android:clickable="true"
                         android:onClick="onClick_Join"
                         android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="130dp"
+                        android:layout_gravity="bottom"
                         android:background="@drawable/ripple_purple_btn">
 
                         <TextView
@@ -281,7 +284,7 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingHorizontal="10dp"
+                    android:padding="20dp"
                     android:background="#ffffff">
 
                     <TextView
@@ -314,7 +317,7 @@
 
                     <TextView
                         android:id="@+id/sns_info_textView4"
-                        android:layout_width="300dp"
+                        android:layout_width="280dp"
                         android:layout_height="20dp"
                         android:text=""
                         android:textSize="15dp"
@@ -332,7 +335,7 @@
                         android:clickable="true"
                         android:onClick="onClick_Join"
                         android:layout_marginHorizontal="15dp"
-                        android:layout_marginTop="130dp"
+                        android:layout_gravity="bottom"
                         android:background="@drawable/ripple_purple_btn">
 
                         <TextView
@@ -356,6 +359,168 @@
                             app:layout_constraintHorizontal_bias="0.5"></TextView>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/boramjul_Login"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp">
+
+                <LinearLayout
+                    android:id="@+id/boramjul_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingVertical="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:text="보람줄 회원"
+                        android:textSize="13dp"
+                        android:gravity="left|center"
+                        android:ellipsize="end"
+                        android:textColor="#ffffff"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                    <TextView
+                        android:id="@+id/user_name_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:text="OOO님, 반가워요!"
+                        android:textSize="25dp"
+                        android:gravity="left|center"
+                        android:ellipsize="end"
+                        android:textColor="#ffffff"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                    <TextView
+                        android:id="@+id/user_mail_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="22dp"
+                        android:layout_marginTop="10dp"
+                        android:text="-"
+                        android:textSize="14dp"
+                        android:gravity="left|center"
+                        android:ellipsize="end"
+                        android:textColor="#ffffff"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                    <TextView
+                        android:id="@+id/user_ph_num_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="22dp"
+                        android:text="-"
+                        android:textSize="14dp"
+                        android:gravity="left|center"
+                        android:ellipsize="end"
+                        android:textColor="#ffffff"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/membership_layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:text="내 맴버쉽 등급"
+                        android:textSize="13dp"
+                        android:gravity="left|center"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:text="적용중"
+                        android:textSize="11dp"
+                        android:gravity="right|center"
+                        android:textColor="#ff0000"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                    <TextView
+                        android:id="@+id/membership_rank"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:text="브론즈"
+                        android:textSize="25dp"
+                        android:layout_gravity="bottom"
+                        android:gravity="left|center"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/gmarketsansbold" />
+
+                    <TextView
+                        android:id="@+id/membership_sub"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:text="15%할인 혜택"
+                        android:textSize="15dp"
+                        android:layout_gravity="bottom"
+                        android:gravity="right|center"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                </FrameLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/my_review_layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingVertical="15dp"
+                    android:background="@drawable/ripple_purple_none_bg"
+                    android:clickable="true"
+                    android:paddingHorizontal="20dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text="내 리뷰 관리"
+                        android:textSize="16dp"
+                        android:gravity="left|center"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/gmarketsansmedium" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:text=">"
+                        android:textSize="20dp"
+                        android:gravity="right|center"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/gmarketsansmedium" />
 
                 </FrameLayout>
 

@@ -65,6 +65,7 @@
             android:layout_weight="1"
             android:hint="아이디 입력"
             android:maxLength="20"
+            android:nextFocusDown="@+id/pw_input"
             app:autoSizeTextType="uniform"
             app:autoSizeMinTextSize="0.1sp"
             app:autoSizeStepGranularity="0.1sp"

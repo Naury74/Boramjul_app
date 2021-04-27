@@ -164,7 +164,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="22dp"
+                android:layout_height="30dp"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
@@ -194,6 +194,7 @@
                     android:fontFamily="@font/gmarketsansmedium"
                     android:layout_marginLeft="20dp"
                     android:clickable="true"
+                    android:onClick="onClick_search_address"
                     android:textSize="11dp"
                     android:text="주소 검색"
                     android:gravity="center"
@@ -584,5 +585,20 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <WebView
+        android:id="@+id/webView_address"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_default="percent"
+        app:layout_constraintWidth_percent="0.01"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.01"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintHorizontal_bias="1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,15 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 
+import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -20,10 +26,18 @@ import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.util.Log;
+import android.view.Display;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -33,6 +47,15 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Calendar;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -54,7 +77,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
     InputMethodManager imm;
 
     TextView birthday_input, email_check, phone_check, code_check, pw_check, re_pw_check, btn_confirm, pw_notice_text;
-    ConstraintLayout main_background_Layout, code_input_layout, phone_input_layout, email_input_layout, pw_layout, re_pw_layout, verify_result_layout;
+    ConstraintLayout main_background_Layout, code_input_layout, phone_input_layout, email_input_layout, pw_layout, re_pw_layout, verify_result_layout,address_layout;
     RadioGroup gender_input;
     EditText name_input;
     EditText phone_input;
@@ -63,6 +86,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
     EditText pw_input;
     EditText re_pw_input;
     EditText email_input;
+    TextView address_input;
 
     int check_re_pw = 0;
     int check_birth = 0;
@@ -76,6 +100,15 @@ public class PersonVerifyActivity extends AppCompatActivity {
     String code_number = "";
 
     CustomAnimationLoadingDialog customAnimationLoadingDialog;
+
+    int gender_value = 1;
+    int birthday_value = 0;
+    String address_string = "";
+
+    private WebView webView;
+    private WebSettings mWebSettings;
+
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,11 +128,13 @@ public class PersonVerifyActivity extends AppCompatActivity {
         pw_layout = (ConstraintLayout)findViewById(R.id.pw_layout);
         re_pw_layout = (ConstraintLayout)findViewById(R.id.re_pw_layout);
         verify_result_layout = (ConstraintLayout)findViewById(R.id.verify_result_layout);
+        address_layout = (ConstraintLayout)findViewById(R.id.address_layout);
         name_input = (EditText)findViewById(R.id.name_input);
         phone_input = (EditText)findViewById(R.id.phone_input);
         code_input = (EditText)findViewById(R.id.code_input);
         id_input = (EditText)findViewById(R.id.id_input);
         pw_input = (EditText)findViewById(R.id.pw_input);
+        address_input = (TextView) findViewById(R.id.address_input);
         re_pw_input = (EditText)findViewById(R.id.re_pw_input);
         email_input = (EditText)findViewById(R.id.email_input);
         email_check = (TextView)findViewById(R.id.email_check);
@@ -302,6 +337,17 @@ public class PersonVerifyActivity extends AppCompatActivity {
                 Enable_btn();
             }// afterTextChanged()..
         });
+
+        gender_input.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(i==R.id.rd_gender_f){
+                    gender_value = 2;
+                } else if (i ==R.id.rd_gender_m) {
+                    gender_value = 1;
+                }
+            }
+        });
     }
 
     public void Enable_btn(){
@@ -400,6 +446,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
             pw_notice_text.setVisibility(View.VISIBLE);
             re_pw_layout.setVisibility(View.VISIBLE);
             verify_result_layout.setVisibility(View.VISIBLE);
+            address_layout.setVisibility(View.VISIBLE);
         }else {
             check_code = 0;
             Toast.makeText(PersonVerifyActivity.this, "인증번호가 틀립니다. 다시 확인해 주세요.", Toast.LENGTH_SHORT).show();
@@ -408,28 +455,40 @@ public class PersonVerifyActivity extends AppCompatActivity {
 
     public void onClick_Complete(View v){
 
-        customAnimationLoadingDialog.show();
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run(){
-                try
-                {
-                    Thread.sleep(1000);
-                }
-                catch (Exception e)
-                {
+        JSONObject jsonObject = new JSONObject();
 
-                }
-                customAnimationLoadingDialog.dismiss();
-                Intent intent = new Intent(PersonVerifyActivity.this, CompleteSignUpActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                finish();
-            }
-        });
-        thread.start();
+        try {
+            jsonObject.put("id",id_input.getText().toString());
+            jsonObject.put("passwd",pw_input.getText().toString());
+            jsonObject.put("name",name_input.getText().toString());
+            jsonObject.put("email",email_input.getText().toString());
+            jsonObject.put("phone",phone_input.getText().toString());
+            jsonObject.put("sns",1);
+            jsonObject.put("gender",gender_value);
+            jsonObject.put("birth",birthday_value);
+            jsonObject.put("address",address_input.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+        String join_data = jsonObject.toString();
+
+        InsertData insertData = new InsertData();
+        insertData.execute(join_data);
+
+//        customAnimationLoadingDialog.show();
+//        customAnimationLoadingDialog.dismiss();
+//        Intent intent = new Intent(PersonVerifyActivity.this, CompleteSignUpActivity.class);
+//        startActivity(intent);
+//        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//        finish();
         //Toast.makeText(this, "가입 완료", Toast.LENGTH_SHORT).show();
+    }
+
+    public void onClick_search_address(View v){
+        init_webView();
+        // 핸들러를 통한 JavaScript 이벤트 반응
+        handler = new Handler();
     }
 
     public void onClick_back(View v){
@@ -462,6 +521,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
             public void onClick(View view) {
                 birthday_input.setText(year_v + "년 " + (month_v+1) + "월 " + day_v + "일");
                 check_birth = 1;
+                birthday_value = Integer.parseInt(year_v+""+(month_v+1)+""+day_v);
                 bottomSheetDialog.dismiss();
             }
         });
@@ -519,5 +579,247 @@ public class PersonVerifyActivity extends AppCompatActivity {
         return numStr;
     }
 
+    String result_check_json;
+    //로그인 시에 서버에 로그인 정보 넘겨주고 리턴값 받음
+    class InsertData extends AsyncTask<String, Void, String> {
+
+        CustomAnimationLoadingDialog customAnimationLoadingDialog = new CustomAnimationLoadingDialog(PersonVerifyActivity.this);
+
+        @Override
+        protected void onPreExecute() {
+            customAnimationLoadingDialog.show();
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            customAnimationLoadingDialog.dismiss();
+            super.onPostExecute(result);
+            Log.d("Login_TAG", "Data Post - App : " + result);
+
+//            if(login_check.equals("SUCCESS")){
+//                Log.d(TAG,"로그인 성공");
+//
+//                save_user_data();
+//
+//                Intent intent = new Intent(context_login, MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+//                save_login_data = true;
+//                save();
+//                finish();
+//            }else{
+//                if(err_return.equals("")){
+//                    Snackbar.make(main_background_Layout, "로그인에 실패했습니다. 잠시후 다시 시도해 주세요.", Snackbar.LENGTH_LONG).show();
+//                }else {
+//                    Snackbar.make(main_background_Layout, err_return, Snackbar.LENGTH_LONG).show();
+//                }
+//                //Toast.makeText(LogIn_Activity.this, "입력하신 정보를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
+//            }
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+//            Log.d("FCM Log", "전화번호: "+login_biz_num);
+//            Log.d("FCM Log", "비밀번호: "+password);
+//            String biz_num = (String)params[1];//사업자 번호
+//            String device_token = (String)params[2];//디바이스 토큰
+//            String password = (String)params[3];//비밀번호
+
+            String serverURL = "http://www.boramjul.kro.kr/member/memberinfojson.do";//서버주소 할당
+            String postParameters = (String)params[0];//전송할 파라미터,값
+            Log.d("Login_TAG","postParameters : "+postParameters);
+
+            try {
+
+                URL url = new URL(serverURL);//주소입력
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);//5초내 무 응답시 예외처리
+                httpURLConnection.setConnectTimeout(5000);//5초내 연결 불가시 예외처리
+                httpURLConnection.setRequestMethod("POST");//post방식 요청
+                httpURLConnection.connect();
+
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));//전송할 데이터 할당
+                outputStream.flush();
+                outputStream.close();
+
+
+                int responseStatusCode = httpURLConnection.getResponseCode();//응답
+                Log.d("Login_TAG", "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {//정상응답
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();//에러
+                }
+
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");//수신값 저장
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                System.out.println("json 리턴: " + sb.toString());
+                bufferedReader.close();
+
+                result_check_json = sb.toString();//수신된 데이터 스트링으로 변환
+                ReturnCheck();
+                return sb.toString();
+
+
+            } catch (Exception e) {
+
+                Log.d("Login_TAG", "InsertData: Error ", e);
+
+                return new String("Error: " + e.getMessage());
+            }
+
+        }
+    }
+
+    protected void ReturnCheck(){//리턴 데이터 확인
+        try{
+            JSONObject jsonObject = new JSONObject(result_check_json);
+
+//            login_check = jsonObject.getString("sign_check");
+//            if(login_check.equals("SUCCESS")){
+//                hp_num_return = jsonObject.getString("user_ph_num");
+//                mail_return = jsonObject.getString("user_email");
+//                user_name_return = jsonObject.getString("user_nicname");
+//                user_PN_return = jsonObject.getString("user_number");
+//                push_msg_return = jsonObject.getString("push_msg");
+//                device_token_return = jsonObject.getString("device_token");
+//                addr_return = jsonObject.getString("registration_addr");
+//                actual_resid_return = jsonObject.getString("actual_resid");
+//                actual_resid_date_return = jsonObject.getString("actual_resid_date");
+//                addr_sub_return = jsonObject.getString("registration_addr_sub");
+//                block_code_return = jsonObject.getString("block_code");
+//                user_img_return = jsonObject.getString("user_Image");
+//            }else{
+//                err_return = jsonObject.getString("err_reason");
+//            }
+//
+//            Log.d(TAG,"Json Return login_check : "+ login_check);
+//            Log.d(TAG,"Json Return biznum : "+ hp_num_return);
+//            Log.d(TAG,"Json Return biz_name : "+ user_name_return);
+//            Log.d(TAG,"Json Return device return : "+ device_token_return);
+//            Log.d(TAG,"Json Return user_PN_return : "+ user_PN_return);
+//            Log.d(TAG,"Json Return mail_return : "+ mail_return);
+//            Log.d(TAG,"Json Return addr_return : "+ addr_return);
+//            Log.d(TAG,"Json Return actual_resid_return : "+ actual_resid_return);
+//            Log.d(TAG,"Json Return actual_resid_date_return : "+ actual_resid_date_return);
+//            Log.d(TAG,"Json Return actual_resid_return : "+ actual_resid_return);
+//            Log.d(TAG,"Json Return addr_sub_return : "+ addr_sub_return);
+//            Log.d(TAG,"Json Return block_code_return : "+ block_code_return);
+//            Log.d(TAG,"Json Return actual_push_msg_return : "+ err_return);
+//            Log.d(TAG,"Json Return user_img_path : "+ user_img_return);
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void init_webView() {
+        // WebView 설정
+        webView = (WebView) findViewById(R.id.webView_address);
+
+        webView.setWebChromeClient(new HelloWebChromeClient());
+//        mWebSettings = webView.getSettings();
+//        mWebSettings.setJavaScriptEnabled(true); // 웹페이지 자바스클비트 허용 여부
+//        mWebSettings.setSupportMultipleWindows(true); // 새창 띄우기 허용 여부
+//        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true); // 자바스크립트 새창 띄우기(멀티뷰) 허용 여부
+//        mWebSettings.setLoadWithOverviewMode(true); // 메타태그 허용 여부
+//        mWebSettings.setUseWideViewPort(true); // 화면 사이즈 맞추기 허용 여부
+//        mWebSettings.setSupportZoom(false); // 화면 줌 허용 여부
+//        mWebSettings.setBuiltInZoomControls(false); // 화면 확대 축소 허용 여부
+//        mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN); // 컨텐츠 사이즈 맞추기
+//        mWebSettings.setCacheMode(WebSettings.LOAD_NO_CACHE); // 브라우저 캐시 허용 여부
+//        mWebSettings.setDomStorageEnabled(true); // 로컬저장소 허용 여부
+        webView.getSettings().setJavaScriptEnabled(true);
+
+        // JavaScript의 window.open 허용
+        webView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        webView.getSettings().setSupportMultipleWindows(true);
+
+        // JavaScript이벤트에 대응할 함수를 정의 한 클래스를 붙여줌
+        webView.addJavascriptInterface(new AndroidBridge(), "TestApp");
+        webView.setWebViewClient(new WebViewClientClass());
+        // webview url load. php 파일 주소
+        webView.loadUrl("http://www.boramjul.kro.kr/111/postsearch.html");
+
+    }
+
+    private class WebViewClientClass extends WebViewClient {//페이지 이동
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.d("check URL",url);
+            view.loadUrl(url);
+            return true;
+        }
+
+    }
+
+    public class HelloWebChromeClient extends WebChromeClient {
+
+        @SuppressLint("SetJavaScriptEnabled")
+        @Override
+        public boolean onCreateWindow(WebView view, boolean isDialog, boolean isUserGesture, Message resultMsg) {
+            WebView newWebView = new WebView(PersonVerifyActivity.this);
+            WebSettings webSettings = newWebView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            final Dialog dialog = new Dialog(PersonVerifyActivity.this);
+            dialog.setContentView(newWebView);
+            dialog.setCanceledOnTouchOutside(false);
+            Display display = getWindowManager().getDefaultDisplay();
+            Point size = new Point();
+            display.getSize(size);
+
+            ViewGroup.LayoutParams params = dialog.getWindow().getAttributes();
+            params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            params.height = size.y;
+            dialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+            dialog.show();
+            newWebView.setWebChromeClient(new WebChromeClient() {
+                @Override public void onCloseWindow(WebView window) {
+                    dialog.dismiss();
+                }
+            });
+            ((WebView.WebViewTransport)resultMsg.obj).setWebView(newWebView);
+            resultMsg.sendToTarget();
+            return true;
+        }
+
+    }
+
+    private class AndroidBridge {
+        @JavascriptInterface
+        public void setAddress(final String arg1, final String arg2, final String arg3) {
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    address_input.setText(String.format("(%s) %s %s", arg1, arg2, arg3));
+                    Log.d("Web_TAG","리턴 주소: "+String.format("(%s) %s %s", arg1, arg2, arg3));
+
+                    // WebView를 초기화 하지않으면 재사용할 수 없음
+                    //init_webView();
+                }
+            });
+        }
+    }
 
 }

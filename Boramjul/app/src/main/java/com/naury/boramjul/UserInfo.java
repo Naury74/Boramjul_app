@@ -8,12 +8,14 @@ public class UserInfo {
     private static String email="";
     private static String ph_num="";
     private static String address="";
+    private static String rank = "";
+    private static String joindate = "";
 
     public  UserInfo(){
 
     }
 
-    public UserInfo(Integer login_type, String name, String birthday, String sex, String email, String ph_num, String address) {
+    public UserInfo(Integer login_type, String name, String birthday, String sex, String email, String ph_num, String address, String rank, String joindate) {
         this.login_type = login_type;
         this.name = name;
         this.birthday = birthday;
@@ -21,6 +23,24 @@ public class UserInfo {
         this.email = email;
         this.ph_num = ph_num;
         this.address = address;
+        this.rank = rank;
+        this.joindate = joindate;
+    }
+
+    public static String getRank() {
+        return rank;
+    }
+
+    public static void setRank(String rank) {
+        UserInfo.rank = rank;
+    }
+
+    public static String getJoindate() {
+        return joindate;
+    }
+
+    public static void setJoindate(String joindate) {
+        UserInfo.joindate = joindate;
     }
 
     public Integer getLogin_type() {
