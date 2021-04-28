@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -103,6 +104,8 @@ public class OrderActivity extends AppCompatActivity {
 
         item_count.setText("총 "+adapter.getItemCount()+"가지 상품");
 
+        ph_num_input.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         pay_input.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -114,30 +117,27 @@ public class OrderActivity extends AppCompatActivity {
             }
         });
 
-        if(userInfo.getLogin_type()==1){
+        order_name_input.setText(userInfo.getName());
+        name_input.setText(userInfo.getName());
+        ph_num_input.setText(userInfo.getPh_num());
 
-            order_name_input.setText(userInfo.getName());
-            name_input.setText(userInfo.getName());
-            ph_num_input.setText(userInfo.getPh_num());
+        String address_result = userInfo.getAddress();
+        String address_num = substringBetween(address_result, "(", ")");
+        address_num_input.setText(address_num);
+        address_input.setText(address_result.substring(address_result.indexOf(")")+1));
 
-            String address_result = userInfo.getAddress();
-            String address_num = substringBetween(address_result, "(", ")");
-            address_num_input.setText(address_num);
-            address_input.setText(address_result.substring(address_result.indexOf(")")+1));
-
-            if(userInfo.getRank().equals("1")){
-                total_price.setText(format.format(adapter.getTotalPrice())+"원");
-                discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
-                final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
-            }else if(userInfo.getRank().equals("2")){
-                total_price.setText(format.format(adapter.getTotalPrice())+"원");
-                discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
-                final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
-            }else if(userInfo.getRank().equals("3")){
-                total_price.setText(format.format(adapter.getTotalPrice())+"원");
-                discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
-                final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
-            }
+        if(userInfo.getRank().equals("1")){
+            total_price.setText(format.format(adapter.getTotalPrice())+"원");
+            discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
+            final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
+        }else if(userInfo.getRank().equals("2")){
+            total_price.setText(format.format(adapter.getTotalPrice())+"원");
+            discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
+            final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
+        }else if(userInfo.getRank().equals("3")){
+            total_price.setText(format.format(adapter.getTotalPrice())+"원");
+            discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
+            final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
         }
     }
 
@@ -152,7 +152,7 @@ public class OrderActivity extends AppCompatActivity {
     }
 
     public void onClick_next(View v){
-        if(!order_name_input.getText().toString().equals("")&&!name_input.getText().toString().equals("")&&!address_num_input.getText().toString().equals("")&&!address_input.getText().toString().equals("")&&!ph_num_input.getText().toString().equals("")&&!request_input.getText().toString().equals("")){
+        if(!order_name_input.getText().toString().equals("")&&!name_input.getText().toString().equals("")&&!address_num_input.getText().toString().equals("")&&!address_input.getText().toString().equals("")&&!ph_num_input.getText().toString().equals("")){
             if(confirm_check.isChecked()){
 
             }else {

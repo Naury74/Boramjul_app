@@ -218,7 +218,7 @@
                     android:inputType="phone"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:maxLength="11"
+                    android:maxLength="13"
                     app:layout_constraintWidth_percent="0.8"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

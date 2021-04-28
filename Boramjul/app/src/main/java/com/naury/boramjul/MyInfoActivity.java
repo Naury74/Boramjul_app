@@ -6,6 +6,8 @@ import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.telephony.PhoneNumberUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -41,39 +43,46 @@ public class MyInfoActivity extends AppCompatActivity {
 
         int type = userInfo.getLogin_type();
         if(type==1){
-            order_list_btn.setVisibility(View.VISIBLE);
-            boramjul_Login.setVisibility(View.VISIBLE);
-            membership_layout.setVisibility(View.VISIBLE);
-
-            user_name_text.setText(userInfo.getName()+"님, 반가워요!");
-            user_mail_text.setText(userInfo.getEmail());
-            user_ph_num_text.setText(userInfo.getPh_num());
-            if(userInfo.getRank().equals("1")){
-                membership_rank.setText("브론즈");
-                membership_rank.setTextColor(Color.parseColor("#BB5353"));
-                membership_sub.setText("5%할인 혜택");
-            }else if(userInfo.getRank().equals("2")){
-                membership_rank.setText("실버");
-                membership_rank.setTextColor(Color.parseColor("#A4A9B8"));
-                membership_sub.setText("10%할인 혜택");
-            }else if(userInfo.getRank().equals("3")){
-                membership_rank.setText("골드");
-                membership_rank.setTextColor(Color.parseColor("#F1BA2C"));
-                membership_sub.setText("15%할인 혜택");
-            }
-            my_review_layout.setVisibility(View.VISIBLE);
+            set_layout();
         }else {
             if(type==2) {
                 Google_Login.setVisibility(View.VISIBLE);
-                sns_info_textView2.setText(userInfo.getName());
+                sns_info_textView2.setText(userInfo.getEmail());
+                set_layout();
             }else if(type==3){
                 Naver_Login.setVisibility(View.VISIBLE);
-                sns_info_textView3.setText(userInfo.getName());
+                sns_info_textView3.setText(userInfo.getEmail());
+                set_layout();
             }else if(type==4){
                 KaKao_Login.setVisibility(View.VISIBLE);
-                sns_info_textView4.setText(userInfo.getName());
+                sns_info_textView4.setText(userInfo.getEmail());
+                set_layout();
             }
         }
+    }
+
+    private void set_layout(){
+        order_list_btn.setVisibility(View.VISIBLE);
+        boramjul_Login.setVisibility(View.VISIBLE);
+        membership_layout.setVisibility(View.VISIBLE);
+
+        user_name_text.setText(userInfo.getName()+"님, 반가워요!");
+        user_mail_text.setText(userInfo.getEmail());
+        user_ph_num_text.setText(userInfo.getPh_num());
+        if(userInfo.getRank().equals("1")){
+            membership_rank.setText("브론즈");
+            membership_rank.setTextColor(Color.parseColor("#BB5353"));
+            membership_sub.setText("5%할인 혜택");
+        }else if(userInfo.getRank().equals("2")){
+            membership_rank.setText("실버");
+            membership_rank.setTextColor(Color.parseColor("#A4A9B8"));
+            membership_sub.setText("10%할인 혜택");
+        }else if(userInfo.getRank().equals("3")){
+            membership_rank.setText("골드");
+            membership_rank.setTextColor(Color.parseColor("#F1BA2C"));
+            membership_sub.setText("15%할인 혜택");
+        }
+        my_review_layout.setVisibility(View.VISIBLE);
     }
 
     public void onClick_back(View v){

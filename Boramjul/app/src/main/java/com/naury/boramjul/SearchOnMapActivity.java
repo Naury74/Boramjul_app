@@ -96,6 +96,7 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
     ///////////////////////뷰
     ConstraintLayout main_background_Layout;
     TextView place_text;
+    TextView current_place_text;
 
     ////////////////////////리스트 관련
     PlaceInfoAdapter place_adapter;
@@ -110,6 +111,7 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
 
         main_background_Layout = (ConstraintLayout)findViewById(R.id.main_background_Layout);
         place_text = (TextView)findViewById(R.id.place_text);
+        current_place_text = (TextView)findViewById(R.id.current_place_text);
 
         locationRequest = new LocationRequest()
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
@@ -203,6 +205,8 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
                 String center_position = getCurrentAddress(centerLatLng);
                 center_position = center_position.substring(5);
 
+                current_place_text.setText(center_position);
+
             }
         });
 
@@ -234,6 +238,13 @@ public class SearchOnMapActivity extends AppCompatActivity implements OnMapReady
         center_position = center_position.substring(5);
 
         place_text.setText(center_position);
+
+        place_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                map.moveCamera(cameraUpdate);
+            }
+        });
 
         showPlaceInformation(currentLatLng);
 

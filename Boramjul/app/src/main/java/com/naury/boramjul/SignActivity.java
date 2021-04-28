@@ -87,6 +87,9 @@ public class SignActivity extends AppCompatActivity {
 
     boolean result_check = false;
 
+    int request_type = 0;
+    String sns_mail = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -201,17 +204,15 @@ public class SignActivity extends AppCompatActivity {
         if (user != null) {
             Log.d("TAG","구글 로그인 유저: "+user.getDisplayName());
             Log.d("TAG","구글 로그인 유저: "+user.getPhoneNumber());
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("Login_Type",2);
-            userInfo.setLogin_type(2);
-            userInfo.setName(user.getEmail());
-            startActivity(intent);
-            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-            finish();
+            sns_mail = user.getEmail();
+            InsertData task = new InsertData();
+            task.execute("2");
+
         }
     }
 
     public void onClick_SignUp(View v) {
+        userInfo.setLogin_type(1);
         Intent intent = new Intent(SignActivity.this, TOS_Activity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
@@ -247,14 +248,10 @@ public class SignActivity extends AppCompatActivity {
                     Log.i("LoginData","expiresAt : "+ expiresAt);
                     Log.i("LoginData","tokenType : "+ tokenType);
 
+                    sns_mail = expiresAt+"";
+                    InsertData task = new InsertData();
+                    task.execute("3");
 
-                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
-                    intent.putExtra("Login_Type",3);
-                    userInfo.setLogin_type(3);
-                    userInfo.setName(Long.toString(expiresAt));
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                    finish();
 
                 } else {
                     String errorCode = oAuthLogin
@@ -289,7 +286,7 @@ public class SignActivity extends AppCompatActivity {
                     get_pw = pw_input.getText().toString();
 
                     InsertData task = new InsertData();
-                    task.execute();
+                    task.execute("1");
 //                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
 //                    intent.putExtra("Login_Type",1);
 //                    userInfo.setLogin_type(1);
@@ -387,14 +384,9 @@ public class SignActivity extends AppCompatActivity {
                                 Log.d("KAKAO_API", "profile image: " + profile.getProfileImageUrl());
                                 Log.d("KAKAO_API", "thumbnail image: " + profile.getThumbnailImageUrl());
 
-                                Intent intent = new Intent(getApplication(), MainActivity.class);
-                                intent.putExtra("Login_Type",4);
-                                userInfo.setLogin_type(4);
-                                userInfo.setName(email);
-                                startActivity(intent);
-                                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                                finish();
-
+                                sns_mail = email;
+                                InsertData task = new InsertData();
+                                task.execute("4");
 
                             } else if (kakaoAccount.profileNeedsAgreement() == OptionalBoolean.TRUE) {
                                 // 동의 요청 후 프로필 정보 획득 가능
@@ -450,15 +442,67 @@ public class SignActivity extends AppCompatActivity {
             if(result_check==true){
                 Log.d("Login_TAB","로그인 성공");
 
-                Intent intent = new Intent(SignActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-                finish();
+                if(request_type==1){
+                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    finish();
+                }else if(request_type==2){//구글
+                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    finish();
+                }else if(request_type==3){//네이버
+                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    finish();
+                }else if(request_type==4){//카카오
+                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                    finish();
+                }else {
+                    Toast.makeText(SignActivity.this, "로그인 과정에서 에러가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                }
             }else{
 
-                Toast.makeText(SignActivity.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
-                //Toast.makeText(LogIn_Activity.this, "입력하신 정보를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
+                if(request_type==1){
+                    Toast.makeText(SignActivity.this, "아이디 또는 비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LogIn_Activity.this, "입력하신 정보를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
+                }else if(request_type==2||request_type==3||request_type==4){//구글, 네이버, 카카오
+                    final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(SignActivity.this,R.style.BottomSheetDialogTheme);
+                    final View bottomSheetView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.sns_join_alert_bottomsheet_layout,(LinearLayout)findViewById(R.id.container_bottom_sheet));
+                    bottomSheetDialog.setCanceledOnTouchOutside(false);
+
+                    bottomSheetView.findViewById(R.id.join_btn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(SignActivity.this, TOS_Activity.class);
+                            startActivity(intent);
+                            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                            bottomSheetDialog.dismiss();
+                        }
+                    });
+
+                    bottomSheetView.findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            bottomSheetDialog.dismiss();
+                        }
+                    });
+
+                    bottomSheetDialog.setContentView(bottomSheetView);
+                    bottomSheetDialog.show();
+                }else {
+                    Toast.makeText(SignActivity.this, "로그인 과정에서 에러가 발생했습니다.", Toast.LENGTH_SHORT).show();
+                }
+
             }
         }
 
@@ -471,6 +515,7 @@ public class SignActivity extends AppCompatActivity {
 //            String biz_num = (String)params[1];//사업자 번호
 //            String device_token = (String)params[2];//디바이스 토큰
 //            String password = (String)params[3];//비밀번호
+            request_type = Integer.parseInt((String)params[0]);
 
             String serverURL = "http://www.boramjul.kro.kr/member/memberinfojson.do";//서버주소 할당
 //            String postParameters = "ph_num=" + biz_num + "&device_token=" + device_token + "&password=" + password;//전송할 파라미터,값
@@ -538,29 +583,115 @@ public class SignActivity extends AppCompatActivity {
         try{
             JSONArray jsonArray = new JSONArray(result_check_json);
 
-            for (int i=0; i < jsonArray.length(); i++)
-            {
-                try {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    // Pulling items from the array
-                    String id = jsonObject.getString("id");
-                    String passwd = jsonObject.getString("passwd");
-                    if(id.equals(get_id)&&passwd.equals(get_pw)){
-                        userInfo.setLogin_type(jsonObject.getInt("sns"));
-                        userInfo.setName(jsonObject.getString("name"));
-                        userInfo.setBirthday(jsonObject.getString("birth"));
-                        userInfo.setSex(jsonObject.getString("gender"));
-                        userInfo.setEmail(jsonObject.getString("email"));
-                        userInfo.setPh_num(jsonObject.getString("phone"));
-                        userInfo.setAddress(jsonObject.getString("address"));
-                        userInfo.setRank(jsonObject.getString("rank"));
-                        userInfo.setJoindate(jsonObject.getString("joindate"));
-                        result_check = true;
-                        break;
+            if(request_type==1){
+                userInfo.setLogin_type(request_type);
+                for (int i=0; i < jsonArray.length(); i++)
+                {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        // Pulling items from the array
+                        String id = jsonObject.getString("id");
+                        String passwd = jsonObject.getString("passwd");
+                        if(id.equals(get_id)&&passwd.equals(get_pw)){
+                            if(jsonObject.getInt("sns")==1){
+                                userInfo.setLogin_type(jsonObject.getInt("sns"));
+                                userInfo.setName(jsonObject.getString("name"));
+                                userInfo.setBirthday(jsonObject.getString("birth"));
+                                userInfo.setSex(jsonObject.getString("gender"));
+                                userInfo.setEmail(jsonObject.getString("email"));
+                                userInfo.setPh_num(jsonObject.getString("phone"));
+                                userInfo.setAddress(jsonObject.getString("address"));
+                                userInfo.setRank(jsonObject.getString("rank"));
+                                userInfo.setJoindate(jsonObject.getString("joindate"));
+                                result_check = true;
+                                break;
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+            }else if(request_type==2){//구글
+                userInfo.setLogin_type(request_type);
+                for (int i=0; i < jsonArray.length(); i++)
+                {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        // Pulling items from the array
+                        if(sns_mail.equals(jsonObject.getString("email"))&&jsonObject.getInt("sns")==2){
+                            userInfo.setLogin_type(jsonObject.getInt("sns"));
+                            userInfo.setName(jsonObject.getString("name"));
+                            userInfo.setBirthday(jsonObject.getString("birth"));
+                            userInfo.setSex(jsonObject.getString("gender"));
+                            userInfo.setEmail(jsonObject.getString("email"));
+                            userInfo.setPh_num(jsonObject.getString("phone"));
+                            userInfo.setAddress(jsonObject.getString("address"));
+                            userInfo.setRank(jsonObject.getString("rank"));
+                            userInfo.setJoindate(jsonObject.getString("joindate"));
+                            result_check = true;
+                            break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                userInfo.setEmail(sns_mail);
+            }else if(request_type==3){//네이버
+                userInfo.setLogin_type(request_type);
+                for (int i=0; i < jsonArray.length(); i++)
+                {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        // Pulling items from the array
+                        if(sns_mail.equals(jsonObject.getString("email"))&&jsonObject.getInt("sns")==3){
+                            userInfo.setLogin_type(jsonObject.getInt("sns"));
+                            userInfo.setName(jsonObject.getString("name"));
+                            userInfo.setBirthday(jsonObject.getString("birth"));
+                            userInfo.setSex(jsonObject.getString("gender"));
+                            userInfo.setEmail(jsonObject.getString("email"));
+                            userInfo.setPh_num(jsonObject.getString("phone"));
+                            userInfo.setAddress(jsonObject.getString("address"));
+                            userInfo.setRank(jsonObject.getString("rank"));
+                            userInfo.setJoindate(jsonObject.getString("joindate"));
+                            result_check = true;
+                            break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                userInfo.setEmail(sns_mail);
+
+            }else if(request_type==4){//카카오
+                userInfo.setLogin_type(request_type);
+                for (int i=0; i < jsonArray.length(); i++)
+                {
+                    try {
+                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        // Pulling items from the array
+                        if(sns_mail.equals(jsonObject.getString("email"))&&jsonObject.getInt("sns")==4){
+                            userInfo.setLogin_type(jsonObject.getInt("sns"));
+                            userInfo.setName(jsonObject.getString("name"));
+                            userInfo.setBirthday(jsonObject.getString("birth"));
+                            userInfo.setSex(jsonObject.getString("gender"));
+                            userInfo.setEmail(jsonObject.getString("email"));
+                            userInfo.setPh_num(jsonObject.getString("phone"));
+                            userInfo.setAddress(jsonObject.getString("address"));
+                            userInfo.setRank(jsonObject.getString("rank"));
+                            userInfo.setJoindate(jsonObject.getString("joindate"));
+                            result_check = true;
+                            userInfo.setLogin_type(request_type);
+                            userInfo.setEmail(sns_mail);
+                            break;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                userInfo.setEmail(sns_mail);
+
+            }else {
+
             }
 
         }catch (JSONException e){

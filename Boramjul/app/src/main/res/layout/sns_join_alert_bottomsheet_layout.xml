@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/container_bottom_sheet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/up_round_white_bg"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="40dp"
+    android:paddingVertical="40dp"
+    android:layout_height="300dp"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/back_btn"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:clickable="true"
+        android:background="@drawable/ic_left_arrow">
+    </TextView>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:text="아직 보람줄 회원이 아니시네요!"
+        android:fontFamily="@font/gilroy_light"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="17dp"></TextView>
+
+    <TextView
+        android:id="@+id/subtitle"
+        android:layout_marginTop="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:text="해당 SNS 계정으로 가입하시겠어요?"
+        android:fontFamily="@font/gmarketsansmedium"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="18dp"></TextView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/join_btn"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/ripple_purple_btn"
+        android:clickable="true"
+        android:elevation="3dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/gmarketsansmedium"
+            android:gravity="center"
+            android:text="회원가입 하기"
+            android:textColor="#ffffff"
+            app:autoSizeMinTextSize="0.1sp"
+            app:autoSizeStepGranularity="0.1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintWidth_percent="0.8"></TextView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

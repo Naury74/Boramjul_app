@@ -84,20 +84,17 @@ public class CartActivity extends AppCompatActivity {
                     }else {
                         listView.setVisibility(View.VISIBLE);
                         empty_layout.setVisibility(View.GONE);
-                        if(userInfo.getLogin_type()==1){
+                        discount_layout.setVisibility(View.VISIBLE);
 
-                            discount_layout.setVisibility(View.VISIBLE);
-
-                            if(userInfo.getRank().equals("1")){
-                                discount_title.setText("5% 할인 적용 - 맴버쉽");
-                                total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
-                            }else if(userInfo.getRank().equals("2")){
-                                discount_title.setText("10% 할인 적용 - 맴버쉽");
-                                total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
-                            }else if(userInfo.getRank().equals("3")){
-                                discount_title.setText("15% 할인 적용 - 맴버쉽");
-                                total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
-                            }
+                        if(userInfo.getRank().equals("1")){
+                            discount_title.setText("5% 할인 적용 - 맴버쉽");
+                            total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
+                        }else if(userInfo.getRank().equals("2")){
+                            discount_title.setText("10% 할인 적용 - 맴버쉽");
+                            total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
+                        }else if(userInfo.getRank().equals("3")){
+                            discount_title.setText("15% 할인 적용 - 맴버쉽");
+                            total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
                         }
                     }
                 }
@@ -106,20 +103,17 @@ public class CartActivity extends AppCompatActivity {
             if(cart_list.size()==0){
 
             }else {
-                if(userInfo.getLogin_type()==1){
+                discount_layout.setVisibility(View.VISIBLE);
 
-                    discount_layout.setVisibility(View.VISIBLE);
-
-                    if(userInfo.getRank().equals("1")){
-                        discount_title.setText("5% 할인 적용 - 맴버쉽");
-                        total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
-                    }else if(userInfo.getRank().equals("2")){
-                        discount_title.setText("10% 할인 적용 - 맴버쉽");
-                        total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
-                    }else if(userInfo.getRank().equals("3")){
-                        discount_title.setText("15% 할인 적용 - 맴버쉽");
-                        total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
-                    }
+                if(userInfo.getRank().equals("1")){
+                    discount_title.setText("5% 할인 적용 - 맴버쉽");
+                    total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
+                }else if(userInfo.getRank().equals("2")){
+                    discount_title.setText("10% 할인 적용 - 맴버쉽");
+                    total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
+                }else if(userInfo.getRank().equals("3")){
+                    discount_title.setText("15% 할인 적용 - 맴버쉽");
+                    total_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
                 }
             }
         }
