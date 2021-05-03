@@ -77,7 +77,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
 
     InputMethodManager imm;
 
-    TextView birthday_input, email_check, phone_check, code_check, pw_check, re_pw_check, btn_confirm, pw_notice_text;
+    TextView birthday_input, email_check, phone_check, code_check, pw_check, re_pw_check, btn_confirm, pw_notice_text, email_check_bar, phone_check_bar, pw_check_bar, re_pw_check_bar;
     ConstraintLayout main_background_Layout, code_input_layout, phone_input_layout, email_input_layout, pw_layout, re_pw_layout, verify_result_layout,address_layout;
     RadioGroup gender_input;
     EditText name_input;
@@ -143,9 +143,13 @@ public class PersonVerifyActivity extends AppCompatActivity {
         email_input = (EditText)findViewById(R.id.email_input);
         email_check = (TextView)findViewById(R.id.email_check);
         phone_check = (TextView)findViewById(R.id.phone_check);
+        email_check_bar = (TextView)findViewById(R.id.email_check_bar);
+        phone_check_bar = (TextView)findViewById(R.id.phone_check_bar);
         code_check = (TextView)findViewById(R.id.code_check);
         pw_check = (TextView)findViewById(R.id.pw_check);
         re_pw_check = (TextView)findViewById(R.id.re_pw_check);
+        pw_check_bar = (TextView)findViewById(R.id.pw_check_bar);
+        re_pw_check_bar = (TextView)findViewById(R.id.re_pw_check_bar);
         btn_confirm = (TextView)findViewById(R.id.btn_confirm);
         pw_notice_text = (TextView)findViewById(R.id.pw_notice_text);
 
@@ -204,10 +208,12 @@ public class PersonVerifyActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(!android.util.Patterns.EMAIL_ADDRESS.matcher(s.toString()).matches()){
                     email_check.setText("");    // 경고 메세지
+                    email_check_bar.setVisibility(View.VISIBLE);
                     check_email = 0;
                 }
                 else{
-                    email_check.setText("O");         //에러 메세지 제거
+                    email_check.setText("O");
+                    email_check_bar.setVisibility(View.GONE);//에러 메세지 제거
                     check_email = 1;
                 }
                 Enable_btn();
@@ -231,9 +237,11 @@ public class PersonVerifyActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 if(isValidCellPhoneNumber(s.toString())){
                     phone_check.setText("인증");
+                    phone_check_bar.setVisibility(View.GONE);
                     check_phone = 1;
                 }else{
                     phone_check.setText("");
+                    phone_check_bar.setVisibility(View.VISIBLE);
                     check_phone = 0;
                 }
                 Enable_btn();
@@ -299,21 +307,26 @@ public class PersonVerifyActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
                 pw_check.setText("O");
                 check_pw = 1;
+                pw_check_bar.setVisibility(View.GONE);
 
                 if(!Pattern.matches("^(?=.{8,20}$).*", pw_input.getText().toString())){
                     pw_check.setText("");
+                    pw_check_bar.setVisibility(View.VISIBLE);
                     check_pw = 0;
                 }
                 if(!Pattern.matches("^(?=\\S*[A-Z]).*$", pw_input.getText().toString())){
                     pw_check.setText("");
+                    pw_check_bar.setVisibility(View.VISIBLE);
                     check_pw = 0;
                 }
                 if(!Pattern.matches("^(?=\\S*\\d).*$", pw_input.getText().toString())){
                     pw_check.setText("");
+                    pw_check_bar.setVisibility(View.VISIBLE);
                     check_pw = 0;
                 }
                 if(!Pattern.matches("^(?=.*\\W)(?=.*\\S+$).*$", pw_input.getText().toString())){
                     pw_check.setText("");
+                    pw_check_bar.setVisibility(View.VISIBLE);
                     check_pw = 0;
                 }
                 Enable_btn();
@@ -334,10 +347,12 @@ public class PersonVerifyActivity extends AppCompatActivity {
                 re_pw_check.setText("O");
                 if(!pw_input.getText().toString().equals(re_pw_input.getText().toString())){
                     re_pw_check.setText("");
+                    re_pw_check_bar.setVisibility(View.VISIBLE);
                     check_re_pw = 0;
                 }
                 else{
                     re_pw_check.setText("O");
+                    re_pw_check_bar.setVisibility(View.GONE);
                     check_re_pw = 1;
                 }
                 Enable_btn();
