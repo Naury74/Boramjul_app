@@ -512,13 +512,6 @@ public class PersonVerifyActivity extends AppCompatActivity {
         InsertData insertData = new InsertData();
         insertData.execute(join_data);
 
-//        customAnimationLoadingDialog.show();
-//        customAnimationLoadingDialog.dismiss();
-//        Intent intent = new Intent(PersonVerifyActivity.this, CompleteSignUpActivity.class);
-//        startActivity(intent);
-//        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//        finish();
-        //Toast.makeText(this, "가입 완료", Toast.LENGTH_SHORT).show();
     }
 
     public void onClick_search_address(View v){
@@ -634,39 +627,19 @@ public class PersonVerifyActivity extends AppCompatActivity {
             super.onPostExecute(result);
             Log.d("Login_TAG", "Data Post - App : " + result);
 
-//            if(login_check.equals("SUCCESS")){
-//                Log.d(TAG,"로그인 성공");
-//
-//                save_user_data();
-//
-//                Intent intent = new Intent(context_login, MainActivity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-//                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//                save_login_data = true;
-//                save();
-//                finish();
-//            }else{
-//                if(err_return.equals("")){
-//                    Snackbar.make(main_background_Layout, "로그인에 실패했습니다. 잠시후 다시 시도해 주세요.", Snackbar.LENGTH_LONG).show();
-//                }else {
-//                    Snackbar.make(main_background_Layout, err_return, Snackbar.LENGTH_LONG).show();
-//                }
-//                //Toast.makeText(LogIn_Activity.this, "입력하신 정보를 다시 확인해주세요", Toast.LENGTH_SHORT).show();
-//            }
+            Intent intent = new Intent(PersonVerifyActivity.this, CompleteSignUpActivity.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+            finish();
+
         }
 
 
         @Override
         protected String doInBackground(String... params) {
 
-//            Log.d("FCM Log", "전화번호: "+login_biz_num);
-//            Log.d("FCM Log", "비밀번호: "+password);
-//            String biz_num = (String)params[1];//사업자 번호
-//            String device_token = (String)params[2];//디바이스 토큰
-//            String password = (String)params[3];//비밀번호
 
-            String serverURL = "http://www.boramjul.kro.kr/member/memberinfojson.do";//서버주소 할당
+            String serverURL = "http://www.boramjul.kro.kr/member/androidsignup.do";//서버주소 할당
             String postParameters = (String)params[0];//전송할 파라미터,값
             Log.d("Login_TAG","postParameters : "+postParameters);
 
@@ -679,6 +652,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
                 httpURLConnection.setReadTimeout(5000);//5초내 무 응답시 예외처리
                 httpURLConnection.setConnectTimeout(5000);//5초내 연결 불가시 예외처리
                 httpURLConnection.setRequestMethod("POST");//post방식 요청
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
                 httpURLConnection.connect();
 
 
@@ -732,38 +706,6 @@ public class PersonVerifyActivity extends AppCompatActivity {
         try{
             JSONObject jsonObject = new JSONObject(result_check_json);
 
-//            login_check = jsonObject.getString("sign_check");
-//            if(login_check.equals("SUCCESS")){
-//                hp_num_return = jsonObject.getString("user_ph_num");
-//                mail_return = jsonObject.getString("user_email");
-//                user_name_return = jsonObject.getString("user_nicname");
-//                user_PN_return = jsonObject.getString("user_number");
-//                push_msg_return = jsonObject.getString("push_msg");
-//                device_token_return = jsonObject.getString("device_token");
-//                addr_return = jsonObject.getString("registration_addr");
-//                actual_resid_return = jsonObject.getString("actual_resid");
-//                actual_resid_date_return = jsonObject.getString("actual_resid_date");
-//                addr_sub_return = jsonObject.getString("registration_addr_sub");
-//                block_code_return = jsonObject.getString("block_code");
-//                user_img_return = jsonObject.getString("user_Image");
-//            }else{
-//                err_return = jsonObject.getString("err_reason");
-//            }
-//
-//            Log.d(TAG,"Json Return login_check : "+ login_check);
-//            Log.d(TAG,"Json Return biznum : "+ hp_num_return);
-//            Log.d(TAG,"Json Return biz_name : "+ user_name_return);
-//            Log.d(TAG,"Json Return device return : "+ device_token_return);
-//            Log.d(TAG,"Json Return user_PN_return : "+ user_PN_return);
-//            Log.d(TAG,"Json Return mail_return : "+ mail_return);
-//            Log.d(TAG,"Json Return addr_return : "+ addr_return);
-//            Log.d(TAG,"Json Return actual_resid_return : "+ actual_resid_return);
-//            Log.d(TAG,"Json Return actual_resid_date_return : "+ actual_resid_date_return);
-//            Log.d(TAG,"Json Return actual_resid_return : "+ actual_resid_return);
-//            Log.d(TAG,"Json Return addr_sub_return : "+ addr_sub_return);
-//            Log.d(TAG,"Json Return block_code_return : "+ block_code_return);
-//            Log.d(TAG,"Json Return actual_push_msg_return : "+ err_return);
-//            Log.d(TAG,"Json Return user_img_path : "+ user_img_return);
 
         }catch (JSONException e){
             e.printStackTrace();

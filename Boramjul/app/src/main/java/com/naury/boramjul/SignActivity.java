@@ -58,13 +58,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignActivity extends AppCompatActivity {
 
@@ -248,10 +252,19 @@ public class SignActivity extends AppCompatActivity {
                     Log.i("LoginData","expiresAt : "+ expiresAt);
                     Log.i("LoginData","tokenType : "+ tokenType);
 
-                    sns_mail = expiresAt+"";
-                    InsertData task = new InsertData();
-                    task.execute("3");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            String header = "Bearer " +  accessToken;
+                            Map<String, String> requestHeaders = new HashMap<>();
+                            requestHeaders.put("Authorization", header);
+                            String apiURL = "https://openapi.naver.com/v1/nid/me"; //엑세스 토큰으로 유저정보를 받아올 주소
+                            String responseBody = get(apiURL,requestHeaders);
+                            Log.d("responseBody 확인 ",responseBody); //주소로 얻은 유저정보 (제이슨)
+                            NaverUserInfo(responseBody);
 
+                        }
+                    }).start();
 
                 } else {
                     String errorCode = oAuthLogin
@@ -287,12 +300,7 @@ public class SignActivity extends AppCompatActivity {
 
                     InsertData task = new InsertData();
                     task.execute("1");
-//                    Intent intent = new Intent(SignActivity.this, MainActivity.class);
-//                    intent.putExtra("Login_Type",1);
-//                    userInfo.setLogin_type(1);
-//                    startActivity(intent);
-//                    overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-//                    finish();
+
                     bottomSheetDialog.dismiss();
                 }else {
                     Toast.makeText(SignActivity.this, "아이디 또는 비밀번호를 입력해 주세요", Toast.LENGTH_SHORT).show();
@@ -424,18 +432,18 @@ public class SignActivity extends AppCompatActivity {
     //로그인 시에 서버에 로그인 정보 넘겨주고 리턴값 받음
     class InsertData extends AsyncTask<String, Void, String> {
 
-        CustomAnimationLoadingDialog customAnimationLoadingDialog = new CustomAnimationLoadingDialog(SignActivity.this);
+        //CustomAnimationLoadingDialog customAnimationLoadingDialog = new CustomAnimationLoadingDialog(SignActivity.this);
 
         @Override
         protected void onPreExecute() {
-            customAnimationLoadingDialog.show();
+            //customAnimationLoadingDialog.show();
             super.onPreExecute();
         }
 
 
         @Override
         protected void onPostExecute(String result) {
-            customAnimationLoadingDialog.dismiss();
+            //customAnimationLoadingDialog.dismiss();
             super.onPostExecute(result);
             Log.d("Login_TAG", "Data Post - App : " + result);
 
@@ -696,6 +704,97 @@ public class SignActivity extends AppCompatActivity {
 
         }catch (JSONException e){
             e.printStackTrace();
+        }
+    }
+
+    private void NaverUserInfo(String msg){
+
+        try {
+            JSONObject jsonObject = new JSONObject(msg);
+            String resultcode = jsonObject.get("resultcode").toString();
+            Log.d("resultcode 확인 ",resultcode);
+
+            String message = jsonObject.get("message").toString();
+            Log.d("message 확인 ",message);
+
+            if(resultcode.equals("00")){
+                if(message.equals("success")){
+                    JSONObject naverJson = (JSONObject) jsonObject.get("response");
+
+                    String id = naverJson.get("id").toString();
+                    //String nickName = naverJson.get("nickname").toString();
+                    //String profileImage = naverJson.get("profile_image").toString();
+                    String email = naverJson.get("email").toString();
+                    String name = naverJson.get("name").toString();
+
+                    sns_mail = email;
+
+                    Log.d("id 확인 ",id);
+                    //Log.d("nickName 확인 ",nickName);
+                    //Log.d("profileImage 확인 ",profileImage);
+                    Log.d("email 확인 ",email);
+                    Log.d("name 확인 ",name);
+
+                    InsertData task = new InsertData();
+                    task.execute("3");
+                }
+            }
+            else{
+                //Toast.makeText(getApplicationContext(),"로그인 오류가 발생했습니다.",Toast.LENGTH_SHORT).show();
+            }
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static String get(String apiUrl, Map<String, String> requestHeaders){
+        HttpURLConnection con = connect(apiUrl);
+        try {
+            con.setRequestMethod("GET");
+            for(Map.Entry<String, String> header :requestHeaders.entrySet()) {
+                con.setRequestProperty(header.getKey(), header.getValue());
+            }
+
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
+                return readBody(con.getInputStream());
+            } else { // 에러 발생
+                return readBody(con.getErrorStream());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("API 요청과 응답 실패", e);
+        } finally {
+            con.disconnect();
+        }
+    }
+
+    private static HttpURLConnection connect(String apiUrl){
+        try {
+            java.net.URL url = new URL(apiUrl);
+            return (HttpURLConnection)url.openConnection();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
+        } catch (IOException e) {
+            throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
+        }
+    }
+
+    private static String readBody(InputStream body){
+        InputStreamReader streamReader = new InputStreamReader(body);
+
+        try (BufferedReader lineReader = new BufferedReader(streamReader)) {
+            StringBuilder responseBody = new StringBuilder();
+
+            String line;
+            while ((line = lineReader.readLine()) != null) {
+                responseBody.append(line);
+            }
+
+            return responseBody.toString();
+        } catch (IOException e) {
+            throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
     }
 }

@@ -2,27 +2,26 @@
     android:id="@+id/main_background_Layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:paddingHorizontal="15dp"
     android:layout_width="match_parent"
     android:layout_height="225dp">
 
     <FrameLayout
         android:id="@+id/main_layout"
         android:clickable="true"
+        android:paddingHorizontal="15dp"
         android:layout_width="match_parent"
         android:layout_height="180dp">
 
         <TextView
             android:id="@+id/title"
-            android:layout_width="230dp"
+            android:layout_width="wrap_content"
             android:layout_height="22dp"
             android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="14dp"
+            android:maxLines="1"
             android:fontFamily="@font/gmarketsansmedium"
             android:text=""
-            android:singleLine="true"
-            android:ellipsize="end"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="130dp"
             android:layout_gravity="top|left"
@@ -32,15 +31,14 @@
 
         <TextView
             android:id="@+id/author"
-            android:layout_width="230dp"
+            android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="11dp"
             android:fontFamily="@font/gmarketsanslight"
             android:text=""
-            android:singleLine="true"
-            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_marginLeft="130dp"
             android:layout_marginTop="72dp"
             android:layout_gravity="top|left"
@@ -50,15 +48,14 @@
 
         <TextView
             android:id="@+id/score"
-            android:layout_width="230dp"
+            android:layout_width="wrap_content"
             android:layout_height="15dp"
             android:textColor="#000000"
             android:textStyle="bold"
             android:textSize="10dp"
             android:fontFamily="@font/gmarketsanslight"
             android:text=""
-            android:singleLine="true"
-            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_marginLeft="130dp"
             android:layout_marginTop="100dp"
             android:layout_gravity="top|left"
@@ -67,7 +64,7 @@
         </TextView>
 
         <TextView
-            android:layout_width="230dp"
+            android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textColor="#3d3d3d"
             android:textSize="10dp"
@@ -84,19 +81,18 @@
 
         <TextView
             android:id="@+id/price"
-            android:layout_width="230dp"
+            android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:textColor="#FF5757"
             android:textStyle="bold"
             android:textSize="15dp"
             android:fontFamily="@font/gmarketsansmedium"
             android:text=""
-            android:singleLine="true"
-            android:ellipsize="end"
-            android:layout_marginLeft="130dp"
+            android:maxLines="1"
             android:layout_marginBottom="20dp"
+            android:layout_marginLeft="190dp"
             android:layout_gravity="bottom|left"
-            android:gravity="bottom|right">
+            android:gravity="bottom|left">
 
         </TextView>
 
