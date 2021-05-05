@@ -609,25 +609,6 @@
                     android:textSize="18dp"
                     app:checkedIcon="@drawable/ic_check_purple" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_27"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:chipBackgroundColor="#ffffff"
-                    app:chipStrokeColor="@color/boram_purple"
-                    app:chipStrokeWidth="1dp"
-                    app:rippleColor="@color/boram_purple"
-                    android:minHeight="20dp"
-                    android:clickable="true"
-                    android:paddingHorizontal="10dp"
-                    android:text="장르소설"
-                    android:fontFamily="@font/gmarketsansmedium"
-                    android:textColor="@color/boram_purple"
-                    app:closeIconEnabled="false"
-                    android:checkable="true"
-                    android:textSize="18dp"
-                    app:checkedIcon="@drawable/ic_check_purple" />
-
 
             </com.google.android.material.chip.ChipGroup>
 

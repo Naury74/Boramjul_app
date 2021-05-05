@@ -179,7 +179,6 @@ public class CategoryActivity extends AppCompatActivity{
         chip_24 = (Chip)findViewById(R.id.chip_24);
         chip_25 = (Chip)findViewById(R.id.chip_25);
         chip_26 = (Chip)findViewById(R.id.chip_26);
-        chip_27 = (Chip)findViewById(R.id.chip_27);
 
     }
 
@@ -265,9 +264,6 @@ public class CategoryActivity extends AppCompatActivity{
                 break;
             case "청소년":
                 getAddress = "http://www.kyobobook.co.kr/bestSellerNew/bestseller.laf?mallGb=KOR&linkClass=g&range=1&kind=0&orderClick=DAb";
-                break;
-            case "장르소설":
-                getAddress = "http://www.kyobobook.co.kr/bestSellerNew/bestseller.laf?mallGb=EBK&linkClass=08&range=1&kind=0&orderClick=DBk";
                 break;
         }
         Best_JsoupAsyncTask jsoupAsyncTask = new Best_JsoupAsyncTask();

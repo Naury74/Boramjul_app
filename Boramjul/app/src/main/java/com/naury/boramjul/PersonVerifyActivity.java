@@ -381,7 +381,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
     public void Enable_btn(){
 
         if(userInfo.getLogin_type()==1){
-            if(check_email==1&&check_pw==1&&check_re_pw==1&&check_code==1&&check_name==1&&check_phone==1&&check_id==1&&check_birth==1&&!address_input.getText().toString().equals("")){
+            if(check_email==1&&check_pw==1&&check_re_pw==1&&check_code==1&&check_name==1&&check_phone==1&&check_id==1&&check_birth==1){
                 //모두 기입
                 btn_confirm.setVisibility(View.VISIBLE);
             }else {
@@ -389,7 +389,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
                 btn_confirm.setVisibility(View.GONE);
             }
         }else {
-            if(check_email==1&&check_code==1&&check_name==1&&check_phone==1&&check_birth==1&&!address_input.getText().toString().equals("")){
+            if(check_email==1&&check_code==1&&check_name==1&&check_phone==1&&check_birth==1){
                 //모두 기입
                 btn_confirm.setVisibility(View.VISIBLE);
             }else {
@@ -485,7 +485,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
                 pw_notice_text.setVisibility(View.VISIBLE);
                 re_pw_layout.setVisibility(View.VISIBLE);
                 verify_result_layout.setVisibility(View.VISIBLE);
-                address_layout.setVisibility(View.VISIBLE);
+                //address_layout.setVisibility(View.VISIBLE);
             }else {
                 name_input.setVisibility(View.GONE);
                 birthday_input.setVisibility(View.GONE);
@@ -494,7 +494,8 @@ public class PersonVerifyActivity extends AppCompatActivity {
                 phone_input_layout.setVisibility(View.GONE);
                 code_input_layout.setVisibility(View.GONE);
                 verify_result_layout.setVisibility(View.VISIBLE);
-                address_layout.setVisibility(View.VISIBLE);
+                //address_layout.setVisibility(View.VISIBLE);
+                btn_confirm.setVisibility(View.VISIBLE);
             }
         }else {
             check_code = 0;
@@ -513,9 +514,9 @@ public class PersonVerifyActivity extends AppCompatActivity {
             jsonObject.put("email",email_input.getText().toString());
             jsonObject.put("phone",phone_input.getText().toString());
             jsonObject.put("sns",userInfo.getLogin_type());
-            jsonObject.put("gender",gender_value);
+            //jsonObject.put("gender",gender_value);
             jsonObject.put("birth",birthday_value);
-            jsonObject.put("address",address_input.getText().toString());
+            //jsonObject.put("address",address_input.getText().toString());
             jsonObject.put("rank",1);
             jsonObject.put("totalprice",0);
         } catch (JSONException e) {
