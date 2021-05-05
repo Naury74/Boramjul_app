@@ -515,7 +515,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
             jsonObject.put("phone",phone_input.getText().toString());
             jsonObject.put("sns",userInfo.getLogin_type());
             //jsonObject.put("gender",gender_value);
-            jsonObject.put("birth",birthday_value);
+            jsonObject.put("birth",Integer.toString(birthday_value));
             //jsonObject.put("address",address_input.getText().toString());
             jsonObject.put("rank",1);
             jsonObject.put("totalprice",0);
