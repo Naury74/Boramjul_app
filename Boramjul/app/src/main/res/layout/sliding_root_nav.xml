@@ -181,7 +181,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:text="쿠폰\u0026이벤트"
+            android:text="혜택 \u0026 포인트"
             android:fontFamily="@font/gmarketsanslight"
             android:gravity="center|left"
             android:textColor="#000000"

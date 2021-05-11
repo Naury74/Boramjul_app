@@ -24,7 +24,6 @@
         <activity android:name=".OrderActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".MyInfoActivity"
-            android:theme="@style/ImageBgTheme"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".CartActivity"
