@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/container_bottom_sheet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/up_round_white_bg"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="15dp"
+    android:paddingVertical="20dp"
+    android:layout_height="650dp"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/back_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="10dp"
+        android:clickable="true"
+        android:background="@drawable/ic_left_arrow">
+    </TextView>
+
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:text=""
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="20dp"></TextView>
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="15dp"
+        android:text="맴버쉽 혜택"
+        android:fontFamily="@font/gmarketsanslight"
+        android:textStyle="bold"
+        android:gravity="center|left"
+        android:textColor="#000000"
+        android:textSize="20dp"></TextView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="15dp"
+        android:background="#000000">
+    </TextView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/gold_layout"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="25dp"
+            android:background="@color/light_gray">
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:text="도서 구입 시\n\n주문 금액의 15%\n기본 할인 적용!"
+                android:textSize="15dp"
+                android:gravity="right|center_vertical"
+                android:layout_gravity="right"
+                android:ellipsize="end"
+                android:textColor="#000000"
+                android:fontFamily="@font/gmarketsansmedium" />
+
+            <ImageView
+                android:id="@+id/gold_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:src="@drawable/ic_gold_medal">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/gold_text"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:text="골드 등급"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:layout_gravity="left|bottom"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:textColor="#E1B100"
+                android:fontFamily="@font/gmarketsansmedium" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="▶ 총 구매금액 50만원 이상"
+        android:fontFamily="@font/gmarketsanslight"
+        android:textStyle="bold"
+        android:gravity="center|left"
+        android:textColor="#000000"
+        android:textSize="12dp"></TextView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/silver_layout"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="25dp"
+            android:background="@color/light_gray">
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:text="도서 구입 시\n\n주문 금액의 10%\n기본 할인 적용!"
+                android:textSize="15dp"
+                android:gravity="right|center_vertical"
+                android:layout_gravity="right"
+                android:ellipsize="end"
+                android:textColor="#000000"
+                android:fontFamily="@font/gmarketsansmedium" />
+
+            <ImageView
+                android:id="@+id/silver_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:src="@drawable/ic_silver_medal">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/silver_text"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:text="실버 등급"
+                android:textSize="12dp"
+                android:gravity="center"
+                android:layout_gravity="left|bottom"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:textColor="#5A5A5A"
+                android:fontFamily="@font/gmarketsansmedium" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="▶ 총 구매금액 20~50만원"
+        android:fontFamily="@font/gmarketsanslight"
+        android:textStyle="bold"
+        android:gravity="center|left"
+        android:textColor="#000000"
+        android:textSize="12dp"></TextView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bronze_layout"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="0dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="25dp"
+            android:background="@color/light_gray">
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="match_parent"
+                android:text="도서 구입 시\n\n주문 금액의 5%\n기본 할인 적용!"
+                android:textSize="15dp"
+                android:gravity="right|center_vertical"
+                android:layout_gravity="right"
+                android:ellipsize="end"
+                android:textColor="#000000"
+                android:fontFamily="@font/gmarketsansmedium" />
+
+            <ImageView
+                android:id="@+id/bronze_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:src="@drawable/ic_bronze_medal">
+            </ImageView>
+
+            <TextView
+                android:id="@+id/bronze_text"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:text="브론즈 등급"
+                android:textSize="11dp"
+                android:gravity="center"
+                android:layout_gravity="left|bottom"
+                android:layout_marginBottom="10dp"
+                android:ellipsize="end"
+                android:textColor="#AC5000"
+                android:fontFamily="@font/gmarketsansmedium" />
+
+        </FrameLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="30dp"
+        android:text="▶ 총 구매금액 0~20만원"
+        android:fontFamily="@font/gmarketsanslight"
+        android:textStyle="bold"
+        android:gravity="center|left"
+        android:textColor="#000000"
+        android:textSize="12dp"></TextView>
+
+</LinearLayout>

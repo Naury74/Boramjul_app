@@ -10,7 +10,6 @@
         android:id="@+id/title_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:clickable="true"
         android:background="@drawable/ripple_purple_none_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.07"

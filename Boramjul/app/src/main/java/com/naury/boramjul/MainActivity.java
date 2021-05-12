@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onScrollChange(View view, int i, int i1, int i2, int i3) {
                 int scrollY = i1;
-                Log.d("스크롤", "스크롤값: "+scrollY);
+                //Log.d("스크롤", "스크롤값: "+scrollY);
                 if(scrollY==0){
                     home_btn_icon.setImageResource(R.drawable.ic_home);
                 }else{
@@ -804,7 +804,10 @@ public class MainActivity extends AppCompatActivity {
         ((ConstraintLayout) findViewById(R.id.Promo_btn)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "프로모션 버튼", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, PointInfoActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+                //Toast.makeText(getApplicationContext(), "프로모션 버튼", Toast.LENGTH_LONG).show();
             }
         });
         ((ConstraintLayout) findViewById(R.id.Privacy_policy_btn)).setOnClickListener(new View.OnClickListener() {

@@ -149,14 +149,14 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
+                app:cardElevation="0dp">
 
                 <FrameLayout
                     android:id="@+id/top_banner_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="20dp"
-                    android:background="#ffffff">
+                    android:background="@color/light_gray">
 
                     <TextView
                         android:layout_width="180dp"
@@ -243,13 +243,13 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
+                app:cardElevation="0dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="20dp"
-                    android:background="#ffffff">
+                    android:background="@color/light_gray">
 
                     <TextView
                         android:layout_width="180dp"
@@ -336,13 +336,13 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
+                app:cardElevation="0dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="20dp"
-                    android:background="#ffffff">
+                    android:background="@color/light_gray">
 
                     <TextView
                         android:layout_width="180dp"
@@ -429,11 +429,12 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
+                app:cardElevation="0dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/light_gray"
                     android:padding="20dp">
 
                     <TextView
@@ -488,7 +489,7 @@
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginTop="20dp"
                 app:cardCornerRadius="15dp"
-                app:cardElevation="3dp">
+                app:cardElevation="0dp">
 
                 <FrameLayout
                     android:layout_width="match_parent"

@@ -26,6 +26,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,8 +46,9 @@ public class OrderActivity extends AppCompatActivity {
 
     UserInfo userInfo;
 
-    TextView total_price, final_price, item_count, discount_price;
+    TextView total_price, final_price, item_count, discount_price, point_discount_title, point_discount_price;
     EditText order_name_input,name_input,address_num_input,address_input,address_detail_input,ph_num_input,request_input;
+    ImageView point_discount_check;
 
     RadioGroup pay_input,easy_pay_select;
 
@@ -76,7 +78,11 @@ public class OrderActivity extends AppCompatActivity {
         final_price = (TextView)findViewById(R.id.final_price);
         item_count = (TextView)findViewById(R.id.item_count);
         discount_price = (TextView)findViewById(R.id.discount_price);
+        point_discount_title = (TextView)findViewById(R.id.point_discount_title);
         confirm_check = (CheckBox)findViewById(R.id.confirm_check);
+        point_discount_price = (TextView)findViewById(R.id.point_discount_price);
+
+        point_discount_check = (ImageView)findViewById(R.id.point_discount_check);
 
         order_name_input = (EditText)findViewById(R.id.order_name_input);
         name_input = (EditText)findViewById(R.id.name_input);
@@ -143,6 +149,35 @@ public class OrderActivity extends AppCompatActivity {
 
     public void onClick_back(View v){
         finish();
+    }
+
+    boolean point_select = false;
+
+    public void onClick_point_use(View v){
+        if(point_select){
+            point_discount_check.setImageResource(R.drawable.ic_check);
+            point_discount_title.setTextColor(Color.parseColor("#CDCDCD"));
+            point_discount_price.setText("0원");
+            point_discount_price.setVisibility(View.GONE);
+            DecimalFormat format = new DecimalFormat("###,###");
+            final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
+            point_select = false;
+        }else {
+            point_discount_check.setImageResource(R.drawable.ic_check_purple);
+            point_discount_title.setTextColor(Color.parseColor("#000000"));
+            int point_val = 5000;
+            if(point_val>=(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))){
+                DecimalFormat format = new DecimalFormat("###,###");
+                point_discount_price.setText(format.format((adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5)))+"원");
+                final_price.setText(0+"원");
+            }else {
+                DecimalFormat format = new DecimalFormat("###,###");
+                point_discount_price.setText(format.format(point_val)+"원");
+                final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15)-point_val)+"원");
+            }
+            point_discount_price.setVisibility(View.VISIBLE);
+            point_select = true;
+        }
     }
 
     public void onClick_search_address(View v){
