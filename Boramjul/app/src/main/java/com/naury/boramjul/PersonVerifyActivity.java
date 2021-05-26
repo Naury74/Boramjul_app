@@ -655,7 +655,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
 
-            String serverURL = "http://www.boramjul.kro.kr/test/member/androidsignup.do";//서버주소 할당
+            String serverURL = "http://www.boramjul.kro.kr/member/androidsignup.do";//서버주소 할당
             String postParameters = (String)params[0];//전송할 파라미터,값
             Log.d("Login_TAG","postParameters : "+postParameters);
 
