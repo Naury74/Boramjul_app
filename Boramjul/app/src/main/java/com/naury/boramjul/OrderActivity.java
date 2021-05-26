@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -27,6 +29,7 @@ import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +49,8 @@ public class OrderActivity extends AppCompatActivity {
 
     UserInfo userInfo;
 
-    TextView total_price, final_price, item_count, discount_price, point_discount_title, point_discount_price;
-    EditText order_name_input,name_input,address_num_input,address_input,address_detail_input,ph_num_input,request_input;
+    TextView total_price, final_price, item_count, discount_price, point_discount_title, point_having_price;
+    EditText order_name_input,name_input,address_num_input,address_input,address_detail_input,ph_num_input,request_input, point_discount_price;
     ImageView point_discount_check;
 
     RadioGroup pay_input,easy_pay_select;
@@ -56,6 +59,11 @@ public class OrderActivity extends AppCompatActivity {
     RecyclerView listView;
 
     CheckBox confirm_check;
+
+    LinearLayout having_point;
+
+    int point_val = 0;
+    int total_point_val = 0;
 
     private WebView webView;
     private WebSettings mWebSettings;
@@ -80,7 +88,8 @@ public class OrderActivity extends AppCompatActivity {
         discount_price = (TextView)findViewById(R.id.discount_price);
         point_discount_title = (TextView)findViewById(R.id.point_discount_title);
         confirm_check = (CheckBox)findViewById(R.id.confirm_check);
-        point_discount_price = (TextView)findViewById(R.id.point_discount_price);
+        point_discount_price = (EditText)findViewById(R.id.point_discount_price);
+        point_having_price = (TextView)findViewById(R.id.point_having_price);
 
         point_discount_check = (ImageView)findViewById(R.id.point_discount_check);
 
@@ -91,6 +100,8 @@ public class OrderActivity extends AppCompatActivity {
         address_detail_input = (EditText)findViewById(R.id.address_detail_input);
         ph_num_input = (EditText)findViewById(R.id.ph_num_input);
         request_input = (EditText)findViewById(R.id.request_input);
+
+        having_point = (LinearLayout)findViewById(R.id.having_point);
 
         adapter = new CartListAdapter(OrderActivity.this,R.layout.order_list_item);
 
@@ -127,20 +138,20 @@ public class OrderActivity extends AppCompatActivity {
         name_input.setText(userInfo.getName());
         ph_num_input.setText(userInfo.getPh_num());
 
-        String address_result = userInfo.getAddress();
-        String address_num = substringBetween(address_result, "(", ")");
-        address_num_input.setText(address_num);
-        address_input.setText(address_result.substring(address_result.indexOf(")")+1));
+//        String address_result = userInfo.getAddress();
+//        String address_num = substringBetween(address_result, "(", ")");
+//        address_num_input.setText(address_num);
+//        address_input.setText(address_result.substring(address_result.indexOf(")")+1));
 
-        if(userInfo.getRank().equals("1")){
+        if(userInfo.getRank().equals("브론즈")){
             total_price.setText(format.format(adapter.getTotalPrice())+"원");
             discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
             final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
-        }else if(userInfo.getRank().equals("2")){
+        }else if(userInfo.getRank().equals("실버")){
             total_price.setText(format.format(adapter.getTotalPrice())+"원");
             discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
             final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
-        }else if(userInfo.getRank().equals("3")){
+        }else if(userInfo.getRank().equals("골드")){
             total_price.setText(format.format(adapter.getTotalPrice())+"원");
             discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
             final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
@@ -157,25 +168,58 @@ public class OrderActivity extends AppCompatActivity {
         if(point_select){
             point_discount_check.setImageResource(R.drawable.ic_check);
             point_discount_title.setTextColor(Color.parseColor("#CDCDCD"));
-            point_discount_price.setText("0원");
+            point_having_price.setText("0원");
             point_discount_price.setVisibility(View.GONE);
+            point_having_price.setVisibility(View.GONE);
             DecimalFormat format = new DecimalFormat("###,###");
             final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
+            having_point.setVisibility(View.GONE);
             point_select = false;
         }else {
             point_discount_check.setImageResource(R.drawable.ic_check_purple);
             point_discount_title.setTextColor(Color.parseColor("#000000"));
-            int point_val = 5000;
-            if(point_val>=(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))){
-                DecimalFormat format = new DecimalFormat("###,###");
-                point_discount_price.setText(format.format((adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5)))+"원");
-                final_price.setText(0+"원");
-            }else {
-                DecimalFormat format = new DecimalFormat("###,###");
-                point_discount_price.setText(format.format(point_val)+"원");
-                final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15)-point_val)+"원");
-            }
             point_discount_price.setVisibility(View.VISIBLE);
+            having_point.setVisibility(View.VISIBLE);
+            point_discount_price.setText("0");
+            point_val = 0;
+            total_point_val = Integer.parseInt(userInfo.getPoint());
+            DecimalFormat format = new DecimalFormat("###,###");
+            point_having_price.setText(format.format(total_point_val)+"원");
+            point_discount_price.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if(point_discount_price.getText().toString().equals("")){
+
+                    }else {
+                        point_val = Integer.parseInt(point_discount_price.getText().toString());
+                        if(point_val>total_point_val){
+                            Toast.makeText(OrderActivity.this, "보유 포인트를 초과하여 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+                            point_discount_price.setText("0");
+                            point_val=0;
+                        }else {
+                            if(point_val>=(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))){
+                                DecimalFormat format = new DecimalFormat("###,###");
+                                final_price.setText(0+"원");
+                            }else {
+                                DecimalFormat format = new DecimalFormat("###,###");
+                                final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15)-point_val)+"원");
+                            }
+                        }
+                    }
+                }
+            });
+            point_having_price.setVisibility(View.VISIBLE);
+            having_point.setVisibility(View.VISIBLE);
             point_select = true;
         }
     }

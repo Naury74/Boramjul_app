@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -144,12 +145,41 @@ public class SignActivity extends AppCompatActivity {
         });
 
         getHashKey();
+        apply_account();
     }
 
     private void signIn() {
         customAnimationLoadingDialog.show();
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    private void store_account(String email, String pw){
+        SharedPreferences pref = getSharedPreferences("login",MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putString("email", email);
+        editor.putString("pw", pw);
+
+        editor.commit();
+    }
+
+    private void apply_account(){
+        SharedPreferences pref = getSharedPreferences("login",MODE_PRIVATE);
+
+        String email = pref.getString("email","");
+        String pw = pref.getString("pw","");
+
+        if(email.equals("")||pw.equals("")){
+
+        }else {
+            get_id = email;
+            get_pw = pw;
+
+            InsertData task = new InsertData();
+            task.execute("1");
+        }
     }
 
     @Override
@@ -598,7 +628,7 @@ public class SignActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
                         // Pulling items from the array
-                        String id = jsonObject.getString("id");
+                        String id = jsonObject.getString("email");
                         String passwd = jsonObject.getString("passwd");
                         if(id.equals(get_id)&&passwd.equals(get_pw)){
                             if(jsonObject.getInt("sns")==1){
@@ -608,9 +638,11 @@ public class SignActivity extends AppCompatActivity {
                                 //userInfo.setSex(jsonObject.getString("gender"));
                                 userInfo.setEmail(jsonObject.getString("email"));
                                 userInfo.setPh_num(jsonObject.getString("phone"));
-                                //userInfo.setAddress(jsonObject.getString("address"));
+                                userInfo.setAddress(jsonObject.getString("address"));
                                 userInfo.setRank(jsonObject.getString("rank"));
+                                userInfo.setPoint(jsonObject.getString("reserves"));
                                 userInfo.setJoindate(jsonObject.getString("joindate"));
+                                store_account(get_id, get_pw);
                                 result_check = true;
                                 break;
                             }
@@ -633,8 +665,9 @@ public class SignActivity extends AppCompatActivity {
                             //userInfo.setSex(jsonObject.getString("gender"));
                             userInfo.setEmail(jsonObject.getString("email"));
                             userInfo.setPh_num(jsonObject.getString("phone"));
-                            //userInfo.setAddress(jsonObject.getString("address"));
+                            userInfo.setAddress(jsonObject.getString("address"));
                             userInfo.setRank(jsonObject.getString("rank"));
+                            userInfo.setPoint(jsonObject.getString("reserves"));
                             userInfo.setJoindate(jsonObject.getString("joindate"));
                             result_check = true;
                             break;
@@ -659,7 +692,8 @@ public class SignActivity extends AppCompatActivity {
                             userInfo.setEmail(jsonObject.getString("email"));
                             userInfo.setPh_num(jsonObject.getString("phone"));
                             userInfo.setAddress(jsonObject.getString("address"));
-                            //userInfo.setRank(jsonObject.getString("rank"));
+                            userInfo.setRank(jsonObject.getString("rank"));
+                            userInfo.setPoint(jsonObject.getString("reserves"));
                             userInfo.setJoindate(jsonObject.getString("joindate"));
                             result_check = true;
                             break;
@@ -684,8 +718,9 @@ public class SignActivity extends AppCompatActivity {
                             //userInfo.setSex(jsonObject.getString("gender"));
                             userInfo.setEmail(jsonObject.getString("email"));
                             userInfo.setPh_num(jsonObject.getString("phone"));
-                            //userInfo.setAddress(jsonObject.getString("address"));
+                            userInfo.setAddress(jsonObject.getString("address"));
                             userInfo.setRank(jsonObject.getString("rank"));
+                            userInfo.setPoint(jsonObject.getString("reserves"));
                             userInfo.setJoindate(jsonObject.getString("joindate"));
                             result_check = true;
                             userInfo.setLogin_type(request_type);

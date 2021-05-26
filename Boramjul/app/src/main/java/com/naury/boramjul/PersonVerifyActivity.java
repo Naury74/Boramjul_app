@@ -381,7 +381,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
     public void Enable_btn(){
 
         if(userInfo.getLogin_type()==1){
-            if(check_email==1&&check_pw==1&&check_re_pw==1&&check_code==1&&check_name==1&&check_phone==1&&check_id==1&&check_birth==1){
+            if(check_email==1&&check_pw==1&&check_re_pw==1&&check_code==1&&check_name==1&&check_phone==1&&check_birth==1){
                 //모두 기입
                 btn_confirm.setVisibility(View.VISIBLE);
             }else {
@@ -480,7 +480,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
                 email_input_layout.setVisibility(View.GONE);
                 phone_input_layout.setVisibility(View.GONE);
                 code_input_layout.setVisibility(View.GONE);
-                id_input.setVisibility(View.VISIBLE);
+                //id_input.setVisibility(View.VISIBLE);
                 pw_layout.setVisibility(View.VISIBLE);
                 pw_notice_text.setVisibility(View.VISIBLE);
                 re_pw_layout.setVisibility(View.VISIBLE);
@@ -508,7 +508,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
 
         try {
-            jsonObject.put("id",id_input.getText().toString());
+            //jsonObject.put("id",id_input.getText().toString());
             jsonObject.put("passwd",pw_input.getText().toString());
             jsonObject.put("name",name_input.getText().toString());
             jsonObject.put("email",email_input.getText().toString());
@@ -517,8 +517,8 @@ public class PersonVerifyActivity extends AppCompatActivity {
             //jsonObject.put("gender",gender_value);
             jsonObject.put("birth",Integer.toString(birthday_value));
             //jsonObject.put("address",address_input.getText().toString());
-            jsonObject.put("rank",1);
-            jsonObject.put("totalprice",0);
+            //jsonObject.put("rank",1);
+            //jsonObject.put("totalprice",0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -655,7 +655,7 @@ public class PersonVerifyActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
 
-            String serverURL = "http://www.boramjul.kro.kr/member/androidsignup.do";//서버주소 할당
+            String serverURL = "http://www.boramjul.kro.kr/test/member/androidsignup.do";//서버주소 할당
             String postParameters = (String)params[0];//전송할 파라미터,값
             Log.d("Login_TAG","postParameters : "+postParameters);
 

@@ -845,6 +845,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void Google_signOut() {//구글계정 로그아웃처리
         FirebaseAuth.getInstance().signOut();
+        SharedPreferences pref = getSharedPreferences("login",MODE_PRIVATE);
+
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putString("email", "");
+        editor.putString("pw", "");
+
+        editor.commit();
     }
 
     private void Google_revokeAccess() {//구글계정 회원탈퇴처리

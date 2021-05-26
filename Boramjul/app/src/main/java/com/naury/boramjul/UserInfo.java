@@ -10,12 +10,13 @@ public class UserInfo {
     private static String address="";
     private static String rank = "";
     private static String joindate = "";
+    private static String point = "";
 
     public  UserInfo(){
 
     }
 
-    public UserInfo(Integer login_type, String name, String birthday, String sex, String email, String ph_num, String address, String rank, String joindate) {
+    public UserInfo(Integer login_type, String name, String birthday, String sex, String email, String ph_num, String address, String rank, String joindate, String point) {
         this.login_type = login_type;
         this.name = name;
         this.birthday = birthday;
@@ -25,6 +26,15 @@ public class UserInfo {
         this.address = address;
         this.rank = rank;
         this.joindate = joindate;
+        this.point = point;
+    }
+
+    public static String getPoint() {
+        return point;
+    }
+
+    public static void setPoint(String point) {
+        UserInfo.point = point;
     }
 
     public static String getRank() {

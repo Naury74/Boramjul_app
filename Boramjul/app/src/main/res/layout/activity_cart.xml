@@ -45,6 +45,7 @@
 
         <TextView
             android:id="@+id/order_list_btn"
+            android:visibility="gone"
             android:layout_width="70dp"
             android:layout_height="20dp"
             android:layout_gravity="right"

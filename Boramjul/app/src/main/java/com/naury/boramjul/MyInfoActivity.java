@@ -69,15 +69,15 @@ public class MyInfoActivity extends AppCompatActivity {
         user_name_text.setText(userInfo.getName()+"님, 반가워요!");
         user_mail_text.setText(userInfo.getEmail());
         user_ph_num_text.setText(userInfo.getPh_num());
-        if(userInfo.getRank().equals("1")){
+        if(userInfo.getRank().equals("브론즈")){
             membership_rank.setText("브론즈");
             membership_rank.setTextColor(Color.parseColor("#BB5353"));
             membership_sub.setText("5%할인 혜택");
-        }else if(userInfo.getRank().equals("2")){
+        }else if(userInfo.getRank().equals("실버")){
             membership_rank.setText("실버");
             membership_rank.setTextColor(Color.parseColor("#A4A9B8"));
             membership_sub.setText("10%할인 혜택");
-        }else if(userInfo.getRank().equals("3")){
+        }else if(userInfo.getRank().equals("골드")){
             membership_rank.setText("골드");
             membership_rank.setTextColor(Color.parseColor("#F1BA2C"));
             membership_sub.setText("15%할인 혜택");

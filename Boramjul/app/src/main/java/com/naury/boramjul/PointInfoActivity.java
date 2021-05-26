@@ -14,10 +14,12 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.text.DecimalFormat;
+
 public class PointInfoActivity extends AppCompatActivity {
 
     ImageView membership_icon;
-    TextView membership_text;
+    TextView membership_text, PointView;
     UserInfo userInfo;
 
     @Override
@@ -27,16 +29,20 @@ public class PointInfoActivity extends AppCompatActivity {
 
         membership_icon = (ImageView)findViewById(R.id.membership_icon);
         membership_text = (TextView)findViewById(R.id.membership_text);
+        PointView = (TextView)findViewById(R.id.PointView);
 
         userInfo = new UserInfo();
 
-        if(userInfo.getRank().equals("1")){
+        DecimalFormat format = new DecimalFormat("###,###");
+        PointView.setText(format.format(Integer.parseInt(userInfo.getPoint())));
+
+        if(userInfo.getRank().equals("브론즈")){
             membership_icon.setImageResource(R.drawable.ic_bronze_medal);
             membership_text.setText("브론즈");
-        }else if(userInfo.getRank().equals("2")){
+        }else if(userInfo.getRank().equals("실버")){
             membership_icon.setImageResource(R.drawable.ic_silver_medal);
             membership_text.setText("실버");
-        }else if(userInfo.getRank().equals("3")){
+        }else if(userInfo.getRank().equals("골드")){
             membership_icon.setImageResource(R.drawable.ic_gold_medal);
             membership_text.setText("골드");
         }

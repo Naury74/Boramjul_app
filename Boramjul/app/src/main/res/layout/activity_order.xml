@@ -418,7 +418,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="340dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/round_white_backgorund"
@@ -552,9 +552,57 @@
                             android:onClick="onClick_point_use">
                         </TextView>
 
-                        <TextView
+                        <EditText
                             android:id="@+id/point_discount_price"
                             android:visibility="gone"
+                            android:paddingHorizontal="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="0"
+                            android:inputType="number"
+                            android:background="#F1F1F1"
+                            android:gravity="center|right"
+                            android:layout_gravity="center|right"
+                            android:textColor="@color/boram_purple">
+                        </EditText>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/having_point"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_gravity="center|left">
+                        </ImageView>
+
+                        <TextView
+                            android:id="@+id/point_having_title"
+                            android:layout_width="200dp"
+                            android:layout_height="16dp"
+                            android:fontFamily="@font/gmarketsansmedium"
+                            android:textSize="14dp"
+                            android:text="보유 포인트"
+                            android:gravity="center|left"
+                            android:layout_gravity="center|left"
+                            android:textColor="#000000"
+                            android:clickable="true"
+                            android:onClick="onClick_point_use">
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/point_having_price"
+                            android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/gmarketsansmedium"
@@ -622,6 +670,7 @@
                         android:text="결제 하기"
                         android:gravity="center"
                         android:layout_marginTop="30dp"
+                        android:layout_marginBottom="20dp"
                         android:textColor="#ffffff">
                     </TextView>
 
