@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:id="@+id/main_background_Layout"
-    tools:context=".PersonVerifyActivity">
+    tools:context=".Activity.PersonVerifyActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"

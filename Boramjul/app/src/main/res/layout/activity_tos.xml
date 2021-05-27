@@ -7,7 +7,7 @@
     android:background="#ffffff"
     android:orientation="vertical"
     android:id="@+id/main_background_Layout"
-    tools:context=".TOS_Activity">
+    tools:context=".Activity.TOS_Activity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"

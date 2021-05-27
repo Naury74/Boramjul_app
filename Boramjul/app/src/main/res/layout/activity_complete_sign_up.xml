@@ -7,7 +7,7 @@
     android:background="@color/boram_purple"
     android:orientation="vertical"
     android:id="@+id/main_background_Layout"
-    tools:context=".CompleteSignUpActivity">
+    tools:context=".Activity.CompleteSignUpActivity">
 
     <TextView
         android:id="@+id/title"

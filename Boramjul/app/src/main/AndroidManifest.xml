@@ -19,47 +19,47 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PointInfoActivity"></activity>
+        <activity android:name=".Activity.PointInfoActivity"></activity>
         <activity
-            android:name=".Address_Search_Activity"
+            android:name=".Activity.Address_Search_Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".OrderActivity"
+            android:name=".Activity.OrderActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyInfoActivity"
+            android:name=".Activity.MyInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CartActivity"
+            android:name=".Activity.CartActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CategoryActivity"
+            android:name=".Activity.CategoryActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ChipTheme" />
         <activity
-            android:name=".CompleteSignUpActivity"
+            android:name=".Activity.CompleteSignUpActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImageBgTheme" />
         <activity
-            android:name=".PersonVerifyActivity"
+            android:name=".Activity.PersonVerifyActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".TOS_Activity"
+            android:name=".Activity.TOS_Activity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RecommendTotalViewActivity"
+            android:name=".Activity.RecommendTotalViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".NewBookTotalViewActivity"
+            android:name=".Activity.NewBookTotalViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BestBookTotalViewActivity"
+            android:name=".Activity.BestBookTotalViewActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DetailBookActivity"
+            android:name=".Activity.DetailBookActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SearchOnMapActivity"
+            android:name=".Activity.SearchOnMapActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MapTheme" />
 
@@ -71,7 +71,7 @@
             android:value="AIzaSyCgwfZbU3ymNGLMnoEjE2UzZvqIq_EYAGA" />
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".Activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -81,11 +81,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignActivity"
+            android:name=".Activity.SignActivity"
             android:screenOrientation="portrait"
             android:theme="@style/ImageBgTheme" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activity.MainActivity"
             android:screenOrientation="portrait" />
     </application>
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/main_background_Layout"
-    tools:context=".SearchOnMapActivity">
+    tools:context=".Activity.SearchOnMapActivity">
 
     <fragment
         android:layout_width="match_parent"
