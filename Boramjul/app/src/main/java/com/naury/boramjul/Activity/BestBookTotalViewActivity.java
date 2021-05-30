@@ -125,6 +125,8 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
 
             bs_list = new ArrayList<BookListItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
+            ArrayList<String> barcode_list = new ArrayList<String>();
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -136,12 +138,21 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
                 Elements price_contents = doc.select(".book_price");
                 Elements score_review_contents = doc.select(".review");
                 Elements ImageGroupList = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
 
                 for (Element element : ImageGroupList){
                     bs_thumbnail = element.select("img").attr("src");
                     if(!bs_thumbnail.equals("")){
                         Log.d("TAG","\n베스트 이미지 주소: "+bs_thumbnail+"\n\n");
                         imgUrl.add(bs_thumbnail);
+                    }
+                }
+
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n베스크북 디테일 바코드: "+barcode);
                     }
                 }
 
@@ -158,7 +169,7 @@ public class BestBookTotalViewActivity extends AppCompatActivity {
                     Log.d("TAG","\n베스트 가격 : "+bs_price);
                     Log.d("TAG","\n베스트 평점 : "+bs_score_review);
 
-                    BookListItem item = new BookListItem(imgUrl.get(i), bs_category, bs_title, bs_author, bs_price, bs_score_review);
+                    BookListItem item = new BookListItem(imgUrl.get(i), bs_category, bs_title, bs_author, bs_price, bs_score_review, barcode_list.get(i));
 
                     bs_list.add(item);
                     search_item.add(bs_title);

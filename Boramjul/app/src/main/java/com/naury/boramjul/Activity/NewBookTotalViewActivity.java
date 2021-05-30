@@ -124,6 +124,8 @@ public class NewBookTotalViewActivity extends AppCompatActivity {
 
             nw_list = new ArrayList<BookListItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
+            ArrayList<String> barcode_list = new ArrayList<String>();
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -134,12 +136,21 @@ public class NewBookTotalViewActivity extends AppCompatActivity {
                 Elements price_contents = doc.select(".sell_price");
                 Elements score_review_contents = doc.select(".score strong");
                 Elements ImageGroupList = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
 
                 for (Element element : ImageGroupList){
                     nw_thumbnail = element.select("img").attr("src");
                     if(!nw_thumbnail.equals("")){
                         Log.d("TAG","\n뉴 이미지 주소: "+nw_thumbnail+"\n\n");
                         imgUrl.add(nw_thumbnail);
+                    }
+                }
+
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n뉴북 토탈뷰 바코드: "+barcode);
                     }
                 }
 
@@ -156,7 +167,7 @@ public class NewBookTotalViewActivity extends AppCompatActivity {
                     Log.d("TAG","\n뉴 가격 : "+nw_price);
                     Log.d("TAG","\n뉴 평점 : "+nw_score_review);
 
-                    BookListItem item = new BookListItem(imgUrl.get(i), nw_category, nw_title, nw_author, nw_price, nw_score_review);
+                    BookListItem item = new BookListItem(imgUrl.get(i), nw_category, nw_title, nw_author, nw_price, nw_score_review, barcode_list.get(i));
 
                     nw_list.add(item);
                     search_item.add(nw_title);

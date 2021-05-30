@@ -143,6 +143,8 @@ public class DetailBookActivity extends AppCompatActivity {
 
             search_list = new ArrayList<BookListItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
+            ArrayList<String> barcode_list = new ArrayList<String>();
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -156,6 +158,7 @@ public class DetailBookActivity extends AppCompatActivity {
                 Elements price_contents = doc.select(".sell_price strong");
                 Elements score_review_contents = doc.select(".rating");
                 Elements ImageGroupList = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
 
                 for (Element element : ImageGroupList){
                     search_thumbnail = element.select("img").attr("src");
@@ -165,7 +168,13 @@ public class DetailBookActivity extends AppCompatActivity {
                     }
                 }
 
-
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n디테일북 바코드: "+barcode);
+                    }
+                }
 
                 for(int i = 0; i < score_review_contents.size(); i++){
                     search_score_review = score_review_contents.get(i).select("img").attr("alt");
@@ -180,7 +189,7 @@ public class DetailBookActivity extends AppCompatActivity {
                     Log.d("TAG","\n검색 가격 : "+search_price);
                     Log.d("TAG","\n검색 평점 : "+search_score_review);
 
-                    BookListItem item = new BookListItem(imgUrl.get(i), search_category, search_title, search_author, search_price, search_score_review);
+                    BookListItem item = new BookListItem(imgUrl.get(i), search_category, search_title, search_author, search_price, search_score_review, barcode_list.get(i));
 
                     search_list.add(item);
                 }

@@ -11,9 +11,10 @@ public class BookListItem implements Serializable {
     private String author;
     private String price;
     private String score_review;
+    private String prodnum;
     private int count;
 
-    public BookListItem(String thumbnail, String category, String title, String author, String price, String score_review) {
+    public BookListItem(String thumbnail, String category, String title, String author, String price, String score_review, String prodnum) {
         this.thumbnail = thumbnail;
         this.category = category;
         this.title = title;
@@ -21,6 +22,7 @@ public class BookListItem implements Serializable {
         this.price = price;
         this.score_review = score_review;
         this.count = 1;
+        this.prodnum = prodnum;
     }
 
     public BookListItem(String thumbnail, String category, String title, String author, String price, String score_review, int count) {
@@ -31,6 +33,14 @@ public class BookListItem implements Serializable {
         this.price = price;
         this.score_review = score_review;
         this.count = count;
+    }
+
+    public String getProdnum() {
+        return prodnum;
+    }
+
+    public void setProdnum(String prodnum) {
+        this.prodnum = prodnum;
     }
 
     public int getCount() {

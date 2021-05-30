@@ -98,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<String> sub_title_list;
     ArrayList<String> author_list;
     ArrayList<String> coverUrl;
+    ArrayList<String> barcode_list;
 
     ImageView week_book_cover;
     TextView week_book_sub_title;
@@ -368,6 +369,9 @@ public class MainActivity extends AppCompatActivity {
             author_list = new ArrayList<String>();
 
             coverUrl = new ArrayList<>();
+            barcode_list = new ArrayList<String>();
+
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -377,12 +381,21 @@ public class MainActivity extends AppCompatActivity {
                 Elements author_contents = doc.select(".author");
                 Elements sub_title_contents = doc.select(".card_news tbody tr td p");
                 Elements ImageGroupList_cover = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
 
                 for (Element element : ImageGroupList_cover){
                     week_cover = element.select("img").attr("src");
                     if(!week_cover.equals("")){
                         Log.d("TAG","\n주간 이미지 커버 주소: "+week_cover+"\n\n");
                         coverUrl.add(week_cover);
+                    }
+                }
+
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n주간 바코드: "+barcode);
                     }
                 }
 
@@ -431,6 +444,8 @@ public class MainActivity extends AppCompatActivity {
             rc_list = new ArrayList<DayBookItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
             ArrayList<String> coverUrl = new ArrayList<>();
+            ArrayList<String> barcode_list = new ArrayList<String>();
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -442,12 +457,21 @@ public class MainActivity extends AppCompatActivity {
                 Elements score_contents = doc.select(".score strong");
                 Elements ImageGroupList = doc.select(".card_news tbody tr");
                 Elements ImageGroupList_cover = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
 
                 for (Element element : ImageGroupList){
                     rc_thumbnail = element.select("td").attr("data-image");
                     if(!rc_thumbnail.equals("")){
                         Log.d("TAG","\n추천 이미지 주소: "+rc_thumbnail+"\n\n");
                         imgUrl.add(rc_thumbnail);
+                    }
+                }
+
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n추천 바코드: "+barcode);
                     }
                 }
 
@@ -471,7 +495,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("TAG","\n추천가격 : "+rc_price);
                     Log.d("TAG","\n추천평점 : "+rc_score);
 
-                    DayBookItem item = new DayBookItem(imgUrl.get(i),coverUrl.get(i), rc_title, rc_author, rc_price, rc_score);
+                    DayBookItem item = new DayBookItem(imgUrl.get(i),coverUrl.get(i), rc_title, rc_author, rc_price, rc_score, barcode_list.get(i));
 
                     rc_list.add(item);
                     search_item.add(rc_title);
@@ -572,6 +596,8 @@ public class MainActivity extends AppCompatActivity {
 
             bs_list = new ArrayList<BookListItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
+            ArrayList<String> barcode_list = new ArrayList<String>();
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -583,12 +609,21 @@ public class MainActivity extends AppCompatActivity {
                 Elements price_contents = doc.select(".book_price");
                 Elements score_review_contents = doc.select(".review");
                 Elements ImageGroupList = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
 
                 for (Element element : ImageGroupList){
                     bs_thumbnail = element.select("img").attr("src");
                     if(!bs_thumbnail.equals("")){
                         Log.d("TAG","\n베스트 이미지 주소: "+bs_thumbnail+"\n\n");
                         imgUrl.add(bs_thumbnail);
+                    }
+                }
+
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n베스트 바코드: "+barcode);
                     }
                 }
 
@@ -605,7 +640,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("TAG","\n베스트 가격 : "+bs_price);
                     Log.d("TAG","\n베스트 평점 : "+bs_score_review);
 
-                    BookListItem item = new BookListItem(imgUrl.get(i), bs_category, bs_title, bs_author, bs_price, bs_score_review);
+                    BookListItem item = new BookListItem(imgUrl.get(i), bs_category, bs_title, bs_author, bs_price, bs_score_review, barcode_list.get(i));
 
                     bs_list.add(item);
                     search_item.add(bs_title);
@@ -637,6 +672,8 @@ public class MainActivity extends AppCompatActivity {
 
             nw_list = new ArrayList<BookListItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
+            ArrayList<String> barcode_list = new ArrayList<String>();
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -647,12 +684,21 @@ public class MainActivity extends AppCompatActivity {
                 Elements price_contents = doc.select(".sell_price");
                 Elements score_review_contents = doc.select(".score strong");
                 Elements ImageGroupList = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
 
                 for (Element element : ImageGroupList){
                     nw_thumbnail = element.select("img").attr("src");
                     if(!nw_thumbnail.equals("")){
                         Log.d("TAG","\n뉴 이미지 주소: "+nw_thumbnail+"\n\n");
                         imgUrl.add(nw_thumbnail);
+                    }
+                }
+
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n뉴 바코드: "+barcode);
                     }
                 }
 
@@ -669,7 +715,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("TAG","\n뉴 가격 : "+nw_price);
                     Log.d("TAG","\n뉴 평점 : "+nw_score_review);
 
-                    BookListItem item = new BookListItem(imgUrl.get(i), nw_category, nw_title, nw_author, nw_price, nw_score_review);
+                    BookListItem item = new BookListItem(imgUrl.get(i), nw_category, nw_title, nw_author, nw_price, nw_score_review, barcode_list.get(i));
 
                     nw_list.add(item);
                     search_item.add(nw_title);
@@ -701,6 +747,8 @@ public class MainActivity extends AppCompatActivity {
 
             search_list = new ArrayList<BookListItem>();
             ArrayList<String> imgUrl = new ArrayList<>();
+            ArrayList<String> barcode_list = new ArrayList<String>();
+            String barcode = "";
 
             Document doc = null;
             try {
@@ -711,6 +759,8 @@ public class MainActivity extends AppCompatActivity {
                 Elements price_contents = doc.select(".sell_price strong");
                 Elements score_review_contents = doc.select(".rating");
                 Elements ImageGroupList = doc.select(".cover a");
+                Elements Barcode_cover = doc.select(".cover");
+
 
                 for (Element element : ImageGroupList){
                     search_thumbnail = element.select("img").attr("src");
@@ -720,7 +770,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-
+                for (Element element : Barcode_cover){
+                    barcode = element.select("a").attr("href");
+                    if(!barcode.equals("")){
+                        barcode_list.add(barcode);
+                        Log.d("TAG","\n서치 바코드: "+barcode);
+                    }
+                }
 
                 for(int i = 0; i < score_review_contents.size(); i++){
                     search_score_review = score_review_contents.get(i).select("img").attr("alt");
@@ -735,7 +791,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.d("TAG","\n검색 가격 : "+search_price);
                     Log.d("TAG","\n검색 평점 : "+search_score_review);
 
-                    BookListItem item = new BookListItem(imgUrl.get(i), search_category, search_title, search_author, search_price, search_score_review);
+                    BookListItem item = new BookListItem(imgUrl.get(i), search_category, search_title, search_author, search_price, search_score_review, barcode_list.get(i));
 
                     search_list.add(item);
                     search_item.add(search_title);

@@ -8,14 +8,24 @@ public class DayBookItem {
     private String author;
     private String price;
     private String score;
+    private String prodnum;
 
-    public DayBookItem(String thumbnail, String book_cover, String title, String author, String price, String score) {
+    public DayBookItem(String thumbnail, String book_cover, String title, String author, String price, String score, String prodnum) {
         this.thumbnail = thumbnail;
         this.book_cover = book_cover;
         this.title = title;
         this.author = author;
         this.price = price;
         this.score = score;
+        this.prodnum = prodnum;
+    }
+
+    public String getProdnum() {
+        return prodnum;
+    }
+
+    public void setProdnum(String prodnum) {
+        this.prodnum = prodnum;
     }
 
     public String getPrice() {

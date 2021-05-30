@@ -43,6 +43,10 @@ import com.naury.boramjul.DTO.UserInfo;
 import com.naury.boramjul.Retrofit.JsonPlaceHolderApi;
 import com.naury.boramjul.Retrofit.RetrofitClient;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -74,6 +78,9 @@ public class OrderActivity extends AppCompatActivity {
 
     int point_val = 0;
     int total_point_val = 0;
+    int order_price = 0;
+    int discount_membership = 0;
+    String pay_method = "카드결제";
 
     private WebView webView;
     private WebSettings mWebSettings;
@@ -140,8 +147,20 @@ public class OrderActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if(i==R.id.method_card){
                     easy_pay_select.setVisibility(View.GONE);
+                    pay_method = "카드결제";
                 } else if (i ==R.id.method_other) {
                     easy_pay_select.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        easy_pay_select.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(i==R.id.kakao_pay){
+                    pay_method = "카카오페이";
+                } else if (i ==R.id.naver_pay) {
+                    pay_method = "네이버페이";
                 }
             }
         });
@@ -155,18 +174,23 @@ public class OrderActivity extends AppCompatActivity {
 //        address_num_input.setText(address_num);
 //        address_input.setText(address_result.substring(address_result.indexOf(")")+1));
 
+        order_price = adapter.getTotalPrice();
+
         if(userInfo.getRank().equals("브론즈")){
             total_price.setText(format.format(adapter.getTotalPrice())+"원");
             discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
             final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5))+"원");
+            discount_membership = (adapter.getTotalPrice()/100)*5;
         }else if(userInfo.getRank().equals("실버")){
             total_price.setText(format.format(adapter.getTotalPrice())+"원");
-            discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
+            discount_price.setText(format.format((adapter.getTotalPrice()/100)*10)+"원");
             final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10))+"원");
+            discount_membership = (adapter.getTotalPrice()/100)*10;
         }else if(userInfo.getRank().equals("골드")){
             total_price.setText(format.format(adapter.getTotalPrice())+"원");
-            discount_price.setText(format.format((adapter.getTotalPrice()/100)*5)+"원");
+            discount_price.setText(format.format((adapter.getTotalPrice()/100)*15)+"원");
             final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
+            discount_membership = (adapter.getTotalPrice()/100)*15;
         }
     }
 
@@ -184,7 +208,7 @@ public class OrderActivity extends AppCompatActivity {
             point_discount_price.setVisibility(View.GONE);
             point_having_price.setVisibility(View.GONE);
             DecimalFormat format = new DecimalFormat("###,###");
-            final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15))+"원");
+            final_price.setText(format.format(order_price-discount_membership)+"원");
             having_point.setVisibility(View.GONE);
             point_select = false;
         }else {
@@ -224,7 +248,13 @@ public class OrderActivity extends AppCompatActivity {
                                 final_price.setText(0+"원");
                             }else {
                                 DecimalFormat format = new DecimalFormat("###,###");
-                                final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15)-point_val)+"원");
+                                if(userInfo.getRank().equals("브론즈")){
+                                    final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*5)-point_val)+"원");
+                                }else if(userInfo.getRank().equals("실버")){
+                                    final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*10)-point_val)+"원");
+                                }else if(userInfo.getRank().equals("골드")){
+                                    final_price.setText(format.format(adapter.getTotalPrice()-((adapter.getTotalPrice()/100)*15)-point_val)+"원");
+                                }
                             }
                         }
                     }
@@ -245,12 +275,11 @@ public class OrderActivity extends AppCompatActivity {
     public void onClick_next(View v){
         if(!order_name_input.getText().toString().equals("")&&!name_input.getText().toString().equals("")&&!address_num_input.getText().toString().equals("")&&!address_input.getText().toString().equals("")&&!ph_num_input.getText().toString().equals("")){
             if(confirm_check.isChecked()){
-
+                createPost();
             }else {
                 Toast.makeText(this, "주문내역 확인에 체크해 주세요", Toast.LENGTH_SHORT).show();
             }
         }else {
-            createPost();
             Toast.makeText(this, "주문정보를 모두 입력해 주세요", Toast.LENGTH_SHORT).show();
         }
     }
@@ -376,23 +405,22 @@ public class OrderActivity extends AppCompatActivity {
         return null;
     }
 
-    String json = "Json데이터";
-
     private void createPost() {
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://www.boramjul.kro.kr/test/member/")
+                .baseUrl("http://www.boramjul.kro.kr/test/mypage/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         jsonPlaceHolderApi = retrofit.create(JsonPlaceHolderApi.class);
 
-        Call<Post> call = jsonPlaceHolderApi.createPost(json);
+        Call<Post> call = jsonPlaceHolderApi.createPost(Make_Object());
 
         call.enqueue(new Callback<Post>() {
             @Override
             public void onResponse(Call<Post> call, Response<Post> response) {
                 if (!response.isSuccessful()) {
+                    Log.d("CON_RESULT","code: " + response.code());
                     Toast.makeText(OrderActivity.this, "code: " + response.code(), Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -408,6 +436,71 @@ public class OrderActivity extends AppCompatActivity {
                 Toast.makeText(OrderActivity.this, "fail: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public String Make_Object(){
+
+        JSONObject jsonObject = new JSONObject();
+        int pay_price = 0;
+
+        try {
+            jsonObject.put("email",userInfo.getEmail());
+            jsonObject.put("name",order_name_input.getText().toString());
+            jsonObject.put("phone",ph_num_input.getText().toString());
+            jsonObject.put("totalprice",order_price);
+            jsonObject.put("saleprice",discount_membership);
+            if(point_select){
+                jsonObject.put("usereserves",point_val);
+                jsonObject.put("payprice",order_price-discount_membership-point_val);
+                pay_price = order_price-discount_membership-point_val;
+            }else {
+                jsonObject.put("usereserves",0);
+                jsonObject.put("payprice",order_price-discount_membership);
+                pay_price = order_price-discount_membership;
+            }
+            jsonObject.put("addreserves",(pay_price/100));
+            jsonObject.put("pay",pay_method);
+            jsonObject.put("address",address_num_input.getText().toString()+address_input.getText().toString()+address_detail_input.getText().toString());
+            jsonObject.put("request",request_input.getText().toString());
+            jsonObject.put("list",Make_List_Object());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String order_data = jsonObject.toString();
+        Log.d("ORDER_POST","Order_Post_json: "+order_data);
+
+        return order_data;
+
+    }
+
+    public JSONArray Make_List_Object(){
+
+        JSONArray jsonArray = new JSONArray();
+
+        try {
+            ArrayList<BookListItem> cart_list = adapter.getList();
+            for(BookListItem item : cart_list){
+                JSONObject jsonObject = new JSONObject();
+                String prodnum = item.getProdnum();
+                //jsonObject.put("prodnum",prodnum);
+                jsonObject.put("name",item.getTitle());
+                jsonObject.put("image",item.getThumbnail());
+                jsonObject.put("quantity",item.getCount());
+                jsonObject.put("price",item.getPrice());
+                String temp_price = item.getPrice().replaceAll("[^\\d]","");
+                int temp_price_num = Integer.parseInt(temp_price);
+                jsonObject.put("price",temp_price_num*item.getCount());
+                jsonArray.put(jsonObject);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String order_data = jsonArray.toString();
+        Log.d("ORDER_CHECK","Order_list_json: "+order_data);
+
+        return jsonArray;
     }
 
 

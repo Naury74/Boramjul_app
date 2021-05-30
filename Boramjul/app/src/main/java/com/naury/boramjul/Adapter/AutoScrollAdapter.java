@@ -56,7 +56,7 @@ public class AutoScrollAdapter extends PagerAdapter {
 
                     DayBookItem pos_item = images.get(position);
 
-                    BookListItem item = new BookListItem(pos_item.getBook_cover(), "", pos_item.getTitle(), pos_item.getAuthor(), pos_item.getPrice(), pos_item.getScore());
+                    BookListItem item = new BookListItem(pos_item.getBook_cover(), "", pos_item.getTitle(), pos_item.getAuthor(), pos_item.getPrice(), pos_item.getScore(), pos_item.getProdnum());
                     Intent intent = new Intent(context, DetailBookActivity.class);
                     intent.putExtra("OBJECT",item);
                     context.startActivity(intent);
@@ -91,7 +91,7 @@ public class AutoScrollAdapter extends PagerAdapter {
     public void ViewDetail(int index){
         DayBookItem pos_item = images.get(index);
 
-        BookListItem item = new BookListItem(pos_item.getBook_cover(), "", pos_item.getTitle(), pos_item.getAuthor(), pos_item.getPrice(), pos_item.getScore());
+        BookListItem item = new BookListItem(pos_item.getBook_cover(), "", pos_item.getTitle(), pos_item.getAuthor(), pos_item.getPrice(), pos_item.getScore(), pos_item.getProdnum());
         Intent intent = new Intent(context, DetailBookActivity.class);
         intent.putExtra("OBJECT",item);
         context.startActivity(intent);
